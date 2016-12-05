@@ -6,22 +6,9 @@
     $matchedanchors = [];
     $frequencey = [];
 
-    $html = file_get_contents('mail.html');
+    $html = file_get_contents('http://mailonline.co.uk');
     $dom = new DOMDocument;
     $dom->loadHTML($html);
-
-    $xpath = new DomXpath($dom);
-
-    $entries = $xpath->query("//div[@class='articletext']");
-    $results = array();
-
-    foreach($entries as $entry) {
-
-        $node = $xpath->query("img", $entry);
-
-        $results['link'] = $node->item(0)->value;
-        var_dump($results);
-    }
 
     foreach($dom->getElementsByTagName('a') as $element) {
         $node_ary = explode(' ', trim($element->nodeValue.'<br />'));
@@ -65,7 +52,7 @@
         <h1>The Male Online</h1>
     </div>
     <div class="content-wrapper">
-        <!-- <?php foreach ($frequencycount as $fkey => $fvalue):  ?>
+        <?php foreach ($frequencycount as $fkey => $fvalue):  ?>
                 <p onClick="openLinks('<?php echo $fkey; ?>')"><span><?php echo $fkey . " " . $fvalue; ?></span></p>
                 <div id="<?php echo $fkey; ?>" class="keyword-wrapper">
                     <ul class="article-list">
@@ -75,7 +62,7 @@
                         <?php endforeach; ?>
                     </ul>
                 </div>
-        <?php endforeach; ?> -->
+        <?php endforeach; ?>
     </div>
 </body>
 </html>
