@@ -7,7 +7,6 @@ body {
 .content-wrapper {
     p {
         text-transform: capitalize;
-        margin: 20px 15px;
         display: inline-block;
     }
     span {
@@ -38,8 +37,16 @@ p:hover {
 }
 .article-list {
     list-style: none;
-    margin-bottom: 10px;
+    margin: 0 15px 10px;
+    padding: 0;
     font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    li {
+        margin: 0 20px;
+        flex: 0 0 10%;
+    }
     a {
         text-decoration: none;
         color: #000;

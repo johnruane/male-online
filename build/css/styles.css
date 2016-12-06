@@ -905,7 +905,6 @@ body {
 
 .content-wrapper p {
   text-transform: capitalize;
-  margin: 20px 15px;
   display: inline-block; }
 
 .content-wrapper span {
@@ -940,8 +939,24 @@ p:hover {
 
 .article-list {
   list-style: none;
-  margin-bottom: 10px;
-  font-size: 14px; }
+  margin: 0 15px 10px;
+  padding: 0;
+  font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start; }
+  .article-list li {
+    margin: 0 20px;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 10%;
+            flex: 0 0 10%; }
   .article-list a {
     text-decoration: none;
     color: #000; }
