@@ -32,6 +32,7 @@ $article_results = array();
 
 $list_articles = $xpath->query('//div[@class="femail"]//li');
 $list_results = array();
+$frequencey = array();
 
 foreach ($list_articles as $article) {
 
@@ -39,8 +40,8 @@ foreach ($list_articles as $article) {
 	$node_text = $node->item(0)->textContent;
 
 	foreach ($bad_words as $word) {
-
 		if ( stripos($node_text, $word) !== false ) {
+			array_push($frequencey, strtolower($word));
 
 			$result['span'] = $node->item(0)->textContent;
 
@@ -55,12 +56,11 @@ foreach ($list_articles as $article) {
 			} else {
 				$list_results[$word] = $result;
 			}
-
 		}
-
 	}
-
 }
-print_r($list_results);
+
+$frequencycount = array_count_values($frequencey);
+arsort($frequencycount);
 
 ?>

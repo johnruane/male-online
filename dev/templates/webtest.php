@@ -12,9 +12,7 @@ $html = <<<'EOF'
 				<div>
 					<img class="fooimage" src="http://foo.com/bar.png" />
 				</div>
-				<div>
 					<p class="description">Foo bar</p>
-				</div>
 			</div>
 			<div class="foo">
 				<div><img class="fooimage" src="http://foo.com/baz.png" /></div>
