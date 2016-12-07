@@ -2,8 +2,8 @@
     // ini_set('display_errors', 'On');
     // ini_set('html_errors', 0);
 
-    // $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','enviable','eye-popping','figure-hugging','flashes','flashing','flaunt','flaunts','gushes','gym','leggy','midriff','perky','pert','plunging','postirior','racy','revealing','scantly','scanty','sexy','showcase','showcases','skimpy','sideboob','sizable','sizzle','sizzling','skimpy','skin-tight','slim','steamy','thigh','toned','underboob','yummy'];
-    $bad_words = ['leggy'];
+    //$bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','enviable','eye-popping','figure-hugging','flashes','flashing','flaunt','flaunts','gushes','gym','leggy','midriff','perky','pert','plunging','postirior','racy','revealing','scantly','scanty','sexy','showcase','showcases','skimpy','sideboob','sizable','sizzle','sizzling','skimpy','skin-tight','slim','steamy','thigh','toned','underboob','yummy'];
+    $bad_words = ['sizzling','slim'];
     $article_results = array();
     $frequencey = array();
 
@@ -47,7 +47,7 @@
     	}
     }
 
-    $list_articles = $xpath->query('//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li');
+    $list_articles = $xpath->query('//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
     $list_results = array();
 
     foreach ($list_articles as $article) {
@@ -76,9 +76,9 @@
     		}
     	}
     }
-
-
+    //array merge issue
     $merge_results = array_merge($article_results, $list_results);
+
 
     $frequencycount = array_count_values($frequencey);
     arsort($frequencycount);
