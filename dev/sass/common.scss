@@ -1,7 +1,7 @@
 body {
     background: #ff96ca;
     font-family: Futura, Arial, sans-serif;
-    font-size: 40px;
+    font-size: 14px;
     line-height: initial;
 }
 .content-wrapper {
@@ -24,13 +24,7 @@ body {
    }
 }
 .keyword-wrapper {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .25s ease-out;
-}
-.keyword-wrapper.active {
-    max-height: 500px;
-    transition: max-height .25s ease-in;
+    display: none;
 }
 p:hover {
     cursor: pointer;
@@ -41,7 +35,7 @@ p:hover {
     padding: 0;
     font-size: 14px;
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     justify-content: flex-start;
     li {
         margin: 0 20px;

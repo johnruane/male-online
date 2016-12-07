@@ -900,7 +900,7 @@ h5, .h5 {
 body {
   background: #ff96ca;
   font-family: Futura, Arial, sans-serif;
-  font-size: 40px;
+  font-size: 14px;
   line-height: initial; }
 
 .content-wrapper p {
@@ -924,15 +924,7 @@ body {
     padding: 20px; }
 
 .keyword-wrapper {
-  max-height: 0;
-  overflow: hidden;
-  -webkit-transition: max-height .25s ease-out;
-          transition: max-height .25s ease-out; }
-
-.keyword-wrapper.active {
-  max-height: 500px;
-  -webkit-transition: max-height .25s ease-in;
-          transition: max-height .25s ease-in; }
+  display: none; }
 
 p:hover {
   cursor: pointer; }
@@ -945,10 +937,8 @@ p:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -ms-flex-flow: row wrap;
+      flex-flow: row wrap;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start; }

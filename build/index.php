@@ -2,8 +2,8 @@
     // ini_set('display_errors', 'On');
     // ini_set('html_errors', 0);
 
-    //$bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','enviable','eye-popping','figure-hugging','flashes','flashing','flaunt','flaunts','gushes','gym','leggy','midriff','perky','pert','plunging','postirior','racy','revealing','scantly','scanty','sexy','showcase','showcases','skimpy','sideboob','sizable','sizzle','sizzling','skimpy','skin-tight','slim','steamy','thigh','toned','underboob','yummy'];
-    $bad_words = ['sizzling','slim'];
+    $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','enviable','eye-popping','figure-hugging','flashes','flashing','flaunt','flaunts','gushes','gym','leggy','midriff','perky','pert','plunging','postirior','racy','revealing','scantly','scanty','sexy','showcase','showcases','skimpy','sideboob','sizable','sizzle','sizzling','skimpy','skin-tight','slim','steamy','thigh','toned','underboob','yummy'];
+    //$bad_words = ['sizzling','slim'];
     $article_results = array();
     $frequencey = array();
 
@@ -14,7 +14,7 @@
     $xpath = new DomXpath($dom);
 
     $articles = $xpath->query('//div[contains(concat(" ", normalize-space(@class), " "), " article ")]');
-    $article_results = array();
+    $results = array();
     $frequencey = array();
 
     foreach ($articles as $article) {
@@ -38,17 +38,16 @@
     			$node = $xpath->query("descendant::img/attribute::data-src", $article);
     			$result['img'] = $node->item(0)->nodeValue;
 
-    			if ( array_key_exists ( $word , $article_results ) ) {
-    				array_push($article_results[$word], $result);
+    			if ( array_key_exists ( $word , $results ) ) {
+    				array_push($results[$word], $result);
     			} else {
-    				$article_results[$word][] = $result;
+    				$results[$word][] = $result;
     			}
     		}
     	}
     }
 
     $list_articles = $xpath->query('//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
-    $list_results = array();
 
     foreach ($list_articles as $article) {
 
@@ -60,7 +59,7 @@
     		if ( stripos($node_text, $word) !== false ) {
     			array_push($frequencey, strtolower($word));
 
-    			$result['main'] = $node->item(0)->textContent;
+    			$result['main'] = $node_text;
 
     			$node = $xpath->query('descendant::a/attribute::href', $article);
     			$result['link'] = $node->item(0)->nodeValue;
@@ -68,17 +67,14 @@
     			$node = $xpath->query('descendant::img/attribute::data-src', $article);
     			$result['img'] = $node->item(0)->nodeValue;
 
-    			if ( array_key_exists ( $word , $list_results ) ) {
-    				array_push($list_results[$word], $result);
+    			if ( array_key_exists ( $word , $results ) ) {
+    				array_push($results[$word], $result);
     			} else {
-    				$list_results[$word][] = $result;
+    				$results[$word][] = $result;
     			}
     		}
     	}
     }
-    //array merge issue
-    $merge_results = array_merge($article_results, $list_results);
-
 
     $frequencycount = array_count_values($frequencey);
     arsort($frequencycount);
@@ -97,6 +93,8 @@
 
   <link rel="stylesheet" href="css/styles.css?v=1.0">
 
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
@@ -104,15 +102,15 @@
 
 <body>
     <div class="title-wrapper">
-        <h1>The Male Online</h1>
+        <h1>The M~ Online</h1>
     </div>
     <div class="content-wrapper">
         <?php foreach ($frequencycount as $fkey => $fvalue):  ?>
                 <p onClick="openLinks('<?php echo $fkey; ?>')"><span><?php echo $fkey . " " . $fvalue; ?></span></p>
                 <div id="<?php echo $fkey; ?>" class="keyword-wrapper">
                     <ul class="article-list">
-                        <?php foreach($merge_results[$fkey] as $mkey => $value): ?>
-                            <li><a href="<?php echo $value['href'] ?>"><img src="<?php echo $value['img'] ?>"><p><?php echo $value['main'] ?></p></a></li>
+                        <?php foreach($results[$fkey] as $mkey => $value): ?>
+                            <li><a href="<?php echo $value['link'] ?>"><img src="<?php echo $value['img'] ?>"><p><?php echo $value['main'] ?></p></a></li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
@@ -123,6 +121,6 @@
 
 <script>
     function openLinks(id) {
-        document.getElementById(id).classList.toggle('active');
+        $('#'+ id).slideToggle('slow');
     }
 </script>
