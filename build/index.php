@@ -7,8 +7,8 @@
     $article_results = array();
     $frequencey = array();
 
-    //$html = file_get_contents('http://mailonline.co.uk');
-    $html = file_get_contents('mail.html');
+    $html = file_get_contents('http://www.dailymail.co.uk');
+    //$html = file_get_contents('mail.html');
     $dom = new DOMDocument;
     $dom->loadHTML($html);
     $xpath = new DomXpath($dom);
@@ -56,7 +56,7 @@
 
     	foreach ($bad_words as $word) {
 
-    		if ( stripos($node_text, $word) !== false ) {
+    		if ( stripos($node_text, ' ' . $word . ' ') !== false ) {
     			array_push($frequencey, strtolower($word));
 
     			$result['main'] = $node_text;
@@ -94,6 +94,7 @@
   <link rel="stylesheet" href="css/styles.css?v=1.0">
 
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=Eczar:800" rel="stylesheet">
 
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -102,11 +103,11 @@
 
 <body>
     <div class="title-wrapper">
-        <h1>The M~ Online</h1>
+        <h1>The <span>Mail</span> Online</h1>
     </div>
     <div class="content-wrapper">
         <?php foreach ($frequencycount as $fkey => $fvalue):  ?>
-                <p onClick="openLinks('<?php echo $fkey; ?>')"><span><?php echo $fkey . " " . $fvalue; ?></span></p>
+                <div class="word-wrapper"><p class="word" onClick="openLinks('<?php echo $fkey; ?>')"><span><?php echo $fkey . " " . $fvalue; ?></span></p></div>
                 <div id="<?php echo $fkey; ?>" class="keyword-wrapper">
                     <ul class="article-list">
                         <?php foreach($results[$fkey] as $mkey => $value): ?>
@@ -120,7 +121,11 @@
 </html>
 
 <script>
-    function openLinks(id) {
-        $('#'+ id).slideToggle('slow');
-    }
+$(function() {
+
+});
+function openLinks(id) {
+    $('.keyword-wrapper').slideUp(300);
+    $('#'+ id).slideToggle(300);
+}
 </script>

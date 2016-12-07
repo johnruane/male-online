@@ -5,22 +5,39 @@ body {
     line-height: initial;
 }
 .content-wrapper {
-    p {
+    .word-wrapper {
+        margin: 10px;
+    }
+    .word {
         text-transform: capitalize;
         display: inline-block;
-    }
-    span {
-        color: #fff;
         background: #000;
+        width: 100%;
+        margin: 0;
+        font-size: 28px;
+        text-align: center;
         padding: 15px 30px;
+        span {
+            color: #fff;
+        }
     }
 }
+@for $i from 1 to 60  {
+    .word-wrapper:nth-child(#{$i}) {
+        margin-left: calc(#{$i}*10px);
+        margin-right: calc(#{$i}*10px);
+    }
+}
+
 .title-wrapper {
     display: flex;
     justify-content: center;
     h1 {
-       border: 10px solid black;
-       padding: 20px;
+        margin-top: 50px;
+        font-weight: normal;
+       span {
+           font-family: 'Eczar', serif;
+       }
    }
 }
 .keyword-wrapper {
@@ -36,7 +53,7 @@ p:hover {
     font-size: 14px;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
+    justify-content: center;
     li {
         margin: 0 20px;
         flex: 0 0 10%;
