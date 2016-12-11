@@ -59,31 +59,7 @@ module.exports = function(grunt) {
                   src: ['js/development/*.js', 'js/vendor/*.js'],
                   dest: '../build/js/'
                 }]
-            },
-            images: {
-              files: [{
-                expand: true,
-                flatten: true,
-                src: ['images/**/*.jpg','images/**/*.png'],
-                dest: '../build/images/'
-              }]
             }
-        },
-        // Combines and minifies JS files
-        uglify: {
-          options: {
-            mangle: false,
-            compress: true,
-            preserveComments: 'some'
-          },
-          all: {
-            files: [{
-              expand: true,
-              flatten: true,
-              src: ['js/resources/*.js', '!*.min.js'],
-              dest: 'js/development/',
-            }]
-          }
         },
         // Clean build files
         clean: {
@@ -107,6 +83,6 @@ module.exports = function(grunt) {
     // ---------------------------------------------------------------------
 
     // The default task just runs build
-    grunt.registerTask('default', ['sass', 'autoprefixer', 'uglify', 'clean', 'copy', 'watch']);
+    grunt.registerTask('default', ['sass', 'autoprefixer', 'clean', 'copy', 'watch']);
 
 };

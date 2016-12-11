@@ -2,8 +2,7 @@
     // ini_set('display_errors', 'On');
     // ini_set('html_errors', 0);
 
-    $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','enviable','eye-popping','figure-hugging','flashes','flashing','flaunt','flaunts','gushes','gym','leggy','midriff','perky','pert','plunging','postirior','racy','revealing','scantly','scanty','sexy','showcase','showcases','skimpy','sideboob','sizable','sizzle','sizzling','skimpy','skin-tight','slim','steamy','thigh','toned','underboob','yummy'];
-    //$bad_words = ['sizzling','slim'];
+    $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','curves','enviable','endless legs','eye-popping','figure-hugging','flat stomach','flashes','flashing','flaunt','flaunts','fuller','gushes','gym','leggy','midriff','perky','pert','pins','plunging','postirior','pout','racy','revealing','saucy','scantly','scanty','sexy','showcase','showcases','sideboob','sizable','sizzle','sizzles','sizzling','skimpy','skin-tight','skinny','slim','slender','steamy','super-slim','surgically-enhanced','thigh','teases','toned','trim','underboob','yummy','vamp'];
     $article_results = array();
     $frequencey = array();
 
@@ -95,6 +94,7 @@
 
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Eczar:800" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -102,30 +102,46 @@
 </head>
 
 <body>
-    <div class="title-wrapper">
-        <h1>The <span>Mail</span> Online</h1>
-    </div>
+    <nav class="title-wrapper">
+        <h1>The <span>Male</span> Online</h1>
+    </nav>
     <div class="content-wrapper">
-        <?php foreach ($frequencycount as $fkey => $fvalue):  ?>
-                <div class="word-wrapper"><p class="word" onClick="openLinks('<?php echo $fkey; ?>')"><span><?php echo $fkey . " " . $fvalue; ?></span></p></div>
-                <div id="<?php echo $fkey; ?>" class="keyword-wrapper">
-                    <ul class="article-list">
-                        <?php foreach($results[$fkey] as $mkey => $value): ?>
-                            <li><a href="<?php echo $value['link'] ?>"><img src="<?php echo $value['img'] ?>"><p><?php echo $value['main'] ?></p></a></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-        <?php endforeach; ?>
+        <div>
+            <?php foreach ($frequencycount as $fkey => $fvalue):  ?>
+                    <div class="word-wrapper" data-collapse="<?php echo $fkey ?>">
+                        <p class="word">
+                            <span class="word-key"><?php echo $fkey ?></span>
+                            <span class="word-value"><?php echo $fvalue; ?></span>
+                        </p>
+                        <div id="<?php echo $fkey; ?>" class="keyword-wrapper">
+                            <ul class="article-list">
+                                <?php foreach($results[$fkey] as $mkey => $value): ?>
+                                    <li><a href="<?php echo $value['link'] ?>">
+                                            <img src="<?php echo $value['img'] ?>">
+                                            <p><?php echo $value['main'] ?></p>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 </body>
 </html>
 
 <script>
 $(function() {
-
+    $('[data-collapse]').on('click', function() {
+        var $moList = $(this).children('.keyword-wrapper')
+        if ( $moList.is(':visible') ) {
+            $($moList).slideUp(300);
+        } else {
+            $('.keyword-wrapper').slideUp(300);
+            $($moList).slideDown(300);
+        }
+    });
 });
-function openLinks(id) {
-    $('.keyword-wrapper').slideUp(300);
-    $('#'+ id).slideToggle(300);
-}
+
 </script>
