@@ -1,22 +1,14 @@
-<?php include 'templateFunctions.php';?>
 <?php
-    $article_results = array();
-    $frequencey = array();
+    ini_set("error_reporting","-1");
+    ini_set("display_errors","On");
+    require_once("mo.php");
 
-    $html = file_get_contents('http://www.dailymail.co.uk/home/sitemaparchive/year_2016.html');
-    $dom = new DOMDocument;
-    $dom->loadHTML($html);
-    $xpath = new DomXpath($dom);
+    $links = array();
+    $articles = array();
+    global $frequencey = array(); //global variables
 
-    $articles = $xpath->query('//ul[@class="split"]/li');
-    $results = array();
-
-    foreach ($articles as $article) {
-    	$node = $xpath->query("descendant::a/attribute::href", $article);
-    	$node_text = $node->item(0)->textContent;
-
-        $results = searchForWord($node_text);
-    }
+    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1994.html', '//ul[@class="split"]/li');
+    $q_links = queryLinks($links);
 
     $frequencycount = array_count_values($frequencey);
     arsort($frequencycount);
