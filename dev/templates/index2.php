@@ -1,17 +1,22 @@
 <?php
-    ini_set("error_reporting","-1");
-    ini_set("display_errors","On");
+    // ini_set("error_reporting","-1");
+    // ini_set("display_errors","On");
     require_once("mo.php");
+    require_once("conf.php");
+    require_once("db.php");
 
     $links = array();
-    $articles = array();
-    global $frequencey = array(); //global variables
+    $frequencey = array(); //global variables
 
     $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1994.html', '//ul[@class="split"]/li');
     $q_links = queryLinks($links);
 
     $frequencycount = array_count_values($frequencey);
     arsort($frequencycount);
+
+    $db=new db($db_database,$db_host,$db_user,$db_passwd);
+    $mo=new MaleOnline();
+    $mo->create_table();
 
 ?>
 

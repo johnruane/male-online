@@ -1,23 +1,14 @@
 <?
+    $db_host = "localhost";
+    $db_user = "root";
+    $db_passwd = "password";
+    $db_database = "mail_online_db";
 
-   $db_host="localhost"; //name of the database host
-   $db_user="bharat"; //database username
-   $db_passwd=""; //password
-
-   //database name give the name of the database where u created entry_detail table using egb_sql.sql file
-   $db_database="gb"; //databasename
-
-   define(ENTRY_TABLE,"entry_detail");
-
-   //set this variable to FALSE if you want to display only a certain number
-   //of entries of guestbook.
-   $display_single_page=FALSE;
-		//if above variable is FALSE following number of entries will be displayed at once.
-		$display=5;
-
-	//admin login and password for deleting entries required for page
-	// admin.php
-  $admin_login="admin";
-  $admin_password="admin";
+    // $sql_create_table = "CREATE TABLE `word_frequency` (
+    // `id` int NOT NULL AUTO_INCREMENT default '0',
+    // `date` datetime NOT NULL default '0000-00-00',
+    // 'tennis' int(6),
+    // 'china' int(6)
+    // )";
 
 ?>
