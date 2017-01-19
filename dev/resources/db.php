@@ -9,9 +9,9 @@ $sql_create_table = "CREATE TABLE WordCount_2017 (
     )";
 
 $sql_insert_row = "INSERT WordCount_2017(publication_date, tennis, china) VALUES (
-        21-10-2017,
-        2,
-        1
+        '21-10-2017',
+        '2',
+        '1'
     )";
 
 
