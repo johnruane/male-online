@@ -59,15 +59,15 @@ function queryLinks($ary_of_links) {
     return $query_results;
 }
 
-class FrequencyCount {
-		function add_entry($frquencyArr) {
-            $sql = "INSERT INTO demo (
-                'id',
-                'tennis',
-                'china') VALUES (
-                    '1',
-                    $frquencyArr['tennis'],
-                    $frquencyArr['china'])";
-		 }
-}
+// class FrequencyCount {
+// 		function add_entry($frquencyArr) {
+//             $sql = "INSERT INTO demo (
+//                 'id',
+//                 'tennis',
+//                 'china') VALUES (
+//                     '1',
+//                     $frquencyArr['tennis'],
+//                     $frquencyArr['china'])";
+// 		 }
+// }
 ?>
