@@ -1,6 +1,6 @@
 <?php
-    ini_set("error_reporting","-1");
-    ini_set("display_errors","On");
+    // ini_set("error_reporting","-1");
+    // ini_set("display_errors","On");
     require_once("mo.php");
     require_once("conf.php");
     require_once("db.php");
@@ -14,10 +14,12 @@
     $frequencycount = array_count_values($frequencey);
     arsort($frequencycount);
 
-    $db = new Db();
-    //$result = $db -> query($sql_create_table);
-
-    $result = $db -> query($sql_insert_row);
+    //var_dump($q_links);
+    foreach($q_links as $value) {
+        echo $value;
+    }
+    //$db = new Db();
+    //$result = $db -> query($sql_create_articles_table);
 ?>
 
 <!doctype html>
@@ -55,7 +57,7 @@
                         </p>
                         <div id="<?php echo $fkey; ?>" class="keyword-wrapper">
                             <ul class="article-list">
-                                <?php foreach($results[$fkey] as $mkey => $value): ?>
+                                <?php foreach($q_links[$fkey] as $mkey => $value): ?>
                                     <li><a href="<?php echo $value['link'] ?>">
                                             <?php echo $value['main'] ?>
                                         </a>

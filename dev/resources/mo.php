@@ -22,7 +22,7 @@ function queryLinks($ary_of_links) {
     $query_results = array();
     $results = array();
     global $frequencey;
-    $bad_words = ['TENNIS','china'];
+    $bad_words = ['TENNIS','of'];
 
     foreach ($ary_of_links as $link) {
         $html = file_get_contents($link);
@@ -36,6 +36,7 @@ function queryLinks($ary_of_links) {
 
             $node = $xpath->query("descendant::a", $article);
             $node_text = $node->item(0)->textContent;
+            preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text);
 
             foreach ($bad_words as $word) {
                 if ( stripos("/\b".$node_text."\b/i", $word) ) {
