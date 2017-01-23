@@ -1,6 +1,6 @@
 <?php
-    // ini_set("error_reporting","-1");
-    // ini_set("display_errors","On");
+    ini_set("error_reporting","-1");
+    ini_set("display_errors","On");
     require_once("mo.php");
     require_once("conf.php");
     require_once("db.php");
@@ -14,12 +14,28 @@
     $frequencycount = array_count_values($frequencey);
     arsort($frequencycount);
 
-    //var_dump($q_links);
-    foreach($q_links as $value) {
-        echo $value;
+    //var_dump($frequencycount);
+    foreach($q_links as $key => $value) {
+        $word = strtolower($key);
+        foreach($value as $v) {
+            $articles = $v['text'].$v['link'];
+        }
+        $count = $frequencycount[$word];
     }
-    //$db = new Db();
-    //$result = $db -> query($sql_create_articles_table);
+
+
+    $today = new DateTime('NOW');
+    $today->format('y-m-d');
+
+    $db = new Db();
+
+    $stmt = $db->connect()->prepare("INSERT INTO current_count (publication_date, word, count, articles) VALUES (:pub, :word, :count, :articles)");
+    $stmt->bindParm(':pub', $today);
+    $stmt->bindParm(':word', $word);
+    $stmt->bindParm(':count', $count);
+    $stmt->bindParm(':articles', $article);
+    $stmt->execute();
+
 ?>
 
 <!doctype html>
