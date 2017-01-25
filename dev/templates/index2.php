@@ -14,28 +14,24 @@
     $frequencycount = array_count_values($frequencey);
     arsort($frequencycount);
 
-    //var_dump($frequencycount);
-    foreach($q_links as $key => $value) {
-        $word = strtolower($key);
-        foreach($value as $v) {
-            $articles = $v['text'].$v['link'];
-        }
-        $count = $frequencycount[$word];
-    }
-
-
     $today = new DateTime('NOW');
-    $today->format('y-m-d');
-
     $db = new Db();
+    // $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
+    // $stmt = $db->connect()->prepare($sql);
+    //
+    // foreach($q_links as $key => $value) {
+    //     $word = strtolower($key);
+    //     foreach($value as $v) {
+    //         $articles = $v['text']." | ".$v['link'];
+    //     }
+    //     $count = $frequencycount[$word];
+    //
+    //     $stmt->bind_param("ssis", $today->format('Y-m-d'), $word, $count, $articles);
+    //     $stmt->execute();
+    // }
 
-    $stmt = $db->connect()->prepare("INSERT INTO current_count (publication_date, word, count, articles) VALUES (:pub, :word, :count, :articles)");
-    $stmt->bindParm(':pub', $today);
-    $stmt->bindParm(':word', $word);
-    $stmt->bindParm(':count', $count);
-    $stmt->bindParm(':articles', $article);
-    $stmt->execute();
-
+    $sql = "SELECT * FROM current_count";
+    $results = $db->select($sql);
 ?>
 
 <!doctype html>
@@ -65,24 +61,25 @@
     </nav>
     <div class="content-wrapper">
         <div>
-            <?php foreach ($frequencycount as $fkey => $fvalue):  ?>
-                    <div class="word-wrapper" data-collapse="<?php echo $fkey ?>">
+            <?php foreach ( $results as $row ): ?>
+                    <div class="word-wrapper" data-collapse="<?php echo $row[0] ?>">
                         <p class="word">
-                            <span class="word-key"><?php echo $fkey ?></span>
-                            <span class="word-value"><?php echo $fvalue; ?></span>
+                            <span class="word-key"><?php echo $row->$word ?></span>
+                            <span class="word-value"><?php echo $row->$count ?></span>
                         </p>
-                        <div id="<?php echo $fkey; ?>" class="keyword-wrapper">
+                        <div id="<?php echo $row->$word ?>" class="keyword-wrapper">
                             <ul class="article-list">
-                                <?php foreach($q_links[$fkey] as $mkey => $value): ?>
-                                    <li><a href="<?php echo $value['link'] ?>">
-                                            <?php echo $value['main'] ?>
+                                <
+                                <?php foreach(explode("|", $row->$articles) as $article): ?>
+                                    <li><a href="<?php echo $article ?>">
+                                            <?php echo $article ?>
                                         </a>
                                     </li>
-                                <?php endforeach; ?>
+                                <?php endforeach ?>
                             </ul>
                         </div>
                     </div>
-            <?php endforeach; ?>
+            <?php endforeach ?>
         </div>
     </div>
 </body>
