@@ -1,7 +1,5 @@
 <?php
 
-// $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','curves','enviable','endless legs','eye-popping','figure-hugging','flat stomach','flashes','flashing','flaunt','flaunts','fuller','gushes','gym','leggy','midriff','perky','pert','pins','plunging','postirior','pout','racy','revealing','saucy','scantly','scanty','sexy','showcase','showcases','sideboob','sizable','sizzle','sizzles','sizzling','skimpy','skin-tight','skinny','slim','slender','steamy','super-slim','surgically-enhanced','thigh','teases','toned','trim','underboob','yummy','vamp'];
-
 function getLinks($url, $query) {
     $link_results = array();
     $html = file_get_contents($url);
@@ -22,7 +20,8 @@ function queryLinks($ary_of_links) {
     $query_results = array();
     $results = array();
     global $frequencey;
-    $bad_words = ['TENNIS','of'];
+    $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','curves','enviable','endless legs','eye-popping','figure-hugging','flat stomach','flashes','flashing','flaunt','flaunts','fuller','gushes','gym','leggy','midriff','perky','pert','pins','plunging','postirior','pout','racy','revealing','saucy','scantly','scanty','sexy','showcase','showcases','sideboob','sizable','sizzle','sizzles','sizzling','skimpy','skin-tight','skinny','slim','slender','steamy','super-slim','surgically-enhanced','thigh','teases','toned','trim','underboob','yummy','vamp'];
+    //$bad_words = ['ageless','as','tennis'];
 
     foreach ($ary_of_links as $link) {
         $html = file_get_contents($link);
@@ -38,20 +37,26 @@ function queryLinks($ary_of_links) {
             $node_text = $node->item(0)->textContent;
             preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text);
 
+            $node_text_ary = explode(' ', $node_text);
+
             foreach ($bad_words as $word) {
-                if ( stripos("/\b".$node_text."\b/i", $word) ) {
+                // if ( stripos("/\b".$node_text."\b/i", $word) ) {
+                foreach ($node_text_ary as $text) {
+                    //echo $text.$word.'<br />';
+                    if (strcasecmp($text, $word) == 0) {
 
-                    array_push($frequencey, strtolower($word));
+                        array_push($frequencey, strtolower($word));
 
-                    $result['text'] = $node_text;
+                        $result['text'] = $node_text;
 
-                    $node = $xpath->query("descendant::a/attribute::href", $article);
-                    $result['link'] = $node->item(0)->nodeValue;
+                        $node = $xpath->query("descendant::a/attribute::href", $article);
+                        $result['link'] = $node->item(0)->nodeValue;
 
-                    if ( array_key_exists ( $word , $results ) ) {
-                        array_push($query_results[$word], $result);
-                    } else {
-                        $query_results[$word][] = $result;
+                        if ( array_key_exists ( $word , $results ) ) {
+                            array_push($query_results[$word], $result);
+                        } else {
+                            $query_results[$word][] = $result;
+                        }
                     }
                 }
             }

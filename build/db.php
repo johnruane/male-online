@@ -1,23 +1,12 @@
 <?php
 
 // Create table
-$sql_create_count_table = "CREATE TABLE current_count (
-    enrty_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    publication_date DATE,
-    word VARCHAR(20),
-    count INT(3),
-    articles TEXT(10000)
-    )";
-
-// Create table
-// $sql_create_articles_table = "CREATE TABLE articles (
-//     article_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-//     article_text VARCHAR(500),
-//     article_link VARCHAR(500),
-//     entry_id INT(6) NOT NULL,
-//     FOREIGN KEY (entry_id)
-//     REFERENCES current_count(enrty_id)
-//     ON DELETE CASCADE
+// $sql_create_count_table = "CREATE TABLE current_count (
+//     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+//     publication_date DATE,
+//     word VARCHAR(20),
+//     count INT(3),
+//     articles TEXT(10000)
 //     )";
 
 

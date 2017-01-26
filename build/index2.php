@@ -7,31 +7,33 @@
 
     $links = array();
     $frequencey = array(); //global variables
-    $articles;
+    $articles = '';
 
-    // $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1996.html', '//ul[@class="split"]/li');
-    // $q_links = queryLinks($links);
-    //
-    // $frequencycount = array_count_values($frequencey);
-    // arsort($frequencycount);
-    //
-    // $today = new DateTime('NOW');
+    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1997.html', '//ul[@class="split"]/li');
+    $q_links = queryLinks($links);
+
+    $frequencycount = array_count_values($frequencey);
+    arsort($frequencycount);
+
+    $today = new DateTime('NOW');
     $db = new Db();
-    // $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
-    // $stmt = $db->connect()->prepare($sql);
-    //
-    // foreach($q_links as $key => $value) {
-    //     $word = strtolower($key);
-    //     foreach($value as $v) {
-    //         $articles .= $v['text']."|".$v['link'].";";
-    //     }
-    //     $count = $frequencycount[$word];
-    //
-    //     $stmt->bind_param("ssis", $today->format('Y-m-d'), $word, $count, $articles);
-    //     $stmt->execute();
-    // }
 
-    //echo $articles
+    $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
+    $stmt = $db->connect()->prepare($sql);
+
+    foreach($q_links as $key => $value) {
+        $word = strtolower($key);
+        foreach($value as $v) {
+            $articles .= $v['text']."|".$v['link'].";"; //put span tags to highlight word here
+        }
+        $count = $frequencycount[$word];
+
+        $stmt->bind_param("ssis", $today->format('Y-m-d'), $word, $count, $articles);
+        $stmt->execute();
+        $error = $mysqli->errno . ' ' . $mysqli->error;
+        echo $error;
+    }
+
 
     $sql = "SELECT * FROM current_count";
     $results = $db->select($sql);
@@ -65,7 +67,7 @@
     <div class="content-wrapper">
         <div>
             <?php foreach ( $results as $row ): ?>
-                    <div class="word-wrapper" data-collapse="<?php echo $row['enrty_id'] ?>">
+                    <div class="word-wrapper" data-collapse="<?php echo $row['entry_id'] ?>">
                         <p class="word">
                             <span class="word-key"><?php echo $row['word'] ?></span>
                             <span class="word-value"><?php echo $row['count'] ?></span>
