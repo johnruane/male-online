@@ -1,6 +1,6 @@
 <?php
-    // ini_set("error_reporting","-1");
-    // ini_set("display_errors","On");
+    ini_set("error_reporting","-1");
+    ini_set("display_errors","On");
     require_once("mo.php");
     require_once("conf.php");
     require_once("db.php");
@@ -9,14 +9,15 @@
     $frequencey = array(); //global variables
     $articles = '';
 
-    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1997.html', '//ul[@class="split"]/li');
+    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1994.html', '//ul[@class="split"]/li');
     $q_links = queryLinks($links);
 
     $frequencycount = array_count_values($frequencey);
     arsort($frequencycount);
 
-    $today = new DateTime('NOW');
     $db = new Db();
+
+    $db->query($sql_create_count_table);
 
     $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
     $stmt = $db->connect()->prepare($sql);
@@ -24,16 +25,13 @@
     foreach($q_links as $key => $value) {
         $word = strtolower($key);
         foreach($value as $v) {
-            $articles .= $v['text']."|".$v['link'].";"; //put span tags to highlight word here
+            $articles .= .$v['text'].$v['link'].";";
         }
         $count = $frequencycount[$word];
 
-        $stmt->bind_param("ssis", $today->format('Y-m-d'), $word, $count, $articles);
+        $stmt->bind_param("ssis", $v['date'], $word, $count, $articles);
         $stmt->execute();
-        $error = $mysqli->errno . ' ' . $mysqli->error;
-        echo $error;
     }
-
 
     $sql = "SELECT * FROM current_count";
     $results = $db->select($sql);

@@ -48,6 +48,9 @@ p:hover {
     font-size: 14px;
     li {
         margin-bottom: 20px;
+        span {
+            background-color: yellow;
+        }
     }
     img {
         width: auto;

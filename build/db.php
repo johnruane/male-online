@@ -1,13 +1,13 @@
 <?php
 
-// Create table
-// $sql_create_count_table = "CREATE TABLE current_count (
-//     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-//     publication_date DATE,
-//     word VARCHAR(20),
-//     count INT(3),
-//     articles TEXT(10000)
-//     )";
+//Create table
+$sql_create_count_table = "CREATE TABLE current_count (
+    entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    publication_date DATE,
+    word VARCHAR(20),
+    count INT(3),
+    articles TEXT(10000)
+    )";
 
 
 class Db {

@@ -20,8 +20,8 @@ function queryLinks($ary_of_links) {
     $query_results = array();
     $results = array();
     global $frequencey;
-    $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','curves','enviable','endless legs','eye-popping','figure-hugging','flat stomach','flashes','flashing','flaunt','flaunts','fuller','gushes','gym','leggy','midriff','perky','pert','pins','plunging','postirior','pout','racy','revealing','saucy','scantly','scanty','sexy','showcase','showcases','sideboob','sizable','sizzle','sizzles','sizzling','skimpy','skin-tight','skinny','slim','slender','steamy','super-slim','surgically-enhanced','thigh','teases','toned','trim','underboob','yummy','vamp'];
-    //$bad_words = ['ageless','as','tennis'];
+    // $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','curves','enviable','endless legs','eye-popping','figure-hugging','flat stomach','flashes','flashing','flaunt','flaunts','fuller','gushes','gym','leggy','midriff','perky','pert','pins','plunging','postirior','pout','racy','revealing','saucy','scantly','scanty','sexy','showcase','showcases','sideboob','sizable','sizzle','sizzles','sizzling','skimpy','skin-tight','skinny','slim','slender','steamy','super-slim','surgically-enhanced','thigh','teases','toned','trim','underboob','yummy','vamp'];
+    $bad_words = ['ageless','as','tennis'];
 
     foreach ($ary_of_links as $link) {
         $html = file_get_contents($link);
@@ -46,8 +46,9 @@ function queryLinks($ary_of_links) {
                     if (strcasecmp($text, $word) == 0) {
 
                         array_push($frequencey, strtolower($word));
+                        $result['date'] = str_replace('.html', '', str_replace('day_', '', end(explode('/', $link))));
 
-                        $result['text'] = $node_text;
+                        $result['text'] = preg_replace('/\b'.$word.'\b/i', '<span>'.$word.'</span>',$node_text);
 
                         $node = $xpath->query("descendant::a/attribute::href", $article);
                         $result['link'] = $node->item(0)->nodeValue;
