@@ -1,6 +1,6 @@
 <?php
-    ini_set("error_reporting","-1");
-    ini_set("display_errors","On");
+    // ini_set("error_reporting","-1");
+    // ini_set("display_errors","On");
     require_once("mo.php");
     require_once("conf.php");
     require_once("db.php");
@@ -25,7 +25,7 @@
     foreach($q_links as $key => $value) {
         $word = strtolower($key);
         foreach($value as $v) {
-            $articles .= .$v['text'].$v['link'].";";
+            $articles .= $v['text'].$v['link'].";";
         }
         $count = $frequencycount[$word];
 

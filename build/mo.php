@@ -48,7 +48,10 @@ function queryLinks($ary_of_links) {
                         array_push($frequencey, strtolower($word));
                         $result['date'] = str_replace('.html', '', str_replace('day_', '', end(explode('/', $link))));
 
-                        $result['text'] = preg_replace('/\b'.$word.'\b/i', '<span>'.$word.'</span>',$node_text);
+                        $new = str_replace($word, 'TEST', $node_text);
+                        echo $new;
+
+                        $result['text'] = $node_text;
 
                         $node = $xpath->query("descendant::a/attribute::href", $article);
                         $result['link'] = $node->item(0)->nodeValue;
