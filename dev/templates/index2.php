@@ -13,28 +13,15 @@
     $q_links = queryLinks($links);
 
     $frequencycount = array_count_values($frequencey);
-    arsort($frequencycount);
 
     $db = new Db();
+    $sql = $sql_create_yearly_table;
+    $db->query($sql);
 
-    $db->query($sql_create_count_table);
 
-    $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
-    $stmt = $db->connect()->prepare($sql);
 
-    foreach($q_links as $key => $value) {
-        $word = strtolower($key);
-        foreach($value as $v) {
-            $articles .= $v['text'].$v['link'].";";
-        }
-        $count = $frequencycount[$word];
-
-        $stmt->bind_param("ssis", $v['date'], $word, $count, $articles);
-        $stmt->execute();
-    }
-
-    $sql = "SELECT * FROM current_count";
-    $results = $db->select($sql);
+    // $sql = $sql_select_all;
+    //$results = $db->select($sql);
 ?>
 
 <!doctype html>

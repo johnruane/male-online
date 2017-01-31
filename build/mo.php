@@ -69,6 +69,29 @@ function queryLinks($ary_of_links) {
     return $query_results;
 }
 
+function runCountAgainstLink() {
+    $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
+    $stmt = $db->connect()->prepare($sql);
+
+    foreach($q_links as $key => $value) {
+        $word = strtolower($key);
+        foreach($value as $v) {
+            $articles .= $v['text'].$v['link'].";";
+        }
+        $count = $frequencycount[$word];
+
+        $stmt->bind_param("ssis", $v['date'], $word, $count, $articles);
+        $stmt->execute();
+    }
+}
+
+function countYearAndStore() {
+    $years = ['1994', '1995', '1996'];
+    foreach($years as $year) {
+        
+    }
+}
+
 // class FrequencyCount {
 // 		function add_entry($frquencyArr) {
 //             $sql = "INSERT INTO demo (
