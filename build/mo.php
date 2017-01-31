@@ -22,7 +22,21 @@ $sql_create_yearly_table = "CREATE TABLE yearly_count (
 // Select all
 $sql_select_all = "SELECT * FROM current_count";
 
-$bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleavage','curves','enviable','endless legs','eye-popping','figure-hugging','flat stomach','flashes','flashing','flaunt','flaunts','fuller','gushes','gym','leggy','midriff','perky','pert','pins','plunging','postirior','pout','racy','revealing','saucy','scantly','scanty','sexy','showcase','showcases','sideboob','sizable','sizzle','sizzles','sizzling','skimpy','skin-tight','skinny','slim','slender','steamy','super-slim','surgically-enhanced','thigh','teases','toned','trim','underboob','yummy','vamp'];
+// $list_of_bad_words = array (
+//     4 => ['boob','bust','pert','pins','pout','racy','sexy','slim','trim','vamp','PAYS'],
+//     5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy','price'],
+//     6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases','tennis'],
+//     7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender','destroy'],
+//     8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
+//     9 => ['postirior','revealing','underboob'],
+//     10 => ['skin-tight','super-slim'],
+//     11 => ['eye-popping'],
+//     14 => ['figure-hugging']
+// );
+
+$list_of_bad_words = array (
+    5 => ['world', 'sheer'],
+);
 
 /*
     Gets all the links from a Yearly archive page and returns them as an array
@@ -30,10 +44,13 @@ $bad_words = ['ageless','ample','assets','boob','braless','bust','busty','cleava
 function getLinks($url, $query) {
     $link_results = array();
     $html = file_get_contents($url);
-    $dom = new DOMDocument;
-    $dom->loadHTML($html);
-    $xpath = new DomXpath($dom);
+    $dom = new \DOMDocument('1.0', 'UTF-8');
 
+    $internalErrors = libxml_use_internal_errors(true); // set error level
+    $dom->loadHTML($html);
+    libxml_use_internal_errors($internalErrors); // Restore error level
+
+    $xpath = new DomXpath($dom);
     $links = $xpath->query($query);
 
     foreach ($links as $article) {
@@ -44,32 +61,40 @@ function getLinks($url, $query) {
 }
 
 /*
-    Takes an array for links, navigates to the articles for that link and searchs for a word in the link text.
+    Get all the links from the year link provided
 */
 function queryLinks($ary_of_links) {
     global $bad_words;
+    $matched_articles = array();
 
     foreach ($ary_of_links as $link) {
         $html = file_get_contents($link);
-        $dom = new DOMDocument;
-        $dom->loadHTML($html);
-        $xpath = new DomXpath($dom);
+        $dom = new \DOMDocument('1.0', 'UTF-8');
 
+        $internalErrors = libxml_use_internal_errors(true); // set error level
+        $dom->loadHTML($html);
+        libxml_use_internal_errors($internalErrors); // Restore error level
+
+        $xpath = new DomXpath($dom);
         $articles = $xpath->query('//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
 
         foreach ($articles as $article) {
             $node = $xpath->query("descendant::a", $article);
             $node_text = $node->item(0)->textContent;
             preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text);
-            $results = searchForWordFrequency($node_text, $bad_words, [$link, $article]);
+            $article_found = searchForWordFrequency($node_text, $bad_words, [$link, $article, $xpath]);
+            if ($article_found) array_push($matched_articles, $article_found);
         }
     }
-    return $results;
+    return $matched_articles;
 }
 
+/*
+    Searches for 'bad word'
+*/
 function searchForWordFrequency($article_string, $list_of_bad_words, $article_info) {
     global $list_of_bad_words;
-    $found_words_array = array();
+    global $found_words_array;
 
     $article_string_array = explode(' ', $article_string);
     foreach ($article_string_array as $article_word) { // loops through words from the article headline
@@ -78,26 +103,48 @@ function searchForWordFrequency($article_string, $list_of_bad_words, $article_in
 
             foreach ($list_of_bad_words[strlen($article_word)] as $badword) { // loops over matching 'bads words'
                 if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
+                    /*
+                        $article_info[0] = $link
+                        $article_info[1] = $article
+                        $article_info[2] = $xpath
+                    */
                     if ($article_info) {
-                        echo('info');
-                        $matched_article['date'] = str_replace('.html', '', str_replace('day_', '', end(explode('/', $article_info[0]))));
-                        $node = $xpath->query("descendant::a/attribute::href", $article_info[1]);
+                        $linkURL = explode('/', $article_info[0]);
+                        $matched_article['date'] = str_replace('.html', '', str_replace('day_', '', end($linkURL))); // get the date from the article url
+                        $matched_article['word'] = $badword;
+                        $node = $article_info[2]->query("descendant::a/attribute::href", $article_info[1]);
                         $matched_article['link'] = $node->item(0)->nodeValue;
+                        // echo $matched_article['link'];
+                        // echo $matched_article['word'];
+                        // echo $matched_article['date'];
 
-                        if ( array_key_exists ( $badword , $found_words_array ) ) {
-                            array_push($found_words_array[$badword], $matched_article);
-                        } else {
-                            $found_words_array[$badword][] = $matched_article;
-                        }
+                        //array_push($found_words_array, $matched_article);
+
+                        // if ( array_key_exists ( $badword , $found_words_array ) ) {
+                        //     array_push($found_words_array[$badword], $matched_article);
+                        // } else {
+                        //     $found_words_array[$badword] = $matched_article;
+                        // }
+                        return $matched_article;
                     } else {
-                        echo('freq');
                         array_push($found_words_array, $badword);
                     }
                 }
             }
         }
     }
-    return $found_words_array;
+}
+
+function writeArrayToDB($q_links) {
+    $db = new Db();
+    $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
+    $stmt = $db->connect()->prepare($sql);
+
+    foreach($q_links as $value) {
+        $count = 1;
+        $stmt->bind_param("ssis", $value['date'], $value['word'], $count, $value['link']);
+        $stmt->execute();
+    }
 }
 
 function runCountAgainstLink() {

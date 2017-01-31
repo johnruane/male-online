@@ -6,12 +6,12 @@
     require_once("db.php");
 
     $links = array();
-    $articles = '';
 
-    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1994.html', '//ul[@class="split"]/li');
+    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1996.html', '//ul[@class="split"]/li');
     $found_articles_array = queryLinks($links);
+    writeArrayToDB($found_articles_array);
 
-    var_dump($found_articles_array);
+    //print_r($found_articles_array);
 
     // $frequencycount = array_count_values($frequencey);
 
@@ -48,11 +48,11 @@
 
 <body>
     <nav class="title-wrapper">
-        <h1>The <span>Male</span> Online</h1>
+        <!-- <h1>The <span>Male</span> Online</h1> -->
     </nav>
     <div class="content-wrapper">
         <div>
-            <?php foreach ( $found_articles_array as $row ): ?>
+            <!-- <?php foreach ( $found_articles_array as $row ): ?>
                 <div class="word-wrapper" data-collapse="<?php echo $row['entry_id'] ?>">
                     <p class="word">
                         <span class="word-key"><?php echo $row['word'] ?></span>
@@ -68,7 +68,7 @@
                         </ul>
                     </div>
                 </div>
-            <?php endforeach ?>
+            <?php endforeach ?> -->
         </div>
     </div>
 </body>
