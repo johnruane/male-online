@@ -1,5 +1,25 @@
 <?php
 
+//Create table
+$sql_create_count_table = "CREATE TABLE current_count (
+    entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    publication_date DATE,
+    word VARCHAR(20),
+    count INT(3),
+    articles TEXT(10000)
+    )";
+
+//Create table
+$sql_create_yearly_table = "CREATE TABLE yearly_count (
+    entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    year_date VARCHAR(4),
+    word VARCHAR(20),
+    count INT(3)
+    )";
+
+// Select all
+$sql_select_all = "SELECT * FROM current_count";
+
 function getLinks($url, $query) {
     $link_results = array();
     $html = file_get_contents($url);
@@ -48,10 +68,9 @@ function queryLinks($ary_of_links) {
                         array_push($frequencey, strtolower($word));
                         $result['date'] = str_replace('.html', '', str_replace('day_', '', end(explode('/', $link))));
 
-                        $new = str_replace($word, 'TEST', $node_text);
-                        echo $new;
-
-                        $result['text'] = $node_text;
+                        // $new = str_replace($word, 'TEST', $node_text);
+                        //
+                        // $result['text'] = $node_text;
 
                         $node = $xpath->query("descendant::a/attribute::href", $article);
                         $result['link'] = $node->item(0)->nodeValue;
@@ -85,11 +104,28 @@ function runCountAgainstLink() {
     }
 }
 
-function countYearAndStore() {
+function countYearAndStore($db) {
     $years = ['1994', '1995', '1996'];
-    foreach($years as $year) {
-        
-    }
+    $sql_select_yearly = "SELECT SUM(count) AS 'total', word FROM current_count WHERE publication_date BETWEEN ? AND ? GROUP BY word";
+    //$sql_count_yearly = "INSERT INTO yearly_count (:year, word, count) SELECT word, count FROM current_count WHERE publication_date BETWEEN ? AND ?";
+
+    // foreach($years as $year) {
+        if ( $stmt = $db->connect()->prepare($sql_select_yearly) ) {
+            $start_date = '1994-01-01';
+            $end_date = '1994-12-31';
+            $stmt->bind_param("ss", $start_date, $end_date);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while($row = mysqli_fetch_assoc($result)) {
+               $word = $row['word'];
+               $count = $row['total'];
+               echo $word.'-'.$count.'<br />';
+            }
+        } else {
+            echo $db->error();
+        }
+
+    // }
 }
 
 // class FrequencyCount {

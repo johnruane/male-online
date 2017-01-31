@@ -1,28 +1,5 @@
 <?php
 
-//Create table
-$sql_create_count_table = "CREATE TABLE current_count (
-    entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    publication_date DATE,
-    word VARCHAR(20),
-    count INT(3),
-    articles TEXT(10000)
-    )";
-
-//Create table
-$sql_create_yearly_table = "CREATE TABLE yearly_count (
-    entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    year_date VARCHAR(4),
-    word VARCHAR(20),
-    count INT(3)
-    )";
-
-// Select all
-$sql_select_all = "SELECT * FROM current_count";
-
-// Do yearly count and store
-$sql_count_yearly = 
-
 class Db {
     // The database connection
     protected static $connection;

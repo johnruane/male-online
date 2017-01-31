@@ -1,6 +1,6 @@
 <?php
-    // ini_set("error_reporting","-1");
-    // ini_set("display_errors","On");
+    ini_set("error_reporting","-1");
+    ini_set("display_errors","On");
     require_once("mo.php");
     require_once("conf.php");
     require_once("db.php");
@@ -15,10 +15,10 @@
     $frequencycount = array_count_values($frequencey);
 
     $db = new Db();
-    $sql = $sql_create_yearly_table;
-    $db->query($sql);
+    // $sql = $sql_create_yearly_table;
+    // $db->query($sql);
 
-
+    countYearAndStore($db);
 
     // $sql = $sql_select_all;
     //$results = $db->select($sql);
