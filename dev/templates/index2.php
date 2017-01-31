@@ -6,7 +6,6 @@
     require_once("db.php");
 
     $links = array();
-    $frequencey = array(); //global variables
     $articles = '';
 
     $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1994.html', '//ul[@class="split"]/li');
@@ -14,11 +13,11 @@
 
     $frequencycount = array_count_values($frequencey);
 
-    $db = new Db();
+    // $db = new Db();
     // $sql = $sql_create_yearly_table;
     // $db->query($sql);
 
-    countYearAndStore($db);
+    yearlyWordCount();
 
     // $sql = $sql_select_all;
     //$results = $db->select($sql);
