@@ -9,15 +9,17 @@
     $articles = '';
 
     $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1994.html', '//ul[@class="split"]/li');
-    $q_links = queryLinks($links);
+    $found_articles_array = queryLinks($links);
 
-    $frequencycount = array_count_values($frequencey);
+    var_dump($found_articles_array);
+
+    // $frequencycount = array_count_values($frequencey);
 
     // $db = new Db();
     // $sql = $sql_create_yearly_table;
     // $db->query($sql);
 
-    yearlyWordCount();
+    //yearlyWordCount();
 
     // $sql = $sql_select_all;
     //$results = $db->select($sql);
@@ -50,22 +52,22 @@
     </nav>
     <div class="content-wrapper">
         <div>
-            <?php foreach ( $results as $row ): ?>
-                    <div class="word-wrapper" data-collapse="<?php echo $row['entry_id'] ?>">
-                        <p class="word">
-                            <span class="word-key"><?php echo $row['word'] ?></span>
-                            <span class="word-value"><?php echo $row['count'] ?></span>
-                        </p>
-                        <div id="<?php echo $row['word'] ?>" class="keyword-wrapper">
-                            <ul class="article-list">
-                                <?php $article = explode(";", $row['articles']) ?>
-                                <?php foreach ($article as $a): ?>
-                                    <?php $titlelink = explode("|", $a) ?>
-                                    <li><a target="_blank" href="http://www.dailymail.co.uk/<?php echo $titlelink[1] ?>"><?php echo $titlelink[0] ?></a></li>
-                                <?php endforeach ?>
-                            </ul>
-                        </div>
+            <?php foreach ( $found_articles_array as $row ): ?>
+                <div class="word-wrapper" data-collapse="<?php echo $row['entry_id'] ?>">
+                    <p class="word">
+                        <span class="word-key"><?php echo $row['word'] ?></span>
+                        <span class="word-value"><?php echo $row['count'] ?></span>
+                    </p>
+                    <div id="<?php echo $row['word'] ?>" class="keyword-wrapper">
+                        <ul class="article-list">
+                            <?php $article = explode(";", $row['articles']) ?>
+                            <?php foreach ($article as $a): ?>
+                                <?php $titlelink = explode("|", $a) ?>
+                                <li><a target="_blank" href="http://www.dailymail.co.uk/<?php echo $titlelink[1] ?>"><?php echo $titlelink[0] ?></a></li>
+                            <?php endforeach ?>
+                        </ul>
                     </div>
+                </div>
             <?php endforeach ?>
         </div>
     </div>

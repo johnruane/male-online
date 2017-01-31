@@ -61,22 +61,15 @@ function queryLinks($ary_of_links) {
             $node = $xpath->query("descendant::a", $article);
             $node_text = $node->item(0)->textContent;
             preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text);
-            searchForWord($node_text, $bad_words, $link);
-            $result['date'] = str_replace('.html', '', str_replace('day_', '', end(explode('/', $link))));
-            $node = $xpath->query("descendant::a/attribute::href", $article);
-            $result['link'] = $node->item(0)->nodeValue;
-            if ( array_key_exists ( $badword , $found_words_array ) ) {
-                array_push($found_words_array[$badword], $result);
-            } else {
-                $found_words_array[$badword][] = $result;
-            }
+            $results = searchForWordFrequency($node_text, $bad_words, [$link, $article]);
         }
     }
+    return $results;
 }
 
-function searchForWordFrequency($article_string, $list_of_bad_words) {
+function searchForWordFrequency($article_string, $list_of_bad_words, $article_info) {
     global $list_of_bad_words;
-    $frequencey = array();
+    $found_words_array = array();
 
     $article_string_array = explode(' ', $article_string);
     foreach ($article_string_array as $article_word) { // loops through words from the article headline
@@ -85,12 +78,26 @@ function searchForWordFrequency($article_string, $list_of_bad_words) {
 
             foreach ($list_of_bad_words[strlen($article_word)] as $badword) { // loops over matching 'bads words'
                 if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
-                    array_push($frequencey, $badword);
+                    if ($article_info) {
+                        echo('info');
+                        $matched_article['date'] = str_replace('.html', '', str_replace('day_', '', end(explode('/', $article_info[0]))));
+                        $node = $xpath->query("descendant::a/attribute::href", $article_info[1]);
+                        $matched_article['link'] = $node->item(0)->nodeValue;
+
+                        if ( array_key_exists ( $badword , $found_words_array ) ) {
+                            array_push($found_words_array[$badword], $matched_article);
+                        } else {
+                            $found_words_array[$badword][] = $matched_article;
+                        }
+                    } else {
+                        echo('freq');
+                        array_push($found_words_array, $badword);
+                    }
                 }
             }
         }
     }
-    return $frequencey;
+    return $found_words_array;
 }
 
 function runCountAgainstLink() {

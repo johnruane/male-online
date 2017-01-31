@@ -9,8 +9,8 @@
 
     $list_of_bad_words = array (
         4 => ['boob','bust','pert','pins','pout','racy','sexy','slim','trim','vamp'],
-        5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy'],
-        6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases'],
+        5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy','china'],
+        6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases','tennis'],
         7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender'],
         8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
         9 => ['postirior','revealing','underboob'],
@@ -18,6 +18,6 @@
         11 => ['eye-popping'],
         14 => ['figure-hugging']
     );
-    $res = array_count_values(searchForWordFrequency($article_string, $list_of_bad_words));
+    $res = array_count_values(searchForWordFrequency($article_string, $list_of_bad_words, []));
     var_dump($res);
 ?>
