@@ -162,6 +162,11 @@ function setYearlyTotalsByYear($year, $result) {
     }
 }
 /* GETTERS */
+function getWeeklyCount() {
+    $sql_select_weekly = "SELECT TOP(7) FROM current_count";
+    $db = new Db();
+    return $db->select($sql_select_yearly);
+}
 function getCurrentCountsForYear($year) {
     $sql_select_yearly = "SELECT SUM(count) AS 'total', word, entry_id FROM current_count WHERE publication_date BETWEEN '$year-01-01' AND '$year-12-31' GROUP BY word";
     $db = new Db();
