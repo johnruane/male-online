@@ -1,9 +1,17 @@
 <?php
 
-$years = ['1994', '1995', '1996'];
+$years = ['1994', '1996', '1997'];
 
 //Create table
 $sql_create_count_table = "CREATE TABLE current_count (
+    entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    publication_date DATE,
+    word VARCHAR(20),
+    count INT(3),
+    articles TEXT(10000)
+    )";
+
+$sql_create_today_count_table = "CREATE TABLE today_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     publication_date DATE,
     word VARCHAR(20),
@@ -35,8 +43,10 @@ $sql_select_all = "SELECT * FROM current_count";
 // );
 
 $list_of_bad_words = array (
-    3 => ['for'],
-    5 => ['world', 'sheer'],
+
+    3 => ['for','all','the'],
+    4 => ['seal','lion'],
+    5 => ['world'],
 );
 
 /*
@@ -64,7 +74,7 @@ function getLinks($url, $query) {
 /*
     Get all the links from the year link provided
 */
-function queryLinks($ary_of_links) {
+function queryLinks($ary_of_links, $container_div) {
     global $bad_words;
     $matched_articles = array();
 
@@ -77,7 +87,7 @@ function queryLinks($ary_of_links) {
         libxml_use_internal_errors($internalErrors); // Restore error level
 
         $xpath = new DomXpath($dom);
-        $articles = $xpath->query('//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
+        $articles = $xpath->query($container_div);
 
         foreach ($articles as $article) {
             $node = $xpath->query("descendant::a", $article);
@@ -147,11 +157,22 @@ function setFoundArticlesToCurrentDB($q_links) {
         $stmt->execute();
     }
 }
+function setTodaysArticles($q_links) {
+    $db = new Db();
+    $sql = "INSERT INTO today_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
+    $stmt = $db->connect()->prepare($sql);
+
+    foreach($q_links as $value) {
+        $count = 1;
+        $stmt->bind_param("ssis", $value['date'], $value['word'], $count, $value['link']);
+        $stmt->execute();
+    }
+}
 function setYearlyTotalsByYear($year, $result) {
     $sql_count_yearly = "INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)";
     $db = new Db();
     if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
-        while($row = mysqli_fetch_assoc($result)) {
+        foreach($result as $row) {
            $word = $row['word'];
            $count = $row['total'];
            $stmt->bind_param("ssi", $year, $row['word'], $row['total']);
@@ -162,10 +183,15 @@ function setYearlyTotalsByYear($year, $result) {
     }
 }
 /* GETTERS */
-function getWeeklyCount() {
-    $sql_select_weekly = "SELECT TOP(7) FROM current_count";
+function getDailyCount() {
+    $sql_select_daily = "SELECT SUM(count) AS 'total', word FROM today_count GROUP BY word";
     $db = new Db();
-    return $db->select($sql_select_yearly);
+    return $db->select($sql_select_daily);
+}
+function getWeeklyCount() {
+    $sql_select_weekly = "SELECT * FROM current_count ORDER BY publication_date DESC LIMIT 7";
+    $db = new Db();
+    return $db->select($sql_select_weekly);
 }
 function getCurrentCountsForYear($year) {
     $sql_select_yearly = "SELECT SUM(count) AS 'total', word, entry_id FROM current_count WHERE publication_date BETWEEN '$year-01-01' AND '$year-12-31' GROUP BY word";

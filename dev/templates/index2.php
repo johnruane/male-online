@@ -7,17 +7,28 @@
 
     $links = array();
 
-    // $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1996.html', '//ul[@class="split"]/li');
-    // $found_articles_array = queryLinks($links);
-    //parseFoundArticlesToCurrentDB($found_articles_array);
+    /*
+        Query each year and populate current_count
+    */
+    // foreach ($years as $year) {
+    //     $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', '//ul[@class="split"]/li');
+    //     $found_articles_array = queryLinks($links,'//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
+    //     setFoundArticlesToCurrentDB($found_articles_array);
+    // }
 
-    // $frequencycount = array_count_values($frequencey);
+    /*
+        Query today and populate today_count
+    */
+    // $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[contains(concat(" ", normalize-space(@class), " "), " article ")]');
+    // setTodaysArticles($found_articles_array);
 
     // $db = new Db();
-    // $sql = $sql_create_yearly_table;
+    // $sql = $sql_create_today_count_table;
     // $db->query($sql);
 
-    //parseCurrentCountBetweenYearsToYearlyTotals();
+    // foreach($years as $year) {
+    //     setYearlyTotalsByYear($year, getCurrentCountsForYear($year));
+    // }
 
     $todays_year = date('Y');
     // $found_articles_array = getYearlyTotals('1996');
@@ -49,11 +60,33 @@
         <!-- <h1>The <span>Male</span> Online</h1> -->
     </nav>
     <div class="content-wrapper">
-        <div>
+        <div class="row">
+            <div class="col-xs-8">
+                <div class="results-panel">
+                    <h4>Today</h4>
+                    <?php $dailyResults = getDailyCount(); ?>
+                    <?php foreach ($dailyResults as $row): ?>
+                        <p><span class="word-key"><?php echo $row['word'] ?></span>
+                        <span class="word-value"><?php echo $row['total'] ?></span></p>
+                    <?php endforeach ?>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="results-panel">
+                    <h4>Last 7 Days</h4>
+                    <?php $weeklyResults = getWeeklyCount(); ?>
+                    <?php foreach ($weeklyResults as $row): ?>
+                        <p><span class="word-key"><?php echo $row['word'] ?></span>
+                        <span class="word-value"><?php echo $row['count'] ?></span></p>
+                    <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <?php foreach ( $years as $year ): ?>
                 <?php $yearlyResults = getYearlyTotals($year); ?>
                 <div class="col-xs-4">
-                    <div class="year-panel">
+                    <div class="results-panel">
                         <h4><?php echo $year ?></h4>
                         <?php foreach ($yearlyResults as $row): ?>
                             <p><span class="word-key"><?php echo $row['word'] ?></span>
