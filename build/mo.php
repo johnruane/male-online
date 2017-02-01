@@ -35,6 +35,7 @@ $sql_select_all = "SELECT * FROM current_count";
 // );
 
 $list_of_bad_words = array (
+    3 => ['for'],
     5 => ['world', 'sheer'],
 );
 
@@ -134,8 +135,8 @@ function searchForWordFrequency($article_string, $list_of_bad_words, $article_in
         }
     }
 }
-
-function writeArrayToDB($q_links) {
+/* SETTERS */
+function setFoundArticlesToCurrentDB($q_links) {
     $db = new Db();
     $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
     $stmt = $db->connect()->prepare($sql);
@@ -146,49 +147,9 @@ function writeArrayToDB($q_links) {
         $stmt->execute();
     }
 }
-
-function runCountAgainstLink() {
-    global $years;
-    $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
-    $stmt = $db->connect()->prepare($sql);
-
-    foreach($q_links as $key => $value) {
-        $word = strtolower($key);
-        foreach($value as $v) {
-            $articles .= $v['text'].$v['link'].";";
-        }
-        $count = $frequencycount[$word];
-
-        $stmt->bind_param("ssis", $v['date'], $word, $count, $articles);
-        $stmt->execute();
-    }
-}
-
-function yearlyWordCount() {
-    global $years;
-    $sql_select_yearly = "SELECT SUM(count) AS 'total', word FROM current_count WHERE publication_date BETWEEN ? AND ? GROUP BY word";
-
-    $db = new Db();
-
-    foreach($years as $year) {
-        if ( $stmt = $db->connect()->prepare($sql_select_yearly) ) {
-            $start_date = $year.'-01-01';
-            $end_date = $year.'-12-31';
-            $stmt->bind_param("ss", $start_date, $end_date);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            storeYearlyWordCount($year, $result);
-        } else {
-            echo $db->error();
-        }
-    }
-}
-
-function storeYearlyWordCount($year, $result) {
+function setYearlyTotalsByYear($year, $result) {
     $sql_count_yearly = "INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)";
-
     $db = new Db();
-
     if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
         while($row = mysqli_fetch_assoc($result)) {
            $word = $row['word'];
@@ -200,16 +161,15 @@ function storeYearlyWordCount($year, $result) {
         echo $db->error();
     }
 }
-
-// class FrequencyCount {
-// 		function add_entry($frquencyArr) {
-//             $sql = "INSERT INTO demo (
-//                 'id',
-//                 'tennis',
-//                 'china') VALUES (
-//                     '1',
-//                     $frquencyArr['tennis'],
-//                     $frquencyArr['china'])";
-// 		 }
-// }
+/* GETTERS */
+function getCurrentCountsForYear($year) {
+    $sql_select_yearly = "SELECT SUM(count) AS 'total', word, entry_id FROM current_count WHERE publication_date BETWEEN '$year-01-01' AND '$year-12-31' GROUP BY word";
+    $db = new Db();
+    return $db->select($sql_select_yearly);
+}
+function getYearlyTotals($year) {
+    $sql_count_yearly = "SELECT * FROM yearly_count WHERE year=$year";
+    $db = new Db();
+    return $db->select($sql_count_yearly);
+}
 ?>

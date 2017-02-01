@@ -7,11 +7,9 @@
 
     $links = array();
 
-    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1996.html', '//ul[@class="split"]/li');
-    $found_articles_array = queryLinks($links);
-    writeArrayToDB($found_articles_array);
-
-    //print_r($found_articles_array);
+    // $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_1996.html', '//ul[@class="split"]/li');
+    // $found_articles_array = queryLinks($links);
+    //parseFoundArticlesToCurrentDB($found_articles_array);
 
     // $frequencycount = array_count_values($frequencey);
 
@@ -19,10 +17,10 @@
     // $sql = $sql_create_yearly_table;
     // $db->query($sql);
 
-    //yearlyWordCount();
+    //parseCurrentCountBetweenYearsToYearlyTotals();
 
-    // $sql = $sql_select_all;
-    //$results = $db->select($sql);
+    $todays_year = date('Y');
+    // $found_articles_array = getYearlyTotals('1996');
 ?>
 
 <!doctype html>
@@ -52,23 +50,18 @@
     </nav>
     <div class="content-wrapper">
         <div>
-            <!-- <?php foreach ( $found_articles_array as $row ): ?>
-                <div class="word-wrapper" data-collapse="<?php echo $row['entry_id'] ?>">
-                    <p class="word">
-                        <span class="word-key"><?php echo $row['word'] ?></span>
-                        <span class="word-value"><?php echo $row['count'] ?></span>
-                    </p>
-                    <div id="<?php echo $row['word'] ?>" class="keyword-wrapper">
-                        <ul class="article-list">
-                            <?php $article = explode(";", $row['articles']) ?>
-                            <?php foreach ($article as $a): ?>
-                                <?php $titlelink = explode("|", $a) ?>
-                                <li><a target="_blank" href="http://www.dailymail.co.uk/<?php echo $titlelink[1] ?>"><?php echo $titlelink[0] ?></a></li>
-                            <?php endforeach ?>
-                        </ul>
+            <?php foreach ( $years as $year ): ?>
+                <?php $yearlyResults = getYearlyTotals($year); ?>
+                <div class="col-xs-4">
+                    <div class="year-panel">
+                        <h4><?php echo $year ?></h4>
+                        <?php foreach ($yearlyResults as $row): ?>
+                            <p><span class="word-key"><?php echo $row['word'] ?></span>
+                            <span class="word-value"><?php echo $row['count'] ?></span></p>
+                        <?php endforeach ?>
                     </div>
                 </div>
-            <?php endforeach ?> -->
+            <?php endforeach ?>
         </div>
     </div>
 </body>

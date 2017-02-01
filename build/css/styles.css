@@ -958,3 +958,18 @@ p:hover {
     display: -ms-flexbox;
     display: flex;
     color: #000; }
+
+.year-panel {
+  border: 1px solid #000;
+  padding: 6px;
+  text-align: center; }
+  .year-panel h4 {
+    margin: 0; }
+  .year-panel p {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between; }
