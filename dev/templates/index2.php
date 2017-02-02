@@ -4,31 +4,37 @@
     require_once("mo.php");
     require_once("conf.php");
     require_once("db.php");
+    $admin=false;
+    $admin=true;
 
     $links = array();
 
-    /*
-        Query each year and populate current_count
-    */
-    // foreach ($years as $year) {
-    //     $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', '//ul[@class="split"]/li');
-    //     $found_articles_array = queryLinks($links,'//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
-    //     setFoundArticlesToCurrentDB($found_articles_array);
-    // }
-
-    /*
-        Query today and populate today_count
-    */
-    // $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[contains(concat(" ", normalize-space(@class), " "), " article ")]');
-    // setTodaysArticles($found_articles_array);
-
-    // $db = new Db();
-    // $sql = $sql_create_today_count_table;
-    // $db->query($sql);
-
-    // foreach($years as $year) {
-    //     setYearlyTotalsByYear($year, getCurrentCountsForYear($year));
-    // }
+    if (isset($_POST['action'])) {
+        switch ($_POST['action']) {
+            case 'clean-all-tables':
+                cleanAllTables();
+                echo "All tables cleaned";
+                break;
+            case 'populate-current-count-from-years': // query each year and populate current_count
+                foreach ($years as $year) {
+                    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', '//ul[@class="split"]/li');
+                    $found_articles_array = queryLinks($links,'//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
+                    setFoundArticlesToCurrentDB($found_articles_array);
+                }
+                echo "Current count populated from years array";
+                break;
+            case 'populate-today-count': // populate today_count
+                $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
+                setTodaysArticles($found_articles_array);
+                echo "Today count populated";
+                break;
+            case 'set-yearly-count':
+                foreach($years as $year) {
+                    setYearlyTotalsByYear($year, getCurrentCountsForYear($year));
+                }
+                break;
+        }
+    }
 
     $todays_year = date('Y');
     // $found_articles_array = getYearlyTotals('1996');
@@ -56,6 +62,14 @@
 </head>
 
 <body>
+    <?php if ($admin) { ?>
+        <div class="admin-panel">
+            <p>Clean tables: <input type="button" value="clean-all-tables"></p>
+            <p>Populate current_count: <input type="button" value="populate-current-count-from-years"></p>
+            <p>Set yearly count: <input type="button" value="set-yearly-count"></p>
+            <p>Populate today_count: <input type="button" value="populate-today-count"></p>
+        </div>
+    <?php } ?>
     <nav class="title-wrapper">
         <!-- <h1>The <span>Male</span> Online</h1> -->
     </nav>
@@ -65,35 +79,42 @@
                 <div class="results-panel">
                     <h4>Today</h4>
                     <?php $dailyResults = getDailyCount(); ?>
-                    <?php foreach ($dailyResults as $row): ?>
-                        <p><span class="word-key"><?php echo $row['word'] ?></span>
-                        <span class="word-value"><?php echo $row['total'] ?></span></p>
-                    <?php endforeach ?>
+                    <?php if ($dailyResults) { ?>                        
+                        <?php foreach ($dailyResults as $row): ?>
+                            <p><span class="word-key"><?php echo $row['word'] ?></span>
+                            <span class="word-value"><?php echo $row['total'] ?></span></p>
+                        <?php endforeach ?>
+                    <?php } ?>
                 </div>
             </div>
             <div class="col-xs-4">
                 <div class="results-panel">
                     <h4>Last 7 Days</h4>
                     <?php $weeklyResults = getWeeklyCount(); ?>
-                    <?php foreach ($weeklyResults as $row): ?>
-                        <p><span class="word-key"><?php echo $row['word'] ?></span>
-                        <span class="word-value"><?php echo $row['count'] ?></span></p>
-                    <?php endforeach ?>
+                    <?php if ($dailyResults) { ?>
+
+                        <?php foreach ($weeklyResults as $row): ?>
+                            <p><span class="word-key"><?php echo $row['word'] ?></span>
+                            <span class="word-value"><?php echo $row['count'] ?></span></p>
+                        <?php endforeach ?>
+                    <?php } ?>
                 </div>
             </div>
         </div>
         <div class="row">
             <?php foreach ( $years as $year ): ?>
                 <?php $yearlyResults = getYearlyTotals($year); ?>
-                <div class="col-xs-4">
-                    <div class="results-panel">
-                        <h4><?php echo $year ?></h4>
-                        <?php foreach ($yearlyResults as $row): ?>
-                            <p><span class="word-key"><?php echo $row['word'] ?></span>
-                            <span class="word-value"><?php echo $row['count'] ?></span></p>
-                        <?php endforeach ?>
+                <?php if ($yearlyResults) { ?>
+                    <div class="col-xs-4">
+                        <div class="results-panel">
+                            <h4><?php echo $year ?></h4>
+                            <?php foreach ($yearlyResults as $row): ?>
+                                <p><span class="word-key"><?php echo $row['word'] ?></span>
+                                <span class="word-value"><?php echo $row['count'] ?></span></p>
+                            <?php endforeach ?>
+                        </div>
                     </div>
-                </div>
+                <?php } ?>
             <?php endforeach ?>
         </div>
     </div>
@@ -110,6 +131,14 @@ $(function() {
             $('.keyword-wrapper').slideUp(300);
             $($moList).slideDown(300);
         }
+    });
+    $('.admin-panel input').on('click', function() {
+        var clickBtnValue = $(this).val();
+        var ajaxurl = 'index2.php',
+        data =  {'action': clickBtnValue};
+        $.post(ajaxurl, data, function (response) {
+            $('body').html(response);
+        });
     });
 });
 </script>

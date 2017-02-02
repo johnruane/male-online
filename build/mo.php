@@ -114,28 +114,13 @@ function searchForWordFrequency($article_string, $list_of_bad_words, $article_in
 
             foreach ($list_of_bad_words[strlen($article_word)] as $badword) { // loops over matching 'bads words'
                 if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
-                    /*
-                        $article_info[0] = $link
-                        $article_info[1] = $article
-                        $article_info[2] = $xpath
-                    */
+
                     if ($article_info) {
                         $linkURL = explode('/', $article_info[0]);
                         $matched_article['date'] = str_replace('.html', '', str_replace('day_', '', end($linkURL))); // get the date from the article url
                         $matched_article['word'] = $badword;
                         $node = $article_info[2]->query("descendant::a/attribute::href", $article_info[1]);
                         $matched_article['link'] = $node->item(0)->nodeValue;
-                        // echo $matched_article['link'];
-                        // echo $matched_article['word'];
-                        // echo $matched_article['date'];
-
-                        //array_push($found_words_array, $matched_article);
-
-                        // if ( array_key_exists ( $badword , $found_words_array ) ) {
-                        //     array_push($found_words_array[$badword], $matched_article);
-                        // } else {
-                        //     $found_words_array[$badword] = $matched_article;
-                        // }
                         return $matched_article;
                     } else {
                         array_push($found_words_array, $badword);
@@ -202,5 +187,15 @@ function getYearlyTotals($year) {
     $sql_count_yearly = "SELECT * FROM yearly_count WHERE year=$year";
     $db = new Db();
     return $db->select($sql_count_yearly);
+}
+/* Other functions */
+function cleanAllTables() {
+    $sql_clean_current_count = "DELETE FROM current_count";
+    $sql_clean_today_count = "DELETE FROM today_count";
+    $sql_clean_yearly_count = "DELETE FROM yearly_count";
+    $db = new Db();
+    $db->select($sql_clean_current_count);
+    $db->select($sql_clean_today_count);
+    $db->select($sql_clean_yearly_count);
 }
 ?>
