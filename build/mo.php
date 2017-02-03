@@ -90,11 +90,20 @@ function queryLinks($ary_of_links, $container_div) {
         $articles = $xpath->query($container_div);
 
         foreach ($articles as $article) {
-            $node = $xpath->query("descendant::a", $article);
-            $node_text = $node->item(0)->textContent;
-            preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text);
-            $article_found = searchForWordFrequency($node_text, $bad_words, [$link, $article, $xpath]);
-            if ($article_found) array_push($matched_articles, $article_found);
+            $node = $xpath->query("descendant::a[@href]", $article);
+
+            // $temp_dom = new DOMDocument();
+            // foreach($node as $n)
+            // $temp_dom->appendChild($temp_dom->importNode($n,true));
+            // print_r($temp_dom->saveHTML().'<br />');
+
+            if ( is_object($node->item(0)) ) {
+                $node_text = $node->item(0)->textContent;
+                preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text);
+                $article_found = searchForWordFrequency($node_text, $bad_words, [$link, $article, $xpath]);
+                if ($article_found) array_push($matched_articles, $article_found);
+            }
+
         }
     }
     return $matched_articles;
@@ -194,8 +203,8 @@ function cleanAllTables() {
     $sql_clean_today_count = "DELETE FROM today_count";
     $sql_clean_yearly_count = "DELETE FROM yearly_count";
     $db = new Db();
-    $db->select($sql_clean_current_count);
-    $db->select($sql_clean_today_count);
-    $db->select($sql_clean_yearly_count);
+    $db->query($sql_clean_current_count);
+    $db->query($sql_clean_today_count);
+    $db->query($sql_clean_yearly_count);
 }
 ?>

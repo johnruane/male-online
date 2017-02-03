@@ -24,7 +24,7 @@
                 echo "Current count populated from years array";
                 break;
             case 'populate-today-count': // populate today_count
-                $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
+                $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
                 setTodaysArticles($found_articles_array);
                 echo "Today count populated";
                 break;
@@ -79,7 +79,7 @@
                 <div class="results-panel">
                     <h4>Today</h4>
                     <?php $dailyResults = getDailyCount(); ?>
-                    <?php if ($dailyResults) { ?>                        
+                    <?php if ($dailyResults) { ?>
                         <?php foreach ($dailyResults as $row): ?>
                             <p><span class="word-key"><?php echo $row['word'] ?></span>
                             <span class="word-value"><?php echo $row['total'] ?></span></p>
