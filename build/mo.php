@@ -15,7 +15,6 @@ $sql_create_today_count_table = "CREATE TABLE today_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     publication_date DATE,
     word VARCHAR(20),
-    count INT(3),
     articles TEXT(10000)
     )";
 
@@ -126,6 +125,7 @@ function searchForWordFrequency($article_string, $list_of_bad_words, $article_in
 
                     if ($article_info) {
                         $linkURL = explode('/', $article_info[0]);
+                        echo $article_info[0];
                         $matched_article['date'] = str_replace('.html', '', str_replace('day_', '', end($linkURL))); // get the date from the article url
                         $matched_article['word'] = $badword;
                         $node = $article_info[2]->query("descendant::a/attribute::href", $article_info[1]);
@@ -153,12 +153,11 @@ function setFoundArticlesToCurrentDB($q_links) {
 }
 function setTodaysArticles($q_links) {
     $db = new Db();
-    $sql = "INSERT INTO today_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO today_count (publication_date, word, articles) VALUES (?, ?, ?)";
     $stmt = $db->connect()->prepare($sql);
 
     foreach($q_links as $value) {
-        $count = 1;
-        $stmt->bind_param("ssis", $value['date'], $value['word'], $count, $value['link']);
+        $stmt->bind_param("sss", $value['date'], $value['word'], $value['link']);
         $stmt->execute();
     }
 }
@@ -178,7 +177,7 @@ function setYearlyTotalsByYear($year, $result) {
 }
 /* GETTERS */
 function getDailyCount() {
-    $sql_select_daily = "SELECT SUM(count) AS 'total', word FROM today_count GROUP BY word";
+    $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word";
     $db = new Db();
     return $db->select($sql_select_daily);
 }

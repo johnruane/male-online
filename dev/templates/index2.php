@@ -24,7 +24,8 @@
                 echo "Current count populated from years array";
                 break;
             case 'populate-today-count': // populate today_count
-                $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
+                // $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
+                $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//li');
                 setTodaysArticles($found_articles_array);
                 echo "Today count populated";
                 break;
