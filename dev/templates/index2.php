@@ -6,6 +6,7 @@
     require_once("db.php");
     $admin=false;
     $admin=true;
+    $archive='';
 
     $links = array();
 
@@ -16,6 +17,7 @@
                 echo "All tables cleaned";
                 break;
             case 'populate-current-count-from-years': // query each year and populate current_count
+                $archive = true;
                 foreach ($years as $year) {
                     $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', '//ul[@class="split"]/li');
                     $found_articles_array = queryLinks($links,'//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
@@ -24,6 +26,7 @@
                 echo "Current count populated from years array";
                 break;
             case 'populate-today-count': // populate today_count
+                $archive = false;
                 // $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
                 $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//li');
                 setTodaysArticles($found_articles_array);

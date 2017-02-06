@@ -1,6 +1,6 @@
 <?php
 
-$years = ['1994', '1996', '1997'];
+$years = ['1994'];
 
 //Create table
 $sql_create_count_table = "CREATE TABLE current_count (
@@ -114,6 +114,8 @@ function queryLinks($ary_of_links, $container_div) {
 function searchForWordFrequency($article_string, $list_of_bad_words, $article_info) {
     global $list_of_bad_words;
     global $found_words_array;
+    global $archive;
+    $pub_date;
 
     $article_string_array = explode(' ', $article_string);
     foreach ($article_string_array as $article_word) { // loops through words from the article headline
@@ -124,9 +126,15 @@ function searchForWordFrequency($article_string, $list_of_bad_words, $article_in
                 if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
 
                     if ($article_info) {
+
                         $linkURL = explode('/', $article_info[0]);
-                        echo $article_info[0];
-                        $matched_article['date'] = str_replace('.html', '', str_replace('day_', '', end($linkURL))); // get the date from the article url
+                        if ($archive) {
+                            $pub_date = preg_split("/[_.]/", end($linkURL))[1]; // get the date from the article url
+                        } else {
+
+                            $pub_date = date("Y-m-d");
+                        }
+                        $matched_article['date'] = $pub_date;
                         $matched_article['word'] = $badword;
                         $node = $article_info[2]->query("descendant::a/attribute::href", $article_info[1]);
                         $matched_article['link'] = $node->item(0)->nodeValue;
