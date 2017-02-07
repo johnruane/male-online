@@ -21,14 +21,14 @@
                 $query = "archive";
                 foreach ($years as $year) {
                     $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', '//ul[@class="split"]/li');
-                    $found_articles_array = queryLinks($links,'//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
+                    queryLinks($links,'//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
                     setFoundArticlesToCurrentDB($matched_articles);
                 }
                 echo "Current count populated from years array";
                 break;
             case 'populate-today-count': // populate today_count
                 $query = "today";
-                $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
+                queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
                 // $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//li');
                 setTodaysArticles($matched_articles);
                 echo "Today count populated";
@@ -97,7 +97,6 @@
                     <h4>Last 7 Days</h4>
                     <?php $weeklyResults = getWeeklyCount(); ?>
                     <?php if ($dailyResults) { ?>
-
                         <?php foreach ($weeklyResults as $row): ?>
                             <p><span class="word-key"><?php echo $row['word'] ?></span>
                             <span class="word-value"><?php echo $row['count'] ?></span></p>

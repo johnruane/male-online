@@ -150,12 +150,12 @@ function searchForWordFrequency($article_string, $list_of_bad_words, $article_in
 /* SETTERS */
 function setFoundArticlesToCurrentDB($q_links) {
     $db = new Db();
-    $sql = "INSERT INTO current_count (publication_date, word, count, articles) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO current_count (publication_date, word, articles) VALUES (?, ?, ?)";
     $stmt = $db->connect()->prepare($sql);
 
     foreach($q_links as $value) {
         $count = 1;
-        $stmt->bind_param("ssis", $value['date'], $value['word'], $count, $value['link']);
+        $stmt->bind_param("sss", $value['date'], $value['word'], $value['link']);
         $stmt->execute();
     }
 }
