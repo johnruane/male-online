@@ -43,13 +43,11 @@ $sql_select_all = "SELECT * FROM current_count";
 
 $list_of_bad_words = array (
     3 => ['for','all','the'],
-    4 => ['seal','lion'],
+    4 => ['seal','lion','mend'],
     5 => ['world'],
     6 => ['likely'],
     9 => ['possessed'],
 );
-
-$list_of_special_characters_to_remove = array ([",", "'", "?", ":"]);
 
 /*
     Gets all the links from a Yearly archive page and returns them as an array
@@ -78,7 +76,7 @@ function getLinks($url, $query) {
 */
 function queryLinks($ary_of_links, $container_div) {
     global $bad_words;
-    $matched_articles = array();
+    $matches = array();
 
     foreach ($ary_of_links as $link) {
         $html = file_get_contents($link);
@@ -102,13 +100,10 @@ function queryLinks($ary_of_links, $container_div) {
             if ( is_object($article) ) {
                 $node_text = $article->nodeValue;
                 $node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); //Removes javascript
-                $article_found = searchForWordFrequency($node_text, $bad_words, [$link, $article, $xpath]);
-                if ($article_found) array_push($matched_articles, $article_found);
+                searchForWordFrequency($node_text, $bad_words, [$link, $article, $xpath]);
             }
-
         }
     }
-    return $matched_articles;
 }
 
 /*
@@ -117,11 +112,13 @@ function queryLinks($ary_of_links, $container_div) {
 function searchForWordFrequency($article_string, $list_of_bad_words, $article_info) {
     global $list_of_bad_words;
     global $found_words_array;
-    global $list_of_special_characters_to_remove;
     global $query;
     $pub_date;
+    global $matched_articles;
 
-    $article_string_array = preg_split('/\s/', $article_string);
+    $article_string = preg_replace('/\s+/', ' ', $article_string); // Replace large whitespaces with a single whitespace
+    $article_string_array = preg_split('/[\s,]+/', $article_string); // Split string on any space
+
     foreach ($article_string_array as $article_word) { // loops through words from the article headline
         $article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word);
         if (isset($list_of_bad_words[strlen($article_word)])) { // does the 'article word' have any matching 'bad words' (by length)
@@ -141,7 +138,7 @@ function searchForWordFrequency($article_string, $list_of_bad_words, $article_in
                         $matched_article['word'] = $badword;
                         $node = $article_info[2]->query("descendant::a/attribute::href", $article_info[1]);
                         $matched_article['link'] = $node->item(0)->nodeValue;
-                        return $matched_article;
+                        array_push($matched_articles, $matched_article);
                     } else {
                         array_push($found_words_array, $badword);
                     }

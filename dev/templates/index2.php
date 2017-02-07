@@ -9,6 +9,7 @@
     $query='';
 
     $links = array();
+    $matched_articles = array();
 
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
@@ -21,7 +22,7 @@
                 foreach ($years as $year) {
                     $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', '//ul[@class="split"]/li');
                     $found_articles_array = queryLinks($links,'//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
-                    setFoundArticlesToCurrentDB($found_articles_array);
+                    setFoundArticlesToCurrentDB($matched_articles);
                 }
                 echo "Current count populated from years array";
                 break;
@@ -29,7 +30,7 @@
                 $query = "today";
                 $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
                 // $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//li');
-                setTodaysArticles($found_articles_array);
+                setTodaysArticles($matched_articles);
                 echo "Today count populated";
                 break;
             case 'set-yearly-count':
