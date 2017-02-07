@@ -65,7 +65,7 @@ p:hover {
         color: #000;
     }
 }
-.results-panel {
+.col {
     border: 1px solid #000;
     padding: 6px;
     text-align: center;
@@ -76,6 +76,9 @@ p:hover {
         display: flex;
         margin: 0;
         justify-content: space-between;
+    }
+    & + .col {
+        margin-left: 25px;
     }
 }
 .admin-panel {

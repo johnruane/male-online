@@ -40,9 +40,7 @@
                 break;
         }
     }
-
-    $todays_year = date('Y');
-    // $found_articles_array = getYearlyTotals('1996');
+    $today = date('Y-d-m');
 ?>
 
 <!doctype html>
@@ -78,45 +76,40 @@
     <nav class="title-wrapper">
         <!-- <h1>The <span>Male</span> Online</h1> -->
     </nav>
-    <div class="content-wrapper">
+    <div class="container">
         <div class="row">
-            <div class="col-xs-8">
-                <div class="results-panel">
-                    <h4>Today</h4>
-                    <?php $dailyResults = getDailyCount(); ?>
-                    <?php if ($dailyResults) { ?>
-                        <?php foreach ($dailyResults as $row): ?>
-                            <p><span class="word-key"><?php echo $row['word'] ?></span>
-                            <span class="word-value"><?php echo $row['total'] ?></span></p>
-                        <?php endforeach ?>
-                    <?php } ?>
-                </div>
+            <div class="col col-xs-8">
+                <h4>Today</h4>
+                <?php $dailyResults = getDailyCount(); ?>
+                <?php if ($dailyResults) { ?>
+                    <?php foreach ($dailyResults as $row): ?>
+                        <p><span class="word-key"><?php echo $row['word'] ?></span>
+                        <span class="word-value"><?php echo $row['total'] ?></span></p>
+                    <?php endforeach ?>
+                <?php } ?>
             </div>
-            <div class="col-xs-4">
-                <div class="results-panel">
-                    <h4>Last 7 Days</h4>
-                    <?php $weeklyResults = getWeeklyCount(); ?>
-                    <?php if ($dailyResults) { ?>
-                        <?php foreach ($weeklyResults as $row): ?>
-                            <p><span class="word-key"><?php echo $row['word'] ?></span>
-                            <span class="word-value"><?php echo $row['count'] ?></span></p>
-                        <?php endforeach ?>
-                    <?php } ?>
-                </div>
+            <div class="col col-xs-4">
+                <h4>Last 7 Days</h4>
+                <!-- <?php $weeklyResults = getWeeklyCount($today, date('Ydm', strtotime('-7 days'))); ?> -->
+                <?php $weeklyResults = getWeeklyCount('1994-01-01', '1994-12-31'); ?>
+                <?php if ($weeklyResults) { ?>
+                    <?php foreach ($weeklyResults as $row): ?>
+                        <p><span class="word-key"><?php echo $row['word'] ?></span>
+                        <span class="word-value"><?php echo $row['total'] ?></span></p>
+                    <?php endforeach ?>
+                <?php } ?>
             </div>
         </div>
         <div class="row">
             <?php foreach ( $years as $year ): ?>
                 <?php $yearlyResults = getYearlyTotals($year); ?>
                 <?php if ($yearlyResults) { ?>
-                    <div class="col-xs-4">
-                        <div class="results-panel">
-                            <h4><?php echo $year ?></h4>
-                            <?php foreach ($yearlyResults as $row): ?>
-                                <p><span class="word-key"><?php echo $row['word'] ?></span>
-                                <span class="word-value"><?php echo $row['count'] ?></span></p>
-                            <?php endforeach ?>
-                        </div>
+                    <div class="col col-xs-4">
+                        <h4><?php echo $year ?></h4>
+                        <?php foreach ($yearlyResults as $row): ?>
+                            <p><span class="word-key"><?php echo $row['word'] ?></span>
+                            <span class="word-value"><?php echo $row['count'] ?></span></p>
+                        <?php endforeach ?>
                     </div>
                 <?php } ?>
             <?php endforeach ?>

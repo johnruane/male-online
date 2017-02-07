@@ -1,13 +1,12 @@
 <?php
 
-$years = ['1994'];
+$years = ['1994', '1996', '1997'];
 
 //Create table
 $sql_create_count_table = "CREATE TABLE current_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     publication_date DATE,
     word VARCHAR(20),
-    count INT(3),
     articles TEXT(10000)
     )";
 
@@ -154,7 +153,6 @@ function setFoundArticlesToCurrentDB($q_links) {
     $stmt = $db->connect()->prepare($sql);
 
     foreach($q_links as $value) {
-        $count = 1;
         $stmt->bind_param("sss", $value['date'], $value['word'], $value['link']);
         $stmt->execute();
     }
@@ -185,22 +183,22 @@ function setYearlyTotalsByYear($year, $result) {
 }
 /* GETTERS */
 function getDailyCount() {
-    $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word";
+    $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word ORDER BY total DESC";
     $db = new Db();
     return $db->select($sql_select_daily);
 }
-function getWeeklyCount() {
-    $sql_select_weekly = "SELECT * FROM current_count ORDER BY publication_date DESC LIMIT 7";
+function getWeeklyCount($today, $lastSevenDays) {
+    $sql_select_weekly = "SELECT word, count(*) AS 'total' FROM current_count WHERE publication_date BETWEEN '$today' AND '$lastSevenDays' GROUP BY word";
     $db = new Db();
     return $db->select($sql_select_weekly);
 }
 function getCurrentCountsForYear($year) {
-    $sql_select_yearly = "SELECT SUM(count) AS 'total', word, entry_id FROM current_count WHERE publication_date BETWEEN '$year-01-01' AND '$year-12-31' GROUP BY word";
+    $sql_select_yearly = "SELECT word, count(*) AS 'total' FROM current_count WHERE publication_date BETWEEN '$year-01-01' AND '$year-12-31' GROUP BY word";
     $db = new Db();
     return $db->select($sql_select_yearly);
 }
 function getYearlyTotals($year) {
-    $sql_count_yearly = "SELECT * FROM yearly_count WHERE year=$year";
+    $sql_count_yearly = "SELECT * FROM yearly_count WHERE year=$year ORDER BY count DESC";
     $db = new Db();
     return $db->select($sql_count_yearly);
 }
