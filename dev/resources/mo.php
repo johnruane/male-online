@@ -42,12 +42,14 @@ $sql_select_all = "SELECT * FROM current_count";
 // );
 
 $list_of_bad_words = array (
-
     3 => ['for','all','the'],
     4 => ['seal','lion'],
     5 => ['world'],
+    6 => ['likely'],
     9 => ['possessed'],
 );
+
+$list_of_special_characters_to_remove = array ([",", "'", "?", ":"]);
 
 /*
     Gets all the links from a Yearly archive page and returns them as an array
@@ -99,7 +101,7 @@ function queryLinks($ary_of_links, $container_div) {
 
             if ( is_object($article) ) {
                 $node_text = $article->nodeValue;
-                preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text);
+                $node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); //Removes javascript
                 $article_found = searchForWordFrequency($node_text, $bad_words, [$link, $article, $xpath]);
                 if ($article_found) array_push($matched_articles, $article_found);
             }
@@ -115,12 +117,13 @@ function queryLinks($ary_of_links, $container_div) {
 function searchForWordFrequency($article_string, $list_of_bad_words, $article_info) {
     global $list_of_bad_words;
     global $found_words_array;
+    global $list_of_special_characters_to_remove;
     global $query;
     $pub_date;
 
-    $article_string_array = preg_split('/\s+/', $article_string);
+    $article_string_array = preg_split('/\s/', $article_string);
     foreach ($article_string_array as $article_word) { // loops through words from the article headline
-
+        $article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word);
         if (isset($list_of_bad_words[strlen($article_word)])) { // does the 'article word' have any matching 'bad words' (by length)
             foreach ($list_of_bad_words[strlen($article_word)] as $badword) { // loops over matching 'bads words'
                 if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
