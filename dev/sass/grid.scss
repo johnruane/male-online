@@ -3,67 +3,87 @@
 $container-width:           90%;
 $narrow-container-width:    70%;
 $column-padding:            15px;
+$row-margin:                20px;
 $cols:                      12;
 $xs:                        320px;
 $sm:                        540px;
 $md:                        760px;
 $lg:                        970px;
 $xl:                        1400px;
-
-@mixin generate-columns($n, $class) {
-    @for $i from 1 through $n {
-      .col-#{$class}-#{$i} {
-        width: $i * (100% / $n);
-        padding-left: $column-padding;
-        padding-right: $column-padding;
-        min-height: 1px;
-        position: relative;
-        float: left;
-      }
-  }
-}
-@media (min-width: $xs) {
-  @include generate-columns($cols, xs);
-}
-@media (min-width: $sm) {
-  @include generate-columns($cols, sm);
-}
-@media (min-width: $md) {
-  @include generate-columns($cols, md);
-}
-@media (min-width: $lg) {
-  @include generate-columns($cols, lg);
-}
-@media (min-width: $xl) {
-  @include generate-columns($cols, xl);
-}
-@mixin container {
-    padding-left: $column-padding;
-    padding-right: $column-padding;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: $container-width;
-    @media (max-width: $sm) {
-        padding-left: $column-padding/2;
-        padding-right: $column-padding/2;
-    }
-}
+//
+// @mixin generate-columns($n, $class) {
+//     @for $i from 1 through $n {
+//       .col-#{$class}-#{$i} {
+//         width: $i * (100% / $n);
+//         padding-left: $column-padding;
+//         padding-right: $column-padding;
+//         min-height: 1px;
+//         position: relative;
+//         float: left;
+//       }
+//   }
+// }
+// @media (min-width: $xs) {
+//   @include generate-columns($cols, xs);
+// }
+// @media (min-width: $sm) {
+//   @include generate-columns($cols, sm);
+// }
+// @media (min-width: $md) {
+//   @include generate-columns($cols, md);
+// }
+// @media (min-width: $lg) {
+//   @include generate-columns($cols, lg);
+// }
+// @media (min-width: $xl) {
+//   @include generate-columns($cols, xl);
+// }
+// @mixin container {
+//     padding-left: $column-padding;
+//     padding-right: $column-padding;
+//     margin-right: auto;
+//     margin-left: auto;
+//     max-width: $container-width;
+//     @media (max-width: $sm) {
+//         padding-left: $column-padding/2;
+//         padding-right: $column-padding/2;
+//     }
+// }
+// .container {
+//     @include container;
+// }
+// .container-fluid {
+//     width: 100%;
+// }
+// .container-narrow {
+//     @include container;
+//     @media (min-width: $md) {
+//         width: $narrow-container-width;
+//     }
+// }
+// .row {
+//   margin-left: -$column-padding;
+//   margin-right: -$column-padding;
+//   + .row {
+//       margin-top: $row-margin;
+//   }
+// }
+// .pull-right {
+//   float: right;
+// }
 .container {
-    @include container;
-}
-.container-fluid {
-    width: 100%;
-}
-.container-narrow {
-    @include container;
-    @media (min-width: $md) {
-        width: $narrow-container-width;
-    }
+    width: 80%;
+    margin: 0 auto;
 }
 .row {
-  margin-left: -$column-padding;
-  margin-right: -$column-padding;
+    display: flex;
+    justify-content: space-between;
+    & + .row {
+        margin-top: 20px;
+    }
 }
-.pull-right {
-  float: right;
+.col {
+    flex: 1;
+    border: 1px solid #000;
+    justify-content: space-around;
 }
