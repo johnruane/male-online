@@ -148,7 +148,7 @@ nav {
     margin-left: 10%;
     margin-right: 10%;
 }
-.mo-sidebar {
+.mo-sidebar-container {
     background: $sidebar-background;
     position: fixed;
     width: $sidebar-width;
@@ -159,7 +159,6 @@ nav {
     overflow-x: hidden;
     ul {
         list-style: none;
-        padding: 50px $global-padding 0;
         li {
             padding: 5px;
             display: flex;
@@ -194,6 +193,17 @@ nav {
     }
     // transitions
     transition: all .5s ease;
+}
+.mo-sidebar-content {
+    padding: 50px $global-padding 0;
+}
+.mo-sidebar-tabs {
+    display: flex;
+    justify-content: space-between;
+    a {
+        color: #000;
+        text-decoration: none;
+    }
 }
 .mo-results-list {
     h2 {

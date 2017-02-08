@@ -28,17 +28,17 @@ $sql_create_yearly_table = "CREATE TABLE yearly_count (
 // Select all
 $sql_select_all = "SELECT * FROM current_count";
 
-// $list_of_bad_words = array (
-//     4 => ['boob','bust','pert','pins','pout','racy','sexy','slim','trim','vamp','PAYS'],
-//     5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy','price'],
-//     6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases','tennis'],
-//     7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender','destroy'],
-//     8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
-//     9 => ['postirior','revealing','underboob'],
-//     10 => ['skin-tight','super-slim'],
-//     11 => ['eye-popping'],
-//     14 => ['figure-hugging']
-// );
+$list_of_bad_words_2 = array (
+    4 => ['boob','bust','pert','pins','pout','racy','sexy','slim','trim','vamp'],
+    5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy','price'],
+    6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases','tennis'],
+    7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender','destroy'],
+    8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
+    9 => ['postirior','revealing','underboob'],
+    10 => ['skin-tight','super-slim'],
+    11 => ['eye-popping'],
+    14 => ['figure-hugging']
+);
 
 $list_of_bad_words = array (
     3 => ['for','all','the'],

@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/styles.css?v=1.0">
 
   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
   <link href="https://fonts.googleapis.com/css?family=Eczar:800" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 
@@ -39,17 +40,34 @@
     <div class="mo-main">
 
     </div>
-    <div class="mo-sidebar" data-bind="sidebar">
-        <ul>
-            <li><input type="radio" name="sidebar-year" value="today" id="year-today">
-                <label for="year-today" data-bind="sidebar-selection">Today</label>
-            </li>
-            <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
-                <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
-                    <label for="year-<?php echo $year_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $year_display_sidebar ?></label>
-                </li>
-            <?php } ?>
+    <div id="sidebar-tab" class="mo-sidebar-container" data-bind="sidebar">
+        <ul class="mo-sidebar-tabs">
+            <li><a href="#tab-1">Words</a></li>
+            <li><a href="#tab-2">Years</a></li>
         </ul>
+        <div id="tab-1">
+            <ul>
+                <?php foreach ( $list_of_bad_words_2 as $word_array) { ?>
+                    <?php foreach ( $word_array as $word_display_sidebar) { ?>
+                        <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="year-<?php echo $word_display_sidebar ?>">
+                            <label for="year-<?php echo $word_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $word_display_sidebar ?></label>
+                        </li>
+                    <?php } ?>
+                <?php } ?>
+            </ul>
+        </div>
+        <div id="tab-2">
+            <ul class="mo-sidebar-content">
+                <li><input type="radio" name="sidebar-year" value="today" id="year-today">
+                    <label for="year-today" data-bind="sidebar-selection">Today</label>
+                </li>
+                <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
+                    <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
+                        <label for="year-<?php echo $year_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $year_display_sidebar ?></label>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
     </div>
 </main>
 
@@ -65,6 +83,7 @@
             navToggle();
             sidebarSelection();
             $('[for="year-today"]').trigger('click');
+            $('#sidebar-tab').tabs();
 		};
         self.navToggle = function() {
             $('[data-bind="navigation"]').on('click', function() {
