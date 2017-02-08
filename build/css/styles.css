@@ -620,7 +620,34 @@ nav {
     list-style: none;
     padding: 50px 15px 0; }
     .mo-sidebar ul li {
-      padding: 5px; }
+      padding: 5px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+    .mo-sidebar ul input {
+      position: absolute;
+      visibility: hidden; }
+    .mo-sidebar ul input:checked ~ label:before {
+      background-color: #ff0000; }
+    .mo-sidebar ul label {
+      font-size: 1rem;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+      .mo-sidebar ul label:before {
+        content: "";
+        display: block;
+        height: 15px;
+        width: 15px;
+        border: 2px solid #000;
+        border-radius: 25px;
+        margin-right: 5px; }
   @media (min-width: 760px) {
     .mo-sidebar {
       right: 0; } }

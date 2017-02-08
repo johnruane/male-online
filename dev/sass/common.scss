@@ -164,6 +164,31 @@ nav {
         padding: 50px $global-padding 0;
         li {
             padding: 5px;
+            display: flex;
+            align-items: center;
+        }
+        input {
+            position: absolute;
+            visibility: hidden;
+        }
+        input:checked {
+            & ~ label:before {
+                background-color: #ff0000;
+            }
+        }
+        label {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            &:before {
+                content: "";
+                display: block;
+                height: 15px;
+                width: 15px;
+                border: 2px solid #000;
+                border-radius: 25px;
+                margin-right: 5px;
+            }
         }
     }
     @media (min-width: $md) {
