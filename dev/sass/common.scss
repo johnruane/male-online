@@ -107,6 +107,7 @@ header {
         text-align: center;
         padding-left: $global-padding;
         margin: 0;
+        font-size: 1rem;
     }
 }
 nav {
@@ -146,9 +147,6 @@ nav {
 .mo-main {
     margin-left: 10%;
     margin-right: 10%;
-    p {
-        text-align: center;
-    }
 }
 .mo-sidebar {
     background: $sidebar-background;
@@ -196,4 +194,20 @@ nav {
     }
     // transitions
     transition: all .5s ease;
+}
+.mo-results-list {
+    h2 {
+        text-align: center;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    li {
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        padding: $global-padding 0;
+        border-bottom: $mo-border;
+    }
 }

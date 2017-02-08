@@ -1,3 +1,8 @@
+<?php
+    require_once("mo.php");
+    require_once("conf.php");
+    require_once("db.php");
+?>
 <!doctype html>
 
 <html lang="en">
@@ -24,7 +29,7 @@
 
 <main>
     <header>
-        <p>Header Header</p>
+        <p>The Male Online</p>
         <nav data-bind="navigation">
             <span></span>
             <span></span>
@@ -32,16 +37,16 @@
         </nav>
     </header>
     <div class="mo-main">
-        <p>test</p>
+
     </div>
     <div class="mo-sidebar" data-bind="sidebar">
         <ul>
-            <li><input type="radio" name="sidebar-year" id="year-today">
-                <label for="year-today">Today</label>
+            <li><input type="radio" name="sidebar-year" value="today" id="year-today">
+                <label for="year-today" data-bind="sidebar-selection">Today</label>
             </li>
             <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
-                <li><input type="radio" name="sidebar-year" id="year-<?php echo $year_display_sidebar ?>">
-                    <label for="year-<?php echo $year_display_sidebar ?>"><?php echo $year_display_sidebar ?></label>
+                <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
+                    <label for="year-<?php echo $year_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $year_display_sidebar ?></label>
                 </li>
             <?php } ?>
         </ul>
@@ -58,6 +63,8 @@
 
 		self.init = function() {
             navToggle();
+            sidebarSelection();
+            $('[for="year-today"]').trigger('click');
 		};
         self.navToggle = function() {
             $('[data-bind="navigation"]').on('click', function() {
@@ -68,6 +75,31 @@
                     $('[data-bind="sidebar"]').css('right', '-200px');
                     $(this).removeClass('active');
                 }
+
+            });
+        };
+        self.sidebarSelection = function() {
+            $('[data-bind="sidebar-selection"]').on('click', function() {
+                $sidebar_value = $(this).prev().val();
+                $main_component ="";
+                $data = "";
+                if ($sidebar_value == "today") {
+                    $.get("daily-list.php", function(data) {
+                        $('.mo-main').html(data);
+                    });
+                } else {
+                    $.ajax({
+                        url: "yearly-list.php",
+                        type: "POST",
+                        data: {
+                            year: $sidebar_value
+                        },
+                        success: function(data) {
+                            $('.mo-main').html(data);
+                        }
+                    });
+                }
+
 
             });
         };

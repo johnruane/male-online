@@ -49,6 +49,14 @@ $list_of_bad_words = array (
 );
 
 /*
+    PHP function to query today
+*/
+function moQueryToday() {
+    $query = "today";
+    queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
+    setTodaysArticles($matched_articles);
+}
+/*
     Gets all the links from a Yearly archive page and returns them as an array
 */
 function getLinks($url, $query) {

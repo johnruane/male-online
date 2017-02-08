@@ -560,7 +560,8 @@ header {
   header p {
     text-align: center;
     padding-left: 15px;
-    margin: 0; }
+    margin: 0;
+    font-size: 1rem; }
 
 nav {
   width: 20px;
@@ -602,8 +603,6 @@ nav {
 .mo-main {
   margin-left: 10%;
   margin-right: 10%; }
-  .mo-main p {
-    text-align: center; }
 
 .mo-sidebar {
   background: #add8e6;
@@ -651,3 +650,21 @@ nav {
   @media (min-width: 760px) {
     .mo-sidebar {
       right: 0; } }
+
+.mo-results-list h2 {
+  text-align: center; }
+
+.mo-results-list ul {
+  list-style: none;
+  padding: 0; }
+
+.mo-results-list li {
+  font-size: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 15px 0;
+  border-bottom: 1px dashed #000; }
