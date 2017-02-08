@@ -535,3 +535,92 @@ p:hover {
 
 .admin-panel p {
   margin-bottom: 5px; }
+
+/* New styles */
+main {
+  width: 100%;
+  -webkit-transition: all .5s ease;
+          transition: all .5s ease; }
+  @media (min-width: 760px) {
+    main {
+      width: calc(100% - 200px); } }
+
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: lightgreen;
+  padding: 15px 0; }
+  header p {
+    text-align: center;
+    padding-left: 15px;
+    margin: 0; }
+
+nav {
+  width: 20px;
+  height: 21px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  margin-right: 15px;
+  z-index: 10; }
+  nav span {
+    height: 2px;
+    display: block;
+    position: relative;
+    background: #000;
+    -webkit-transition: all .5s ease;
+            transition: all .5s ease;
+    -webkit-transform-origin: right;
+            transform-origin: right; }
+  nav.active span:nth-child(1) {
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg); }
+  nav.active span:nth-child(2) {
+    opacity: 0; }
+  nav.active span:nth-child(3) {
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg); }
+  nav:hover {
+    cursor: pointer; }
+  @media (min-width: 760px) {
+    nav {
+      display: none; } }
+
+.mo-main {
+  margin-left: 10%;
+  margin-right: 10%; }
+  .mo-main p {
+    text-align: center; }
+
+.mo-sidebar {
+  background: #add8e6;
+  position: fixed;
+  width: 200px;
+  right: -200px;
+  top: 0;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-transition: all .5s ease;
+          transition: all .5s ease; }
+  .mo-sidebar ul {
+    list-style: none;
+    padding: 50px 15px 0; }
+    .mo-sidebar ul li {
+      padding: 5px; }
+  @media (min-width: 760px) {
+    .mo-sidebar {
+      right: 0; } }
