@@ -47,7 +47,7 @@
         </ul>
         <div id="tab-1">
             <ul>
-                <?php foreach ( $list_of_bad_words_2 as $word_array) { ?>
+                <?php foreach ( $list_of_bad_words as $word_array) { ?>
                     <?php foreach ( $word_array as $word_display_sidebar) { ?>
                         <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="year-<?php echo $word_display_sidebar ?>">
                             <label for="year-<?php echo $word_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $word_display_sidebar ?></label>

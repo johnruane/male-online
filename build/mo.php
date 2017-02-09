@@ -1,6 +1,8 @@
 <?php
 
-$years_to_search = ['1994'];
+// $years_to_search = ['1994', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
+
+$years_to_search = ['1994', '1996', '1997'];
 
 //Create table
 $sql_create_count_table = 'CREATE TABLE archive_count (
@@ -9,7 +11,7 @@ $sql_create_count_table = 'CREATE TABLE archive_count (
     word VARCHAR(20),
     article_text TEXT(10000),
     article_link TEXT(10000),
-    image_link TEXT(10000)
+    thumbnail_link TEXT(10000)
     )';
 
 $sql_create_today_count_table = 'CREATE TABLE today_count (
@@ -32,11 +34,11 @@ $sql_create_yearly_table = 'CREATE TABLE yearly_count (
 // Select all
 $sql_select_all = 'SELECT * FROM archive_count';
 
-$list_of_bad_words_2 = array (
+$list_of_bad_words = array (
     4 => ['boob','bust','pert','pins','pout','racy','sexy','slim','trim','vamp'],
-    5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy','price'],
-    6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases','tennis'],
-    7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender','destroy'],
+    5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy'],
+    6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases',],
+    7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender',],
     8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
     9 => ['postirior','revealing','underboob'],
     10 => ['skin-tight','super-slim'],
@@ -44,13 +46,13 @@ $list_of_bad_words_2 = array (
     14 => ['figure-hugging']
 );
 
-$list_of_bad_words = array (
-    3 => ['for','all','hot'],
-    4 => ['peep','lion','mend'],
-    5 => ['world', 'china'],
-    6 => ['likely'],
-    9 => ['possessed'],
-);
+// $list_of_bad_words = array (
+//     3 => ['for','all','hot'],
+//     4 => ['peep','lion','mend'],
+//     5 => ['world', 'china'],
+//     6 => ['likely'],
+//     9 => ['possessed'],
+// );
 
 /*
     Gets all the Date links from a Yearly archive page and return them as an array
@@ -77,7 +79,7 @@ function getDailyArchiveLinks($url, $xpath_string) {
 /*
     Get all the links from the year link provided
 */
-function getListOfArticleLinks($ary_of_links, $query_string) {
+function getListOfArticleLinks($ary_of_links, $query_string, $year) {
     global $matched_articles;
     global $list_of_bad_words;
     $pub_date = '';
@@ -124,12 +126,14 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
                                 $matched_article['word'] = $badword;
                                 $matched_article['article_text'] = $node_text;
                                 $matched_article['article_link'] = $xpath->query('descendant::a/attribute::href', $article)->item(0)->nodeValue;
-                                $matched_article['thumbnail_link'] = $xpath->query('descendant::a/img/attribute::data-src', $article)->item(0)->nodeValue;
+                                $thumbnail = $xpath->query('descendant::a/img/attribute::data-src', $article);
+                                if (strpos($link, 'index') == true) {
+                                    $matched_article['thumbnail_link'] = $thumbnail->item(0)->nodeValue;
+                                }
                                 array_push($matched_articles, $matched_article);
                             }
                         }
                     }
-
                 }
             }
         }
