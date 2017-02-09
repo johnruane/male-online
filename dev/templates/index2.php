@@ -1,46 +1,47 @@
 <?php
-    ini_set("error_reporting","-1");
-    ini_set("display_errors","On");
-    require_once("mo.php");
-    require_once("conf.php");
-    require_once("db.php");
-    $admin=false;
-    $admin=true;
-    $query='';
+ini_set("error_reporting","-1");
+ini_set("display_errors","On");
+require_once("mo.php");
+require_once("conf.php");
+require_once("db.php");
+$admin=false;
+$admin=true;
+$query='';
 
-    $links = array();
-    $matched_articles = array();
+$mo_homepage_url = "http://www.dailymail.co.uk/home/index.html";
+$mo_archive_url = "http://www.dailymail.co.uk/home/sitemaparchive/year_";
+$xpath_archive_article_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li";
+$xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
-    if (isset($_POST['action'])) {
-        switch ($_POST['action']) {
-            case 'clean-all-tables':
-                cleanAllTables();
-                echo "All tables cleaned";
-                break;
-            case 'populate-current-count-from-years': // query each year and populate current_count
-                $query = "archive";
-                foreach ($years as $year) {
-                    $links = getLinks('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', '//ul[@class="split"]/li');
-                    queryLinks($links,'//ul[contains(concat(" ", normalize-space(@class), " "), " archive-articles ")]/li');
-                    setFoundArticlesToCurrentDB($matched_articles);
-                }
-                echo "Current count populated from years array";
-                break;
-            case 'populate-today-count': // populate today_count
-                $query = "today";
-                queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
-                // $found_articles_array = queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//li');
-                setTodaysArticles($matched_articles);
-                echo "Today count populated";
-                break;
-            case 'set-yearly-count':
-                foreach($years as $year) {
-                    setYearlyTotalsByYear($year, getCurrentCountsForYear($year));
-                }
-                break;
-        }
+$article_list = array(); // List of all the articles got from yearly page
+$matched_articles = array();
+
+if (isset($_POST['action'])) {
+    switch ($_POST['action']) {
+        case 'clean-all-tables':
+            cleanAllTables();
+            echo "All tables cleaned";
+            break;
+        case 'populate-current-count-from-years': // query each year and populate current_count
+            foreach ($years_to_search as $year) {
+                $article_list = getDailyArchiveLinks($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
+                getListOfArticleLinks($article_list, $xpath_archive_article_query_string);
+                setFoundArticlesToCurrentDB($matched_articles);
+            }
+            echo "Current count populated from years array";
+            break;
+        case 'populate-today-count': // populate today_count
+            getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string);
+            setTodaysArticles($matched_articles);
+            echo "Today count populated";
+            break;
+        case 'set-yearly-count':
+            foreach($years_to_search as $year) {
+                setYearlyTotalsByYear($year, getCurrentCountsForYear($year));
+            }
+            break;
     }
-    $today = date('Y-d-m');
+}
 ?>
 
 <!doctype html>
@@ -90,7 +91,6 @@
             </div>
             <div class="col col-xs-4">
                 <h4>Last 7 Days</h4>
-                <!-- <?php $weeklyResults = getWeeklyCount($today, date('Ydm', strtotime('-7 days'))); ?> -->
                 <?php $weeklyResults = getWeeklyCount('1994-01-01', '1994-12-31'); ?>
                 <?php if ($weeklyResults) { ?>
                     <?php foreach ($weeklyResults as $row): ?>
@@ -101,7 +101,7 @@
             </div>
         </div>
         <div class="row">
-            <?php foreach ( $years as $year ): ?>
+            <?php foreach ( $years_to_search as $year ): ?>
                 <?php $yearlyResults = getYearlyTotals($year); ?>
                 <?php if ($yearlyResults) { ?>
                     <div class="col col-xs-4">

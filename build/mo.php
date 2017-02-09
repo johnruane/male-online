@@ -1,32 +1,34 @@
 <?php
 
-$years = ['1994', '1996', '1997'];
+$years_to_search = ['1994'];
 
 //Create table
-$sql_create_count_table = "CREATE TABLE current_count (
+$sql_create_count_table = 'CREATE TABLE current_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     publication_date DATE,
     word VARCHAR(20),
-    articles TEXT(10000)
-    )";
+    article_link TEXT(10000),
+    image_link TEXT(10000)
+    )';
 
-$sql_create_today_count_table = "CREATE TABLE today_count (
+$sql_create_today_count_table = 'CREATE TABLE today_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     publication_date DATE,
     word VARCHAR(20),
-    articles TEXT(10000)
-    )";
+    article_link TEXT(10000),
+    image_link TEXT(10000)
+    )';
 
 //Create table
-$sql_create_yearly_table = "CREATE TABLE yearly_count (
+$sql_create_yearly_table = 'CREATE TABLE yearly_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     year VARCHAR(4),
     word VARCHAR(20),
     count INT(3)
-    )";
+    )';
 
 // Select all
-$sql_select_all = "SELECT * FROM current_count";
+$sql_select_all = 'SELECT * FROM current_count';
 
 $list_of_bad_words_2 = array (
     4 => ['boob','bust','pert','pins','pout','racy','sexy','slim','trim','vamp'],
@@ -41,9 +43,9 @@ $list_of_bad_words_2 = array (
 );
 
 $list_of_bad_words = array (
-    3 => ['for','all','the'],
-    4 => ['seal','lion','mend'],
-    5 => ['world'],
+    3 => ['for','all','hot'],
+    4 => ['peep','lion','mend'],
+    5 => ['world', 'china'],
     6 => ['likely'],
     9 => ['possessed'],
 );
@@ -52,15 +54,14 @@ $list_of_bad_words = array (
     PHP function to query today
 */
 function moQueryToday() {
-    $query = "today";
+    $query = 'today';
     queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
     setTodaysArticles($matched_articles);
 }
 /*
-    Gets all the links from a Yearly archive page and returns them as an array
+    Gets all the Date links from a Yearly archive page and return them as an array
 */
-function getLinks($url, $query) {
-    $link_results = array();
+function getDailyArchiveLinks($url, $xpath_string) {
     $html = file_get_contents($url);
     $dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -69,22 +70,29 @@ function getLinks($url, $query) {
     libxml_use_internal_errors($internalErrors); // Restore error level
 
     $xpath = new DomXpath($dom);
-    $links = $xpath->query($query);
+    $article_list = $xpath->query($xpath_string); // Returns all list items from a yearly page
 
-    foreach ($links as $article) {
-    	$node = $xpath->query("descendant::a/attribute::href", $article);
-    	array_push($link_results, "http://www.dailymail.co.uk" . $node->item(0)->textContent);
+    $article_links = array();
+    foreach ($article_list as $article) {
+    	$node = $xpath->query('descendant::a/attribute::href', $article);
+    	array_push($article_links, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
     }
-    return $link_results;
+    return $article_links; // Returns an array of daily links
 }
 
 /*
     Get all the links from the year link provided
 */
-function queryLinks($ary_of_links, $container_div) {
-    global $bad_words;
-    $matches = array();
+function getListOfArticleLinks($ary_of_links, $query_string) {
+    global $matched_articles;
+    global $list_of_bad_words;
+    $pub_date = '';
 
+    /*
+        link = http://www.dailymail.co.uk/home/sitemaparchive/day_19941014.html
+        or
+        http://www.dailymail.co.uk/home/index.html
+    */
     foreach ($ary_of_links as $link) {
         $html = file_get_contents($link);
         $dom = new \DOMDocument('1.0', 'UTF-8');
@@ -94,61 +102,40 @@ function queryLinks($ary_of_links, $container_div) {
         libxml_use_internal_errors($internalErrors); // Restore error level
 
         $xpath = new DomXpath($dom);
-        $articles = $xpath->query($container_div);
+        $articles = $xpath->query($query_string);
 
-        foreach ($articles as $article) {
-            //$node = $xpath->query("descendant::a[@href]", $article);
-
-            // $temp_dom = new DOMDocument();
-            // foreach($node as $n)
-            // $temp_dom->appendChild($temp_dom->importNode($n,true));
-            // print_r($temp_dom->saveHTML().'<br />');
-
+        foreach ($articles as $article) { // article = DOMElement
             if ( is_object($article) ) {
-                $node_text = $article->nodeValue;
-                $node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); //Removes javascript
-                searchForWordFrequency($node_text, $bad_words, [$link, $article, $xpath]);
-            }
-        }
-    }
-}
+                $node_text = $article->nodeValue; // article[nodeValue] = string to search eg "She dropped her Chanel diamond ring" etc
+                $node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); // removes javascript
+                $node_text = preg_replace('/\s+/', ' ', $node_text); // replace large whitespaces with a single whitespace
+                $article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any space into array
 
-/*
-    Searches for 'bad word'
-*/
-function searchForWordFrequency($article_string, $list_of_bad_words, $article_info) {
-    global $list_of_bad_words;
-    global $found_words_array;
-    global $query;
-    $pub_date;
-    global $matched_articles;
+                foreach ($article_string_array as $article_word) { // loops through array of article[nodeValue]
+                    $article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word); // remove numerical & special characters
 
-    $article_string = preg_replace('/\s+/', ' ', $article_string); // Replace large whitespaces with a single whitespace
-    $article_string_array = preg_split('/[\s,]+/', $article_string); // Split string on any space
+                    if (isset($list_of_bad_words[strlen($article_word)])) { // if the 'article word' length matches a 'bad words' length
+                        foreach ($list_of_bad_words[strlen($article_word)] as $badword) {
+                            if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
 
-    foreach ($article_string_array as $article_word) { // loops through words from the article headline
-        $article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word);
-        if (isset($list_of_bad_words[strlen($article_word)])) { // does the 'article word' have any matching 'bad words' (by length)
-            foreach ($list_of_bad_words[strlen($article_word)] as $badword) { // loops over matching 'bads words'
-                if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
-                    if ($article_info) {
-                        $linkURL = explode('/', $article_info[0]);
-                        switch ($query) {
-                            case "archive":
-                                $pub_date = preg_split("/[_.]/", end($linkURL))[1]; // get the date from the article url
-                                break;
-                            case "today":
-                                $pub_date = date("Y-m-d");
-                                break;
+                                // different date function for 'archive' or 'daily'
+                                if (strpos($link, 'sitemaparchive') == true) {
+                                    $linkURL = explode('/', $link);
+                                    $pub_date = preg_split("/[_.]/", end($linkURL))[1]; // get the date from the article url
+                                } else {
+                                    $pub_date = date("Y-m-d");
+                                }
+
+                                $matched_article['date'] = $pub_date;
+                                $matched_article['word'] = $badword;
+                                $node = $xpath->query('descendant::a/attribute::href', $article);
+                                $matched_article['link'] = $node->item(0)->nodeValue;
+                                
+                                array_push($matched_articles, $matched_article);
+                            }
                         }
-                        $matched_article['date'] = $pub_date;
-                        $matched_article['word'] = $badword;
-                        $node = $article_info[2]->query("descendant::a/attribute::href", $article_info[1]);
-                        $matched_article['link'] = $node->item(0)->nodeValue;
-                        array_push($matched_articles, $matched_article);
-                    } else {
-                        array_push($found_words_array, $badword);
                     }
+
                 }
             }
         }
@@ -157,32 +144,32 @@ function searchForWordFrequency($article_string, $list_of_bad_words, $article_in
 /* SETTERS */
 function setFoundArticlesToCurrentDB($q_links) {
     $db = new Db();
-    $sql = "INSERT INTO current_count (publication_date, word, articles) VALUES (?, ?, ?)";
+    $sql = 'INSERT INTO current_count (publication_date, word, article_link) VALUES (?, ?, ?)';
     $stmt = $db->connect()->prepare($sql);
 
     foreach($q_links as $value) {
-        $stmt->bind_param("sss", $value['date'], $value['word'], $value['link']);
+        $stmt->bind_param('sss', $value['date'], $value['word'], $value['link']);
         $stmt->execute();
     }
 }
 function setTodaysArticles($q_links) {
     $db = new Db();
-    $sql = "INSERT INTO today_count (publication_date, word, articles) VALUES (?, ?, ?)";
+    $sql = 'INSERT INTO today_count (publication_date, word, article_link) VALUES (?, ?, ?)';
     $stmt = $db->connect()->prepare($sql);
 
     foreach($q_links as $value) {
-        $stmt->bind_param("sss", $value['date'], $value['word'], $value['link']);
+        $stmt->bind_param('sss', $value['date'], $value['word'], $value['link']);
         $stmt->execute();
     }
 }
 function setYearlyTotalsByYear($year, $result) {
-    $sql_count_yearly = "INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)";
+    $sql_count_yearly = 'INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)';
     $db = new Db();
     if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
         foreach($result as $row) {
            $word = $row['word'];
            $count = $row['total'];
-           $stmt->bind_param("ssi", $year, $row['word'], $row['total']);
+           $stmt->bind_param('ssi', $year, $row['word'], $row['total']);
            $stmt->execute();
         }
     } else {
