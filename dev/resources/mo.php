@@ -3,10 +3,11 @@
 $years_to_search = ['1994'];
 
 //Create table
-$sql_create_count_table = 'CREATE TABLE current_count (
+$sql_create_count_table = 'CREATE TABLE archive_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     publication_date DATE,
     word VARCHAR(20),
+    article_text TEXT(10000),
     article_link TEXT(10000),
     image_link TEXT(10000)
     )';
@@ -15,8 +16,9 @@ $sql_create_today_count_table = 'CREATE TABLE today_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     publication_date DATE,
     word VARCHAR(20),
+    article_text TEXT(1000),
     article_link TEXT(10000),
-    image_link TEXT(10000)
+    thumbnail_link TEXT(10000)
     )';
 
 //Create table
@@ -28,7 +30,7 @@ $sql_create_yearly_table = 'CREATE TABLE yearly_count (
     )';
 
 // Select all
-$sql_select_all = 'SELECT * FROM current_count';
+$sql_select_all = 'SELECT * FROM archive_count';
 
 $list_of_bad_words_2 = array (
     4 => ['boob','bust','pert','pins','pout','racy','sexy','slim','trim','vamp'],
@@ -50,14 +52,6 @@ $list_of_bad_words = array (
     9 => ['possessed'],
 );
 
-/*
-    PHP function to query today
-*/
-function moQueryToday() {
-    $query = 'today';
-    queryLinks(['http://www.dailymail.co.uk/home/index.html'],'//div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "femail")]//li | //div[@class="beta"]//div[contains(concat(" ", normalize-space(@class), " "), "tvshowbiz")]//li');
-    setTodaysArticles($matched_articles);
-}
 /*
     Gets all the Date links from a Yearly archive page and return them as an array
 */
@@ -91,7 +85,7 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
     /*
         link = http://www.dailymail.co.uk/home/sitemaparchive/day_19941014.html
         or
-        http://www.dailymail.co.uk/home/index.html
+        link = http://www.dailymail.co.uk/home/index.html
     */
     foreach ($ary_of_links as $link) {
         $html = file_get_contents($link);
@@ -128,9 +122,9 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
 
                                 $matched_article['date'] = $pub_date;
                                 $matched_article['word'] = $badword;
-                                $node = $xpath->query('descendant::a/attribute::href', $article);
-                                $matched_article['link'] = $node->item(0)->nodeValue;
-                                
+                                $matched_article['article_text'] = $node_text;
+                                $matched_article['article_link'] = $xpath->query('descendant::a/attribute::href', $article)->item(0)->nodeValue;
+                                $matched_article['thumbnail_link'] = $xpath->query('descendant::a/img/attribute::data-src', $article)->item(0)->nodeValue;
                                 array_push($matched_articles, $matched_article);
                             }
                         }
@@ -144,21 +138,21 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
 /* SETTERS */
 function setFoundArticlesToCurrentDB($q_links) {
     $db = new Db();
-    $sql = 'INSERT INTO current_count (publication_date, word, article_link) VALUES (?, ?, ?)';
+    $sql = 'INSERT INTO archive_count (publication_date, word, article_text, article_link, thumbnail_link) VALUES (?, ?, ?, ?, ?)';
     $stmt = $db->connect()->prepare($sql);
 
     foreach($q_links as $value) {
-        $stmt->bind_param('sss', $value['date'], $value['word'], $value['link']);
+        $stmt->bind_param('sssss', $value['date'], $value['word'], $value['article_text'], $value['article_link'], $value['thumbnail_link']);
         $stmt->execute();
     }
 }
 function setTodaysArticles($q_links) {
     $db = new Db();
-    $sql = 'INSERT INTO today_count (publication_date, word, article_link) VALUES (?, ?, ?)';
+    $sql = 'INSERT INTO today_count (publication_date, word, article_text, article_link, thumbnail_link) VALUES (?, ?, ?, ?, ?)';
     $stmt = $db->connect()->prepare($sql);
 
     foreach($q_links as $value) {
-        $stmt->bind_param('sss', $value['date'], $value['word'], $value['link']);
+        $stmt->bind_param('sssss', $value['date'], $value['word'], $value['article_text'], $value['article_link'], $value['thumbnail_link']);
         $stmt->execute();
     }
 }
@@ -183,12 +177,12 @@ function getDailyCount() {
     return $db->select($sql_select_daily);
 }
 function getWeeklyCount($today, $lastSevenDays) {
-    $sql_select_weekly = "SELECT word, count(*) AS 'total' FROM current_count WHERE publication_date BETWEEN '$today' AND '$lastSevenDays' GROUP BY word";
+    $sql_select_weekly = "SELECT word, count(*) AS 'total' FROM archive_count WHERE publication_date BETWEEN '$today' AND '$lastSevenDays' GROUP BY word";
     $db = new Db();
     return $db->select($sql_select_weekly);
 }
 function getCurrentCountsForYear($year) {
-    $sql_select_yearly = "SELECT word, count(*) AS 'total' FROM current_count WHERE publication_date BETWEEN '$year-01-01' AND '$year-12-31' GROUP BY word";
+    $sql_select_yearly = "SELECT word, count(*) AS 'total' FROM archive_count WHERE publication_date BETWEEN '$year-01-01' AND '$year-12-31' GROUP BY word";
     $db = new Db();
     return $db->select($sql_select_yearly);
 }
@@ -199,11 +193,11 @@ function getYearlyTotals($year) {
 }
 /* Other functions */
 function cleanAllTables() {
-    $sql_clean_current_count = "DELETE FROM current_count";
+    $sql_clean_archive_count = "DELETE FROM archive_count";
     $sql_clean_today_count = "DELETE FROM today_count";
     $sql_clean_yearly_count = "DELETE FROM yearly_count";
     $db = new Db();
-    $db->query($sql_clean_current_count);
+    $db->query($sql_clean_archive_count);
     $db->query($sql_clean_today_count);
     $db->query($sql_clean_yearly_count);
 }

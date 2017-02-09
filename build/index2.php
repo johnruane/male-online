@@ -22,7 +22,7 @@ if (isset($_POST['action'])) {
             cleanAllTables();
             echo "All tables cleaned";
             break;
-        case 'populate-current-count-from-years': // query each year and populate current_count
+        case 'populate-current-count-from-years': // query each year and populate archive_count
             foreach ($years_to_search as $year) {
                 $article_list = getDailyArchiveLinks($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
                 getListOfArticleLinks($article_list, $xpath_archive_article_query_string);
@@ -69,7 +69,7 @@ if (isset($_POST['action'])) {
     <?php if ($admin) { ?>
         <div class="admin-panel">
             <p>Clean tables: <input type="button" value="clean-all-tables"></p>
-            <p>Populate current_count: <input type="button" value="populate-current-count-from-years"></p>
+            <p>Populate archive_count: <input type="button" value="populate-current-count-from-years"></p>
             <p>Set yearly count: <input type="button" value="set-yearly-count"></p>
             <p>Populate today_count: <input type="button" value="populate-today-count"></p>
         </div>
