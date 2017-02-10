@@ -20,24 +20,21 @@ if (isset($_POST['action'])) {
     switch ($_POST['action']) {
         case 'clean-all-tables':
             cleanAllTables();
-            echo "All tables cleaned";
+            error_log('All tables cleaned', 0);
             break;
         case 'populate-current-count-from-years': // query each year and populate archive_count
             foreach ($years_to_search as $year) {
                 $article_list = getDailyArchiveLinks($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
                 getListOfArticleLinks($article_list, $xpath_archive_article_query_string, $year);
                 setFoundArticlesToCurrentDB($matched_articles);
-                echo 'querying '.$year.'<br/>';
-                flush();
-                ob_flush();
-                sleep(1);
+                error_log($year.' done.', 0);
             }
-            echo "Current count populated from years array";
+            error_log('Archive populated from years array', 0);
             break;
         case 'populate-today-count': // populate today_count
             getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string);
             setTodaysArticles($matched_articles);
-            echo "Today count populated";
+            error_log('Today count populated', 0);
             break;
         case 'set-yearly-count':
             foreach($years_to_search as $year) {
