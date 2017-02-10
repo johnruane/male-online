@@ -37,36 +37,38 @@
             <span></span>
         </nav>
     </header>
-    <div class="mo-main">
+    <div class="main-wrapper">
+        <div class="mo-main">
 
-    </div>
-    <div id="sidebar-tab" class="mo-sidebar-container" data-bind="sidebar">
-        <ul class="mo-sidebar-tabs">
-            <li><a href="#tab-1">Words</a></li>
-            <li><a href="#tab-2">Years</a></li>
-        </ul>
-        <div id="tab-1">
-            <ul>
-                <?php foreach ( $list_of_bad_words as $word_array) { ?>
-                    <?php foreach ( $word_array as $word_display_sidebar) { ?>
-                        <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="year-<?php echo $word_display_sidebar ?>">
-                            <label for="year-<?php echo $word_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $word_display_sidebar ?></label>
+        </div>
+        <div id="sidebar-tab" class="mo-sidebar-container" data-bind="sidebar">
+            <ul class="mo-sidebar-tabs">
+                <li><a href="#tab-1">Words</a></li>
+                <li><a href="#tab-2">Years</a></li>
+            </ul>
+            <div id="tab-1">
+                <ul class="mo-sidebar-content">
+                    <?php foreach ( $list_of_bad_words as $word_array) { ?>
+                        <?php foreach ( $word_array as $word_display_sidebar) { ?>
+                            <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="year-<?php echo $word_display_sidebar ?>">
+                                <label for="year-<?php echo $word_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $word_display_sidebar ?></label>
+                            </li>
+                        <?php } ?>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div id="tab-2">
+                <ul class="mo-sidebar-content">
+                    <li><input type="radio" name="sidebar-year" value="today" id="year-today">
+                        <label for="year-today" data-bind="sidebar-selection">Today</label>
+                    </li>
+                    <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
+                        <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
+                            <label for="year-<?php echo $year_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $year_display_sidebar ?></label>
                         </li>
                     <?php } ?>
-                <?php } ?>
-            </ul>
-        </div>
-        <div id="tab-2">
-            <ul class="mo-sidebar-content">
-                <li><input type="radio" name="sidebar-year" value="today" id="year-today">
-                    <label for="year-today" data-bind="sidebar-selection">Today</label>
-                </li>
-                <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
-                    <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
-                        <label for="year-<?php echo $year_display_sidebar ?>" data-bind="sidebar-selection"><?php echo $year_display_sidebar ?></label>
-                    </li>
-                <?php } ?>
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
 </main>

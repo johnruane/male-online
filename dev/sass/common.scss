@@ -91,11 +91,14 @@ p:hover {
 /* New styles */
 main {
     width: 100%;
-    @media (min-width: $md) {
-        width: calc(100% - #{$sidebar-width});
-    }
+    // @media (min-width: $md) {
+    //     width: calc(100% - #{$sidebar-width});
+    // }
     // transitions
     transition: all .5s ease;
+}
+.main-wrapper {
+    display: flex;
 }
 header {
     display: flex;
@@ -145,19 +148,23 @@ nav {
     }
 }
 .mo-main {
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+    flex: 1.5;
+    @media (min-width: $md) {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
 }
 .mo-sidebar-container {
     background: $sidebar-background;
-    position: fixed;
-    width: $sidebar-width;
-    right: -$sidebar-width;
+    width: $sidebar-width-sm;
     top: 0;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    ul {
+    flex: 1;
+    ul.mo-sidebar-content {
         list-style: none;
         li {
             padding: 5px;
@@ -190,20 +197,53 @@ nav {
     }
     @media (min-width: $md) {
         right: 0;
+        width: $sidebar-width;
+        flex: 0 0 $sidebar-width;
     }
     // transitions
     transition: all .5s ease;
 }
 .mo-sidebar-content {
-    padding: 50px $global-padding 0;
+    padding: $global-padding $global-padding 0;
 }
 .mo-sidebar-tabs {
     display: flex;
     justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin: 0;
     a {
         color: #000;
         text-decoration: none;
     }
+    li {
+        flex: 1;
+        text-align: center;
+        padding: $global-padding;
+        a {
+            padding: $global-padding;
+        }
+        &:first-child {
+            background-color: $tab-1-color;
+        }
+        &:last-child {
+            background-color: blue;
+        }
+    }
+    @media (max-width: $md) {
+        & li:first-child {
+            flex-grow: 1;
+        }
+        & li:last-child {
+            flex-grow: 2;
+        }
+    }
+}
+#tab-1 {
+    background-color: $tab-1-color;
+}
+#tab-2 {
+    background-color: $tab-2-color;
 }
 .mo-results-list {
     h2 {
