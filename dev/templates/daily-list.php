@@ -4,7 +4,7 @@
     require_once("db.php");
 ?>
 <div class="mo-results-list">
-    <h2>Today</h2>
+    <h2 class="results-heading">Today</h2>
     <?php $dailyResults = getDailyCount(); ?>
     <?php if ($dailyResults) { ?>
         <ul class="mo-daily-list">

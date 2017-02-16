@@ -201,6 +201,12 @@ function getYearlyTotals($year) {
     $db = new Db();
     return $db->select($sql_count_yearly);
 }
+function getWordCount($word) {
+    error_log($word, 0);
+    $sql_select_word = "SELECT year, count FROM yearly_count WHERE word = '$word'";
+    $db = new Db();
+    return $db->select($sql_select_word);
+}
 /* Other functions */
 function cleanAllTables() {
     $sql_clean_archive_count = "DELETE FROM archive_count";
@@ -210,5 +216,15 @@ function cleanAllTables() {
     $db->query($sql_clean_archive_count);
     $db->query($sql_clean_today_count);
     $db->query($sql_clean_yearly_count);
+}
+function getBadWords() {
+    $list_of_bad_words_sorted = [];
+    global $list_of_bad_words;
+    foreach ($list_of_bad_words as $value) {
+        foreach($value as $val) {
+            array_push($list_of_bad_words_sorted, $val);
+        }
+    }
+    return $list_of_bad_words_sorted;
 }
 ?>
