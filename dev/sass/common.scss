@@ -89,14 +89,23 @@ p:hover {
 
 
 /* New styles */
-.main-wrapper {
+.site-wrapper {
     display: flex;
-    width: calc(100% + #{$sidebar-width-sm});
-    &.menu-active {
-        width: 100%;
-    }
-    // transitions
-    transition: all .5s ease;
+}
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    // width: calc(100% + #{$sidebar-width-sm});
+    // @media (min-width: $md) {
+    //     width: 100%;
+    // }
+    // &.menu-active {
+    //     width: 100%;
+    // }
+    // // transitions
+    // transition: all .5s ease;
 }
 header {
     display: flex;
@@ -114,6 +123,7 @@ header {
 nav {
     width: 20px;
     height: 21px;
+    display: block;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
