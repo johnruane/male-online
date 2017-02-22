@@ -5,7 +5,7 @@
     $word = $_POST['word'];
 ?>
 <div class="mo-results-list">
-    <h2 class="results-heading">Today</h2>
+    <h2 class="results-heading"><?php echo $word ?></h2>
     <?php $wordResults = getWordCount($word); ?>
     <?php if ($wordResults) { ?>
         <ul class="mo-daily-list">
@@ -15,4 +15,5 @@
             <?php endforeach ?>
         </ul>
     <?php } ?>
+    <div class="ct-chart ct-golden-section"></div>
 </div>
