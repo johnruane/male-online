@@ -61,23 +61,24 @@ $sort_array = array();
                         <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
                             <label for="year-<?php echo $year_display_sidebar ?>" data-bind="sidebar-year-selection"><?php echo $year_display_sidebar ?></label>
                         </li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <div id="tab-2">
+                <ul class="mo-sidebar-content">
+                    <?php foreach (getBadWords() as $word_display_sidebar) { ?>
+                        <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="word-<?php echo $word_display_sidebar ?>">
+                            <label for="word-<?php echo $word_display_sidebar ?>" data-bind="sidebar-word-selection"><?php echo $word_display_sidebar ?></label>
+                        </li>
                         <?php } ?>
                     </ul>
                 </div>
-                <div id="tab-2">
-                    <ul class="mo-sidebar-content">
-                        <?php foreach (getBadWords() as $word_display_sidebar) { ?>
-                            <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="word-<?php echo $word_display_sidebar ?>">
-                                <label for="word-<?php echo $word_display_sidebar ?>" data-bind="sidebar-word-selection"><?php echo $word_display_sidebar ?></label>
-                            </li>
-                            <?php } ?>
-                        </ul>
-                    </div>
-                </div>
             </div>
-            <script src="//localhost:35729/livereload.js"></script>
-        </body>
-        </html>
+        </div>
+    </div>
+    <script src="//localhost:35729/livereload.js"></script>
+</body>
+</html>
         <script>
         (function(jQuery) {
             var MaleOnlineFunctions = function ($){

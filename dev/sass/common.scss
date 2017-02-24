@@ -157,7 +157,6 @@ nav {
     }
 }
 .mo-sidebar-container {
-    background: $sidebar-background;
     top: 0;
     width: 0;
     overflow-y: auto;
@@ -220,32 +219,40 @@ nav {
         width: 50%;
         display: inline-block;
         float: left;
+        user-select: none;
         a {
-            padding: $global-padding;
+            padding: ($global-padding+1);
             font-size: 1rem;
             float: left;
             width: 100%;
             &:focus {
                 outline: none;
+                user-select: none;
             }
         }
     }
-    [aria-controls="tab-1"] {
-        background: $tab-1-color;
+    &[aria-hidden=false] {
+        background: $tab-active-color;
     }
-    [aria-controls="tab-2"] {
-        background: $tab-2-color;
+    &[aria-hidden=true] {
+        background: $tab-color;
     }
 }
-#tab-1 {
-    background: $tab-1-color;
+.ui-state-default {
+    background: $tab-color;
 }
-#tab-2 {
-    background: $tab-2-color;
+.ui-tabs-active {
+    background: $tab-active-color;
 }
 .ui-tabs-panel {
     height: 100vh;
     overflow: scroll;
+    &[aria-hidden=false] {
+        background: $tab-active-color;
+    }
+    &[aria-hidden=true] {
+        background: $tab-color;
+    }
 }
 .mo-results-list {
     h2 {
