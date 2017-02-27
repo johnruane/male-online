@@ -207,6 +207,11 @@ function getWordCount($word) {
     $db = new Db();
     return $db->select($sql_select_word);
 }
+function getDailyArticlesFromWord($word) {
+    $sql_select_word_articles = "SELECT article_text, article_link, thumbnail_link FROM today_count WHERE word = '$word'";
+    $db = new Db();
+    return $db->select($sql_select_word_articles);
+}
 /* Other functions */
 function cleanAllTables() {
     $sql_clean_archive_count = "DELETE FROM archive_count";

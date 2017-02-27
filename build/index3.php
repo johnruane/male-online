@@ -44,7 +44,7 @@ $sort_array = array();
                 </nav>
             </header>
             <main class="mo-content">
-
+                <?php include 'daily-list.php' ?>
             </main>
         </div>
         <div id="sidebar-tab" class="mo-sidebar-container active" data-bind="sidebar">
@@ -87,8 +87,9 @@ $sort_array = array();
                 self.init = function() {
                     navToggle();
                     sidebarSelection();
-                    $('[for="year-today"]').trigger('click');
+                    // $('[for="year-today"]').trigger('click');
                     $('#sidebar-tab').tabs();
+                    toggleCollapse();
                 };
                 self.navToggle = function() {
                     $('[data-bind="navigation"]').on('click', function() {
@@ -132,6 +133,15 @@ $sort_array = array();
                                 self.wordChart();
                             }
                         });
+                    });
+                };
+                self.toggleCollapse = function() {
+                    $('[data-toggle="collapse"]').on('click', function() {
+                        if ($('.article-list-item').is(':visible')) {
+                            $(this).slideUp(300);
+                        }
+                        var $id = $(this).data('target');
+                        $($id).slideToggle(300);
                     });
                 };
                 self.wordChart = function() {
