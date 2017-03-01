@@ -157,18 +157,13 @@ nav {
     }
     ul.mo-sidebar-content {
         list-style: none;
-        li {
-            padding: 5px;
-            display: flex;
-            align-items: center;
-        }
         input {
             position: absolute;
             visibility: hidden;
         }
         input:checked {
             & ~ label:before {
-                background-color: $radio-background-color;
+                background-color: $radio-background-color-active;
             }
         }
         label {
@@ -182,7 +177,15 @@ nav {
                 width: 15px;
                 border: 2px solid #000;
                 border-radius: 25px;
-                margin-right: 5px;
+                margin-right: 10px;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        li + li {
+            label {
+                margin-top: ($global-margin/2);
             }
         }
     }

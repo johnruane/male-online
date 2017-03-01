@@ -55,11 +55,11 @@ $sort_array = array();
             <div id="tab-1">
                 <ul class="mo-sidebar-content">
                     <li><input type="radio" name="sidebar-year" value="today" id="year-today">
-                        <label for="year-today" data-bind="sidebar-year-selection">Today</label>
+                        <label for="year-today" data-bind="sidebar-year-selection"><span>Today</span></label>
                     </li>
                     <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
                         <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
-                            <label for="year-<?php echo $year_display_sidebar ?>" data-bind="sidebar-year-selection"><?php echo $year_display_sidebar ?></label>
+                            <label for="year-<?php echo $year_display_sidebar ?>" class="sidebar-year" data-bind="sidebar-year-selection"><span><?php echo $year_display_sidebar ?></span></label>
                         </li>
                     <?php } ?>
                 </ul>
@@ -68,7 +68,7 @@ $sort_array = array();
                 <ul class="mo-sidebar-content">
                     <?php foreach (getBadWords() as $word_display_sidebar) { ?>
                         <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="word-<?php echo $word_display_sidebar ?>">
-                            <label for="word-<?php echo $word_display_sidebar ?>" data-bind="sidebar-word-selection"><?php echo $word_display_sidebar ?></label>
+                            <label for="word-<?php echo $word_display_sidebar ?>" data-bind="sidebar-word-selection"><span><?php echo $word_display_sidebar ?></span></label>
                         </li>
                         <?php } ?>
                     </ul>

@@ -624,17 +624,9 @@ nav {
       right: 0;
       width: 200px; } }
   .mo-sidebar-container.active {
-    width: 140px; }
+    width: 100px; }
   .mo-sidebar-container ul.mo-sidebar-content {
     list-style: none; }
-    .mo-sidebar-container ul.mo-sidebar-content li {
-      padding: 5px;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center; }
     .mo-sidebar-container ul.mo-sidebar-content input {
       position: absolute;
       visibility: hidden; }
@@ -655,7 +647,11 @@ nav {
         width: 15px;
         border: 2px solid #000;
         border-radius: 25px;
-        margin-right: 5px; }
+        margin-right: 10px; }
+      .mo-sidebar-container ul.mo-sidebar-content label:hover {
+        cursor: pointer; }
+    .mo-sidebar-container ul.mo-sidebar-content li + li label {
+      margin-top: 7.5px; }
 
 .mo-sidebar-content {
   padding: 15px 15px 0; }
