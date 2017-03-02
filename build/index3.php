@@ -54,7 +54,7 @@ $sort_array = array();
             </ul>
             <div id="tab-1">
                 <ul class="mo-sidebar-content">
-                    <li><input type="radio" name="sidebar-year" value="today" id="year-today">
+                    <li><input type="radio" name="sidebar-year" value="today" id="year-today" checked>
                         <label for="year-today" data-bind="sidebar-year-selection"><span>Today</span></label>
                     </li>
                     <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
@@ -146,12 +146,13 @@ $sort_array = array();
                 };
                 self.wordChart = function() {
                     var $word_labels = [];
-                    $('.mo-daily-list .word-key').each(function() {
+                    $('.mo-word-list .word-key').each(function() {
                         var w = $(this).text();
                         $word_labels.push(w.slice(2));
+                        console.log(w.slice(2));
                     })
                     var $word_values = [];
-                    $('.mo-daily-list .word-value').each(function() {
+                    $('.mo-word-list .word-value').each(function() {
                         $word_values.push(parseInt($(this).text()));
                     });
 
@@ -160,19 +161,16 @@ $sort_array = array();
                         series: [$word_values],
                     };
                     var options = {
-                        lineSmooth: false,
+                        lineSmooth: true,
                         axisX: {
-                            showGrid: false
+                            showGrid: true,
+                            showLabel: true
                         },
                         axisY: {
                             offset: 0,
                             showLabel: false
                         }
                     };
-
-                    // Create a new line chart object where as first parameter we pass in a selector
-                    // that is resolving to our chart container element. The Second parameter
-                    // is the actual data object.
                     new Chartist.Line('.ct-chart', data, options);
                 };
                 return {

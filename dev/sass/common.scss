@@ -155,43 +155,48 @@ nav {
     &.active {
         width: $sidebar-width-sm;
     }
-    ul.mo-sidebar-content {
-        list-style: none;
-        input {
-            position: absolute;
-            visibility: hidden;
-        }
-        input:checked {
-            & ~ label:before {
-                background-color: $radio-background-color-active;
-            }
-        }
-        label {
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            &:before {
-                content: "";
-                display: block;
-                height: 15px;
-                width: 15px;
-                border: 2px solid #000;
-                border-radius: 25px;
-                margin-right: 10px;
-            }
-            &:hover {
-                cursor: pointer;
-            }
-        }
-        li + li {
-            label {
-                margin-top: ($global-margin/2);
-            }
-        }
-    }
 }
 .mo-sidebar-content {
+    list-style: none;
     padding: $global-padding $global-padding 0;
+    span {
+        border-bottom: $sidebar-label-border;
+    }
+    input {
+        position: absolute;
+        visibility: hidden;
+    }
+    input:checked {
+        & ~ label:before {
+            background-color: $radio-background-color-active;
+        }
+        & ~ label span {
+            border-color: $sidebar-label-border-color;
+        }
+    }
+    label {
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        &:before {
+            content: "";
+            display: block;
+            height: 15px;
+            width: 15px;
+            border: 2px solid #000;
+            border-radius: 25px;
+            margin-right: 5px;
+            margin-bottom: 3px;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    li + li {
+        label {
+            margin-top: ($global-margin/3);
+        }
+    }
 }
 .mo-sidebar-tabs {
     display: flex;
@@ -244,6 +249,7 @@ nav {
     }
 }
 .mo-results-list {
+    //visibility: hidden;
     h2 {
         text-align: center;
     }
@@ -281,4 +287,8 @@ nav {
 }
 .results-heading {
     margin-top: $global-padding;
+}
+.mo-word-list {
+    visibility: hidden;
+    position: absolute;
 }

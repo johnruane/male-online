@@ -624,37 +624,41 @@ nav {
       right: 0;
       width: 200px; } }
   .mo-sidebar-container.active {
-    width: 100px; }
-  .mo-sidebar-container ul.mo-sidebar-content {
-    list-style: none; }
-    .mo-sidebar-container ul.mo-sidebar-content input {
-      position: absolute;
-      visibility: hidden; }
-    .mo-sidebar-container ul.mo-sidebar-content input:checked ~ label:before {
-      background-color: #ffe37b; }
-    .mo-sidebar-container ul.mo-sidebar-content label {
-      font-size: 1rem;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center; }
-      .mo-sidebar-container ul.mo-sidebar-content label:before {
-        content: "";
-        display: block;
-        height: 15px;
-        width: 15px;
-        border: 2px solid #000;
-        border-radius: 25px;
-        margin-right: 10px; }
-      .mo-sidebar-container ul.mo-sidebar-content label:hover {
-        cursor: pointer; }
-    .mo-sidebar-container ul.mo-sidebar-content li + li label {
-      margin-top: 7.5px; }
+    width: 95px; }
 
 .mo-sidebar-content {
+  list-style: none;
   padding: 15px 15px 0; }
+  .mo-sidebar-content span {
+    border-bottom: 3px solid transparent; }
+  .mo-sidebar-content input {
+    position: absolute;
+    visibility: hidden; }
+  .mo-sidebar-content input:checked ~ label:before {
+    background-color: #ffe37b; }
+  .mo-sidebar-content input:checked ~ label span {
+    border-color: #000; }
+  .mo-sidebar-content label {
+    font-size: 1rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .mo-sidebar-content label:before {
+      content: "";
+      display: block;
+      height: 15px;
+      width: 15px;
+      border: 2px solid #000;
+      border-radius: 25px;
+      margin-right: 5px;
+      margin-bottom: 3px; }
+    .mo-sidebar-content label:hover {
+      cursor: pointer; }
+  .mo-sidebar-content li + li label {
+    margin-top: 5px; }
 
 .mo-sidebar-tabs {
   display: -webkit-box;
@@ -746,3 +750,7 @@ nav {
 
 .results-heading {
   margin-top: 15px; }
+
+.mo-word-list {
+  visibility: hidden;
+  position: absolute; }

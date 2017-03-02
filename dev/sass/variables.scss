@@ -1,5 +1,5 @@
 $sidebar-background: #add8e6;
-$sidebar-width-sm: 100px;
+$sidebar-width-sm: 95px;
 $sidebar-width: 200px;
 $header-height: 35px;
 $global-padding: 15px;
@@ -16,5 +16,5 @@ $radio-background-color-active: #ffe37b;
 $tab-active-color: #bfd8d2;
 $tab-color: #93a6a1;
 
-$sidebar-label-border: 1px solid grey;
-$sidebar-label-border-active: 3px solid grey;
+$sidebar-label-border: 3px solid transparent;
+$sidebar-label-border-color: #000;
