@@ -3,7 +3,7 @@
 // $years_to_search = ['1994', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
 // $years_to_search = ['1994', '1996', '1997', '1998'];
-$years_to_search = ['1999', '2000', '2001', '2002'];
+$years_to_search = ['2004', '2005'];
 // $years_to_search = ['2003', '2004', '2005', '2006'];
 // $years_to_search = ['2007', '2008', '2009', '2010'];
 // $years_to_search = ['2011', '2012', '2013', '2014'];
@@ -140,7 +140,7 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
                         }
                     }
                 }
-                error_log($article_string_array, 0);
+                error_log($node_text, 0);
             }
         }
     }

@@ -83,6 +83,7 @@ $sort_array = array();
         (function(jQuery) {
             var MaleOnlineFunctions = function ($){
                 var self = this;
+                var $word_values = [];
 
                 self.init = function() {
                     navToggle();
@@ -130,7 +131,7 @@ $sort_array = array();
                             },
                             success: function(data) {
                                 $('.mo-content').html(data);
-                                self.wordChart();
+                                self.wordGraph();
                             }
                         });
                     });
@@ -144,14 +145,13 @@ $sort_array = array();
                         $($id).slideToggle(300);
                     });
                 };
-                self.wordChart = function() {
+                self.wordGraph = function() {
                     var $word_labels = [];
                     $('.mo-word-list .word-key').each(function() {
                         var w = $(this).text();
                         $word_labels.push(w.slice(2));
                         console.log(w.slice(2));
                     })
-                    var $word_values = [];
                     $('.mo-word-list .word-value').each(function() {
                         $word_values.push(parseInt($(this).text()));
                     });
@@ -162,12 +162,15 @@ $sort_array = array();
                     };
                     var options = {
                         lineSmooth: true,
+                        showArea: true,
+                        fullWidth: true,
                         axisX: {
-                            showGrid: true,
-                            showLabel: true
+                            showGrid: false,
+                            showLabel: false
                         },
                         axisY: {
                             offset: 0,
+                            showGrid: false,
                             showLabel: false
                         }
                     };
