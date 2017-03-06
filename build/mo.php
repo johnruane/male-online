@@ -232,4 +232,15 @@ function getBadWords() {
     }
     return $list_of_bad_words_sorted;
 }
+function randomArticleByWord($word) {
+    $sql_random_article = "SELECT article_text FROM archive_count WHERE word = '$word' ORDER BY rand() LIMIT 1";
+    $db = new Db();
+    return $db->select($sql_random_article);
+}
+function cmp($a, $b) {
+    if ($a['value'] == $b['value']) {
+        return 0;
+    }
+    return ($a['value'] < $b['value']) ? -1 : 1;
+}
 ?>

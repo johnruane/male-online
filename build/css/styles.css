@@ -501,23 +501,6 @@ p:hover {
     display: flex;
     color: #000; }
 
-.col {
-  border: 1px solid #000;
-  padding: 6px;
-  text-align: center; }
-  .col h4 {
-    margin: 0; }
-  .col p {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    margin: 0;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between; }
-  .col + .col {
-    margin-left: 25px; }
-
 .admin-panel p {
   margin-bottom: 5px; }
 

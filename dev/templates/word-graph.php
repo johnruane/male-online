@@ -16,8 +16,10 @@
         </ul>
     <?php } ?>
     <div class="ct-chart ct-golden-section"></div>
-    <?php $wordResults.asort(); ?>
-    <div id="word-year-highest">Highest yearly usage: <?php echo current($wordResults)['year'] ?>: <?php echo current($wordResults)['count'] ?></span></div>
-    <div id="word-year-lowest">Lowest yearly usage: <?php echo end($wordResults)['year'] ?>: <?php echo end($wordResults)['count'] ?></span></div>
+    <?php usort($wordResults, "cmp"); ?>
+    <div id="word-year-highest">Highest: <?php echo current($wordResults)['count'] ?> times in <?php echo current($wordResults)['year'] ?></span></div>
+    <div id="word-year-lowest">Lowest: <?php echo end($wordResults)['count'] ?> times in <?php echo end($wordResults)['year'] ?></span></div>
+    <?php $randomWord = randomArticleByWord($word); ?>
     <h4 id="random-use">Random use in an article:</h4>
+    <p><?php echo $randomWord[0]['article_text']; ?></p>
 </div>
