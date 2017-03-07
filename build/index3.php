@@ -83,7 +83,9 @@ $sort_array = array();
         (function(jQuery) {
             var MaleOnlineFunctions = function ($){
                 var self = this;
-                var $word_values = [];
+                var $chartistWordValues= [];
+                var $chartistWordLabels = [];
+                var $chartist;
 
                 self.init = function() {
                     navToggle();
@@ -146,19 +148,17 @@ $sort_array = array();
                     });
                 };
                 self.wordGraph = function() {
-                    var $word_labels = [];
                     $('.mo-word-list .word-key').each(function() {
                         var w = $(this).text();
-                        $word_labels.push(w.slice(2));
+                        $chartistWordLabels.push(w.slice(2));
                         console.log(w.slice(2));
                     })
                     $('.mo-word-list .word-value').each(function() {
-                        $word_values.push(parseInt($(this).text()));
+                        $chartistWordValues.push(parseInt($(this).text()));
                     });
-
                     var data = {
-                        labels: $word_labels,
-                        series: [$word_values],
+                        labels: $chartistWordLabels,
+                        series: [$chartistWordValues],
                     };
                     var options = {
                         lineSmooth: true,
@@ -174,7 +174,7 @@ $sort_array = array();
                             showLabel: false
                         }
                     };
-                    new Chartist.Line('.ct-chart', data, options);
+                    $chartist = new Chartist.Line('.ct-chart', data, options);
                 };
                 return {
                     init: init,

@@ -293,3 +293,15 @@ nav {
     position: absolute;
 }
 // Graph styling
+.graph-text {
+    text-align: center;
+    span {
+        display: block;
+        & + span {
+            font-size: 1.5rem;
+        }
+    }
+    div + div {
+        margin-top: $global-padding;
+    }
+}

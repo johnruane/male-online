@@ -417,9 +417,6 @@ p, ul {
   margin-bottom: 1.5rem;
   font-weight: 300; }
 
-p {
-  text-align: justify; }
-
 h1, h2, h3, h4, h5, h6 {
   padding: 0;
   margin: 0; }
@@ -737,3 +734,12 @@ nav {
 .mo-word-list {
   visibility: hidden;
   position: absolute; }
+
+.graph-text {
+  text-align: center; }
+  .graph-text span {
+    display: block; }
+    .graph-text span + span {
+      font-size: 1.5rem; }
+  .graph-text div + div {
+    margin-top: 15px; }
