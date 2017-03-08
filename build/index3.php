@@ -140,11 +140,12 @@ $sort_array = array();
                 };
                 self.toggleCollapse = function() {
                     $('[data-toggle="collapse"]').on('click', function() {
+                        var $collapsable = $(this).data('target');
                         if ($('.article-list-item').is(':visible')) {
-                            $(this).slideUp(300);
+                            $($collapsable).slideUp(300);
+                        } else {
+                            $($collapsable).slideToggle(300);
                         }
-                        var $id = $(this).data('target');
-                        $($id).slideToggle(300);
                     });
                 };
                 self.wordGraph = function() {
