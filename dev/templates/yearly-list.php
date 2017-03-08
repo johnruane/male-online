@@ -11,7 +11,7 @@
     <?php if ($yearlyResults) { ?>
         <ul class="mo-yearly-list">
             <?php foreach ($yearlyResults as $row): ?>
-                <li><span class="word-key"><?php echo $row['word'] ?></span>
+                <li class="mo-list-item"><span class="word-key"><?php echo $row['word'] ?></span>
                 <span class="word-value"><?php echo $row['count'] ?></span></li>
             <?php endforeach ?>
         </ul>

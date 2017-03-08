@@ -1,13 +1,15 @@
 <?php
+ini_set('max_execution_time', 0);
 
-// $years_to_search = ['1994', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
+$years_to_search = ['1994', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
-// $years_to_search = ['1994', '1996', '1997', '1998'];
-$years_to_search = ['2004', '2005'];
-// $years_to_search = ['2003', '2004', '2005', '2006'];
-// $years_to_search = ['2007', '2008', '2009', '2010'];
-// $years_to_search = ['2011', '2012', '2013', '2014'];
-// $years_to_search = ['2015', '2016', '2017'];
+//$years_to_search = ['1994', '1996', '1997', '1998', '1999'];
+//$years_to_search = ['2001', '2002', '2003'];
+// $years_to_search = ['2004','2005','2006'];
+// $years_to_search = ['2007,'2008','2009'];
+// $years_to_search = ['2010','2011','2012'];
+// $years_to_search = ['2013','2014','2015'];
+// $years_to_search = ['2016','2017'];
 
 //Create table
 $sql_create_count_table = 'CREATE TABLE archive_count (
@@ -40,7 +42,7 @@ $sql_create_yearly_table = 'CREATE TABLE yearly_count (
 $sql_select_all = 'SELECT * FROM archive_count';
 
 $list_of_bad_words = array (
-    4 => ['boob','bust','pert','pins','pout','racy','sexy','slim','trim','vamp'],
+    4 => ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp'],
     5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy'],
     6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases',],
     7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender',],
@@ -233,7 +235,7 @@ function getBadWords() {
     return $list_of_bad_words_sorted;
 }
 function randomArticleByWord($word) {
-    $sql_random_article = "SELECT article_text FROM archive_count WHERE word = '$word' ORDER BY rand() LIMIT 1";
+    $sql_random_article = "SELECT article_text, article_link FROM archive_count WHERE word = '$word' ORDER BY rand() LIMIT 1";
     $db = new Db();
     return $db->select($sql_random_article);
 }

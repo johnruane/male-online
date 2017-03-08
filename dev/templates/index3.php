@@ -85,7 +85,6 @@ $sort_array = array();
                 var self = this;
                 var $chartistWordValues= [];
                 var $chartistWordLabels = [];
-                var $chartist;
 
                 self.init = function() {
                     navToggle();
@@ -152,7 +151,6 @@ $sort_array = array();
                     $('.mo-word-list .word-key').each(function() {
                         var w = $(this).text();
                         $chartistWordLabels.push(w.slice(2));
-                        console.log(w.slice(2));
                     })
                     $('.mo-word-list .word-value').each(function() {
                         $chartistWordValues.push(parseInt($(this).text()));
@@ -175,7 +173,11 @@ $sort_array = array();
                             showLabel: false
                         }
                     };
-                    $chartist = new Chartist.Line('.ct-chart', data, options);
+                    var mychart = new Chartist.Line('#LineChart .ct-chart', data, options);
+                    var mychart = $('#LineChart .ct-chart');
+                    mychart.get(0).__chartist__.update(data);
+                    $chartistWordLabels = [];
+                    $chartistWordValues = [];
                 };
                 return {
                     init: init,
