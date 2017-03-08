@@ -19,19 +19,20 @@
         <div class="ct-chart ct-golden-section"></div>
     </div>
     <?php usort($wordResults, "cmp"); ?>
-    <div class="graph-text">
-        <div id="word-year-highest">
-            <span>Highest:</span>
+    <div>
+        <div id="word-year-highest" class="graph-stat">
+            <span class="graph-label">Highest:</span>
             <span><?php echo current($wordResults)['count'] ?> times in <?php echo current($wordResults)['year'] ?></span>
         </div>
-        <div id="word-year-lowest">
+        <div id="word-year-lowest" class="graph-stat">
             <span class="graph-label">Lowest:</span>
             <span><?php echo end($wordResults)['count'] ?> times in <?php echo end($wordResults)['year'] ?></span>
         </div>
         <?php $randomWord = randomArticleByWord($word); ?>
-        <div class="graph-text-data">
-            <span id="random-use">Random use in an article: </span>
-            <span><a href="http://dailymail.co.uk/<?php echo $randomWord[0]['article_link']; ?>" target="_blank"><?php echo $randomWord[0]['article_text']; ?></a></span>
+        <div id="word-year-lowest" class="graph-stat">
+            <span class="graph-label" id="random-use">Random use in an article: </span>
+            <span><a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank"><?php echo $randomWord[0]['article_text']; ?></a>
         </div>
+        </span>
     </div>
 </div>

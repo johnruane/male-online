@@ -293,15 +293,17 @@ nav {
     position: absolute;
 }
 // Graph styling
-.graph-text {
+.graph-stat {
     text-align: center;
-    span {
-        display: block;
-        & + span {
-            font-size: 1.5rem;
-        }
-    }
-    div + div {
+    & + .graph-stat {
         margin-top: $global-padding;
     }
+}
+.graph-label {
+    display: block;
+    font-style: italic;
+}
+.graph-link {
+    font-size: 1.5rem;
+    color: #000;
 }

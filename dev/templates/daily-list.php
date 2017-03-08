@@ -16,7 +16,7 @@
                     <ul class="daily-article-list">
                         <?php $articleResults = getDailyArticlesFromWord($row['word']); ?>
                         <?php foreach ($articleResults as $list): ?>
-                            <li class="article-list-item"><a href="<?php echo $list['article_link'] ?>">
+                            <li class="article-list-item"><a href="<?php echo $mo_home_domain ?><?php echo $list['article_link'] ?>" target="_blank">
                                 <img src="<?php echo $list['thumbnail_link'] ?>">
                                 <span><?php echo $list['article_text'] ?></span>
                             </a></li>
