@@ -151,15 +151,19 @@ nav {
     width: 50%;
 }
 .mo-content {
-    margin-left: 5%;
-    margin-right: 5%;
     flex: 1;
     height: 100vh;
-    overflow: scroll;
+    @media (max-width: $md) {
+        overflow: scroll;
+    }
     @media (min-width: $md) {
         margin-left: 10%;
         margin-right: 10%;
     }
+}
+.mo-results-list {
+    padding-left: 5%;
+    padding-right: 5%;
 }
 .mo-sidebar-container {
     top: 0;
@@ -272,8 +276,11 @@ nav {
     background: $tab-active-color;
 }
 .ui-tabs-panel {
-    height: 100vh;
-    overflow: scroll;
+    height: 100%;
+    width: 100%;
+    @media (min-width: $md) {
+        overflow: scroll;
+    }
     &[aria-hidden=false] {
         background: $tab-active-color;
     }
