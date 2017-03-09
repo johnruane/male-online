@@ -7,7 +7,7 @@ $years_to_search = ['1994', '1996', '1997', '1998', '1999', '2000', '2001', '200
 
 //$years_to_search = ['1994', '1996', '1997', '1998', '1999'];
 //$years_to_search = ['2001', '2002', '2003'];
-// $years_to_search = ['2004','2005','2006'];
+//$years_to_search = ['2004','2005','2006'];
 // $years_to_search = ['2007,'2008','2009'];
 // $years_to_search = ['2010','2011','2012'];
 // $years_to_search = ['2013','2014','2015'];
@@ -234,6 +234,7 @@ function getBadWords() {
             array_push($list_of_bad_words_sorted, $val);
         }
     }
+    asort($list_of_bad_words_sorted);
     return $list_of_bad_words_sorted;
 }
 function randomArticleByWord($word) {

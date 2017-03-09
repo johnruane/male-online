@@ -85,12 +85,31 @@ header {
     align-items: center;
     background: #e8e8e8;
     padding: $global-padding 0;
+    height: $header-height;
     p {
         text-align: center;
         padding-left: $global-padding;
         margin: 0;
-        font-size: 1rem;
+        font-size: 1.5rem;
     }
+}
+.super-text {
+    vertical-align: super;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #272727;
+}
+.flam-text {
+    font-family: 'Bigshot One', cursive;
+}
+.thin-text {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 200;
+    color: #5A6C7B
+}
+.close {
+    word-spacing: -5px;
 }
 nav {
     width: 20px;
@@ -148,19 +167,26 @@ nav {
     overflow-y: auto;
     overflow-x: hidden;
     transition: all .5s ease;
+    &.active {
+        width: $sidebar-width-sm;
+    }
     @media (min-width: $md) {
         right: 0;
         width: $sidebar-width;
-    }
-    &.active {
-        width: $sidebar-width-sm;
+        &.active {
+            width: $sidebar-width;
+        }
     }
 }
 .mo-sidebar-content {
     list-style: none;
     padding: $global-padding $global-padding 0;
+    min-width: $sidebar-width-sm;
     span {
         border-bottom: $sidebar-label-border;
+        @media (max-width: $md) {
+            flex: 0;
+        }
     }
     input {
         position: absolute;
@@ -181,12 +207,16 @@ nav {
         &:before {
             content: "";
             display: block;
-            height: 15px;
-            width: 15px;
+            height: 10px;
+            width: 10px;
             border: 2px solid #000;
             border-radius: 25px;
-            margin-right: 5px;
+            margin-right: 6px;
             margin-bottom: 3px;
+            @media (min-width: $md) {
+                height: 15px;
+                width: 15px;
+            }
         }
         &:hover {
             cursor: pointer;
@@ -204,6 +234,7 @@ nav {
     list-style: none;
     padding: 0;
     margin: 0;
+    height: $header-height;
     a {
         color: #000;
         text-decoration: none;
@@ -211,11 +242,13 @@ nav {
     li {
         text-align: center;
         width: 50%;
+        min-width: 60px;
         display: inline-block;
         float: left;
         user-select: none;
+        display: flex;
+        align-items: center;
         a {
-            padding: ($global-padding+1);
             font-size: 1rem;
             float: left;
             width: 100%;

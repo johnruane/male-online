@@ -20,12 +20,13 @@
     </div>
     <?php usort($wordResults, "cmp"); ?>
     <div>
-        <div id="word-year-highest" class="graph-stat">
-            <span class="graph-label">Highest:</span>
-            <span><?php echo current($wordResults)['count'] ?> times in <?php echo current($wordResults)['year'] ?></span>
-        </div>
         <div id="word-year-lowest" class="graph-stat">
             <span class="graph-label">Lowest:</span>
+            <span><?php echo current($wordResults)['count'] ?> times in <?php echo current($wordResults)['year'] ?></span>
+        </div>
+        <?php reset($wordResults) ?>
+        <div id="word-year-highest" class="graph-stat">
+            <span class="graph-label">Highest:</span>
             <span><?php echo end($wordResults)['count'] ?> times in <?php echo end($wordResults)['year'] ?></span>
         </div>
         <?php $randomWord = randomArticleByWord($word); ?>

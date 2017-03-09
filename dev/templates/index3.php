@@ -24,8 +24,8 @@ $sort_array = array();
 
     <link rel="stylesheet" href="css/styles.css?v=1.0">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Eczar:800" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bigshot+One" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -36,7 +36,7 @@ $sort_array = array();
     <div class="site-wrapper">
         <div class="content-wrapper">
             <header>
-                <p>The Male Online</p>
+                <p class="close"><span class="super-text">The</span> <span class="flam-text">Male</span> <span class="thin-text">Online</span></p>
                 <nav data-bind="navigation">
                     <span></span>
                     <span></span>
@@ -49,8 +49,8 @@ $sort_array = array();
         </div>
         <div id="sidebar-tab" class="mo-sidebar-container active" data-bind="sidebar">
             <ul class="mo-sidebar-tabs">
-                <li><a href="#tab-1">Y</a></li>
-                <li><a href="#tab-2">W</a></li>
+                <li><a href="#tab-1">Year</a></li>
+                <li><a href="#tab-2">Word</a></li>
             </ul>
             <div id="tab-1">
                 <ul class="mo-sidebar-content">
@@ -79,114 +79,118 @@ $sort_array = array();
     <script src="//localhost:35729/livereload.js"></script>
 </body>
 </html>
-        <script>
-        (function(jQuery) {
-            var MaleOnlineFunctions = function ($){
-                var self = this;
-                var $chartistWordValues= [];
-                var $chartistWordLabels = [];
+<script>
+(function(jQuery) {
+    var MaleOnlineFunctions = function ($){
+        var self = this;
+        var $chartistWordValues= [];
+        var $chartistWordLabels = [];
 
-                self.init = function() {
-                    navToggle();
-                    sidebarSelection();
-                    // $('[for="year-today"]').trigger('click');
-                    $('#sidebar-tab').tabs();
-                    toggleCollapse();
-                };
-                self.navToggle = function() {
-                    $('[data-bind="navigation"]').on('click', function() {
-                        $('.mo-sidebar-container').toggleClass('active');
+        self.init = function() {
+            navToggle();
+            sidebarSelection();
+            // $('[for="year-today"]').trigger('click');
+            $('#sidebar-tab').tabs();
+            toggleCollapse();
+        };
+        self.navToggle = function() {
+            $('[data-bind="navigation"]').on('click', function() {
+                $('.mo-sidebar-container').toggleClass('active');
+            });
+        };
+        self.sidebarSelection = function() {
+            $('[data-bind="sidebar-year-selection"]').on('click', function() {
+                $sidebar_value = $(this).prev().val();
+                $main_component ="";
+                $data = "";
+                if ($sidebar_value == "today") {
+                    $.get("daily-list.php", function(data) {
+                        $('.mo-content').html(data);
+                        self.toggleCollapse();
                     });
-                };
-                self.sidebarSelection = function() {
-                    $('[data-bind="sidebar-year-selection"]').on('click', function() {
-                        $sidebar_value = $(this).prev().val();
-                        $main_component ="";
-                        $data = "";
-                        if ($sidebar_value == "today") {
-                            $.get("daily-list.php", function(data) {
-                                $('.mo-content').html(data);
-                            });
-                        } else {
-                            $.ajax({
-                                url: "yearly-list.php",
-                                type: "POST",
-                                data: {
-                                    year: $sidebar_value
-                                },
-                                success: function(data) {
-                                    $('.mo-content').html(data);
-                                }
-                            });
-                        }
-                    });
-                    $('[data-bind="sidebar-word-selection"]').on('click', function() {
-                        $sidebar_value = $(this).prev().val();
-                        $main_component ="";
-                        $data = "";
-                        $.ajax({
-                            url: "word-graph.php",
-                            type: "POST",
-                            data: {
-                                word: $sidebar_value
-                            },
-                            success: function(data) {
-                                $('.mo-content').html(data);
-                                self.wordGraph();
-                            }
-                        });
-                    });
-                };
-                self.toggleCollapse = function() {
-                    $('[data-toggle="collapse"]').on('click', function() {
-                        var $collapsable = $(this).data('target');
-                        if ($('.article-list-item').is(':visible')) {
-                            $($collapsable).slideUp(300);
-                        } else {
-                            $($collapsable).slideToggle(300);
-                        }
-                    });
-                };
-                self.wordGraph = function() {
-                    $('.mo-word-list .word-key').each(function() {
-                        var w = $(this).text();
-                        $chartistWordLabels.push(w.slice(2));
-                    })
-                    $('.mo-word-list .word-value').each(function() {
-                        $chartistWordValues.push(parseInt($(this).text()));
-                    });
-                    var data = {
-                        labels: $chartistWordLabels,
-                        series: [$chartistWordValues],
-                    };
-                    var options = {
-                        lineSmooth: true,
-                        showArea: true,
-                        fullWidth: true,
-                        axisX: {
-                            showGrid: false,
-                            showLabel: false
+                } else {
+                    $.ajax({
+                        url: "yearly-list.php",
+                        type: "POST",
+                        data: {
+                            year: $sidebar_value
                         },
-                        axisY: {
-                            offset: 0,
-                            showGrid: false,
-                            showLabel: false
+                        success: function(data) {
+                            $('.mo-content').html(data);
                         }
-                    };
-                    var mychart = new Chartist.Line('#LineChart .ct-chart', data, options);
-                    var mychart = $('#LineChart .ct-chart');
-                    mychart.get(0).__chartist__.update(data);
-                    $chartistWordLabels = [];
-                    $chartistWordValues = [];
-                };
-                return {
-                    init: init,
+                    });
+                }
+            });
+            $('[data-bind="sidebar-word-selection"]').on('click', function() {
+                $sidebar_value = $(this).prev().val();
+                if (typeof $previous_value === "undefined" || $sidebar_value != $previous_value) {
+                    $previous_value = $sidebar_value;
+                    $main_component ="";
+                    $data = "";
+                    $.ajax({
+                        url: "word-graph.php",
+                        type: "POST",
+                        data: {
+                            word: $sidebar_value
+                        },
+                        success: function(data) {
+                            $('.mo-content').html(data);
+                            self.wordGraph();
+                        }
+                    });
+                }
+            });
+        };
+        self.toggleCollapse = function() {
+            $('[data-toggle="collapse"]').on('click', function() {
+                var $collapsable = $(this).data('target');
+                if ($('.article-list-item').is(':visible')) {
+                    $($collapsable).slideUp(300);
+                } else {
+                    $($collapsable).slideToggle(300);
+                }
+            });
+        };
+        self.wordGraph = function() {
+            $('.mo-word-list .word-key').each(function() {
+                var w = $(this).text();
+                $chartistWordLabels.push(w.slice(2));
+            })
+            $('.mo-word-list .word-value').each(function() {
+                $chartistWordValues.push(parseInt($(this).text()));
+            });
+            var data = {
+                labels: $chartistWordLabels,
+                series: [$chartistWordValues],
+            };
+            var options = {
+                lineSmooth: true,
+                showArea: true,
+                fullWidth: true,
+                axisX: {
+                    showGrid: false,
+                    showLabel: false
+                },
+                axisY: {
+                    offset: 0,
+                    showGrid: false,
+                    showLabel: false
                 }
             };
-            // Setup the global object and run init on document ready
-            $(function(){
-                window.MaleOnlineFunctions = MaleOnlineFunctions(jQuery);
-                window.MaleOnlineFunctions.init();
-            });
-        })(jQuery);
-        </script>
+            var mychart = new Chartist.Line('#LineChart .ct-chart', data, options);
+            var mychart = $('#LineChart .ct-chart');
+            mychart.get(0).__chartist__.update(data);
+            $chartistWordLabels = [];
+            $chartistWordValues = [];
+        };
+        return {
+            init: init,
+        }
+    };
+    // Setup the global object and run init on document ready
+    $(function(){
+        window.MaleOnlineFunctions = MaleOnlineFunctions(jQuery);
+        window.MaleOnlineFunctions.init();
+    });
+})(jQuery);
+</script>
