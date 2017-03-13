@@ -81,12 +81,12 @@ p:hover {
 }
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     background: #e8e8e8;
     padding: $global-padding 0;
     height: $header-height;
-    p {
+    .close {
         text-align: center;
         padding-left: $global-padding;
         margin: 0;
@@ -141,6 +141,16 @@ nav {
         &:nth-child(3) {
             transform: rotate(45deg);
         }
+    }
+    &:hover {
+        cursor: pointer;
+    }
+}
+.archive-menu {
+    font-size: 0.7rem;
+    margin: 0;
+    @media (min-width: $md) {
+        display: none;
     }
     &:hover {
         cursor: pointer;

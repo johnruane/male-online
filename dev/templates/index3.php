@@ -36,12 +36,13 @@ $sort_array = array();
     <div class="site-wrapper">
         <div class="content-wrapper">
             <header>
-                <p class="close"><span class="super-text">The</span> <span class="flam-text">Male</span> <span class="thin-text">Online</span></p>
-                <nav data-bind="navigation">
+                <nav data-bind="menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </nav>
+                <p class="close"><span class="super-text">The</span> <span class="flam-text">Male</span> <span class="thin-text">Online</span></p>
+                <p data-bind="navigation" class="archive-menu">ARCHIVE<span>&nbsp;></span></p>
             </header>
             <main class="mo-content">
                 <?php include 'daily-list.php' ?>
@@ -93,10 +94,19 @@ $sort_array = array();
             $('#sidebar-tab').tabs();
             toggleCollapse();
         };
+        self.hideSidebar = function() {
+            var $sbar = $('#sidebar-tab');
+            if ($($sbar).hasClass('active')) {
+                $($sbar).css('position', 'block');
+            } else {
+                $($sbar).css('display', 'none');
+            }
+        };
         self.navToggle = function() {
             $('[data-bind="navigation"]').on('click', function() {
                 $('.mo-sidebar-container').toggleClass('active');
             });
+            document.getElementById('sidebar-tab').addEventListener('transitionend', hideSidebar);
         };
         self.sidebarSelection = function() {
             $('[data-bind="sidebar-year-selection"]').on('click', function() {
@@ -178,7 +188,7 @@ $sort_array = array();
                 }
             };
             var mychart = new Chartist.Line('#LineChart .ct-chart', data, options);
-            var mychart = $('#LineChart .ct-chart');
+            mychart = $('#LineChart .ct-chart');
             mychart.get(0).__chartist__.update(data);
             $chartistWordLabels = [];
             $chartistWordValues = [];

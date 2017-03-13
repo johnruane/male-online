@@ -186,7 +186,7 @@ function setYearlyTotalsByYear($year, $result) {
 }
 /* GETTERS */
 function getDailyCount() {
-    $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word ORDER BY total DESC";
+    $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word ORDER BY total DESC LIMIT 10";
     $db = new Db();
     return $db->select($sql_select_daily);
 }
