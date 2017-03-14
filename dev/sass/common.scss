@@ -86,22 +86,22 @@ header {
     background: #e8e8e8;
     padding: $global-padding 0;
     height: $header-height;
-    .close {
-        text-align: center;
-        padding-left: $global-padding;
-        margin: 0;
-        font-size: 1.5rem;
-    }
 }
 .super-text {
-    vertical-align: super;
-    font-family: 'Quicksand', sans-serif;
-    font-size: 0.7rem;
-    font-weight: bold;
-    color: #272727;
+
 }
 .flam-text {
     font-family: 'Bigshot One', cursive;
+    &:before {
+        content: "THE";
+        position: absolute;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 0.7rem;
+        font-weight: bold;
+        color: #272727;
+        top: -5px;
+        left: -5px;
+    }
 }
 .thin-text {
     font-family: 'Quicksand', sans-serif;
@@ -109,7 +109,11 @@ header {
     color: #5A6C7B
 }
 .close {
+    text-align: center;
+    margin: 0;
+    font-size: 1.5rem;
     word-spacing: -5px;
+    position: relative;
 }
 nav {
     width: 20px;
@@ -118,9 +122,9 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin-right: $global-margin;
     z-index: $z-index-high;
     @media (min-width: $md) {
+
         display: none;
     }
     span {

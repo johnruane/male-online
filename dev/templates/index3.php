@@ -21,6 +21,7 @@ $sort_array = array();
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    <script src="jquery.resize.js"></script>
 
     <link rel="stylesheet" href="css/styles.css?v=1.0">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
@@ -41,7 +42,7 @@ $sort_array = array();
                     <span></span>
                     <span></span>
                 </nav>
-                <p class="close"><span class="super-text">The</span> <span class="flam-text">Male</span> <span class="thin-text">Online</span></p>
+                <p class="close"><span class="flam-text">Male</span> <span class="thin-text">Online</span></p>
                 <p data-bind="navigation" class="archive-menu">ARCHIVE<span>&nbsp;></span></p>
             </header>
             <main class="mo-content">
@@ -86,6 +87,7 @@ $sort_array = array();
         var self = this;
         var $chartistWordValues= [];
         var $chartistWordLabels = [];
+        var $mychart;
 
         self.init = function() {
             navToggle();
@@ -93,20 +95,25 @@ $sort_array = array();
             // $('[for="year-today"]').trigger('click');
             $('#sidebar-tab').tabs();
             toggleCollapse();
+            $('.content-wrapper').resize(resize);
         };
-        self.hideSidebar = function() {
-            var $sbar = $('#sidebar-tab');
-            if ($($sbar).hasClass('active')) {
-                $($sbar).css('position', 'block');
-            } else {
-                $($sbar).css('display', 'none');
+        self.resize = function() {
+            if ( $($mychart).length > 0 ) {
+                $($mychart).get(0).__chartist__.update();
             }
         };
         self.navToggle = function() {
             $('[data-bind="navigation"]').on('click', function() {
                 $('.mo-sidebar-container').toggleClass('active');
+                var $sbar = $('#sidebar-tab');
+                if ($($sbar).hasClass('active')) {
+                    $($sbar).children('.mo-sidebar-content').css('display', 'block');
+                } else {
+                    setTimeout(function () {
+                        $($sbar).children('.mo-sidebar-content').css('display', 'none');
+                    }, 500);
+                }
             });
-            document.getElementById('sidebar-tab').addEventListener('transitionend', hideSidebar);
         };
         self.sidebarSelection = function() {
             $('[data-bind="sidebar-year-selection"]').on('click', function() {
@@ -187,9 +194,9 @@ $sort_array = array();
                     showLabel: false
                 }
             };
-            var mychart = new Chartist.Line('#LineChart .ct-chart', data, options);
-            mychart = $('#LineChart .ct-chart');
-            mychart.get(0).__chartist__.update(data);
+            $mychart = new Chartist.Line('#LineChart .ct-chart', data, options);
+            $mychart = $('#LineChart .ct-chart');
+            $mychart.get(0).__chartist__.update(data);
             $chartistWordLabels = [];
             $chartistWordValues = [];
         };

@@ -16,7 +16,7 @@
         </ul>
     <?php } ?>
     <div id="LineChart">
-        <div class="ct-chart ct-golden-section"></div>
+        <div class="ct-chart ct-square"></div>
     </div>
     <?php usort($wordResults, "cmp"); ?>
     <div>
