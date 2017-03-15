@@ -96,11 +96,11 @@ header {
         content: "THE";
         position: absolute;
         font-family: 'Quicksand', sans-serif;
-        font-size: 0.7rem;
+        font-size: 0.5rem;
         font-weight: bold;
         color: #272727;
-        top: -5px;
-        left: -5px;
+        top: -2px;
+        left: 5px;
     }
 }
 .thin-text {
@@ -111,13 +111,13 @@ header {
 .close {
     text-align: center;
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     word-spacing: -5px;
     position: relative;
 }
 nav {
-    width: 20px;
-    height: 21px;
+    width: 17px;
+    height: 18px;
     display: block;
     display: flex;
     flex-direction: column;
@@ -198,7 +198,7 @@ nav {
 }
 .mo-sidebar-content {
     list-style: none;
-    padding: $global-padding $global-padding 0;
+    padding: $global-padding 10px 0;
     min-width: $sidebar-width-sm;
     span {
         border-bottom: $sidebar-label-border;
@@ -260,14 +260,14 @@ nav {
     li {
         text-align: center;
         width: 50%;
-        min-width: 60px;
+        min-width: 50px;
         display: inline-block;
         float: left;
         user-select: none;
         display: flex;
         align-items: center;
         a {
-            font-size: 1rem;
+            font-size: 0.8rem;
             float: left;
             width: 100%;
             &:focus {
@@ -360,4 +360,10 @@ nav {
 .graph-link {
     font-size: 1.5rem;
     color: #000;
+}
+.ct-line {
+    stroke-width: 5px;
+}
+.ct-point {
+    stroke-width: 4px;
 }

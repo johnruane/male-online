@@ -23,8 +23,8 @@ $sort_array = array();
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="jquery.resize.js"></script>
 
-    <link rel="stylesheet" href="css/styles.css?v=1.0">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bigshot+One" rel="stylesheet">
 
