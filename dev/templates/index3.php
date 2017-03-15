@@ -16,7 +16,7 @@ $sort_array = array();
     <title>The Male Online</title>
     <meta name="description" content="The Male Online">
     <meta name="author" content="SitePoint">
-    <meta name="viewport" content="width=device-width; initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no; " />
+    <meta name="viewport" content="width=device-width; initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no;" />
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
@@ -49,7 +49,7 @@ $sort_array = array();
                 <?php include 'daily-list.php' ?>
             </main>
         </div>
-        <div id="sidebar-tab" class="mo-sidebar-container active" data-bind="sidebar">
+        <!-- <div id="sidebar-tab" class="mo-sidebar-container" data-bind="sidebar">
             <ul class="mo-sidebar-tabs">
                 <li><a href="#tab-1">Year</a></li>
                 <li><a href="#tab-2">Word</a></li>
@@ -76,7 +76,7 @@ $sort_array = array();
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <script src="//localhost:35729/livereload.js"></script>
 </body>
@@ -104,15 +104,15 @@ $sort_array = array();
         };
         self.navToggle = function() {
             $('[data-bind="navigation"]').on('click', function() {
-                $('.mo-sidebar-container').toggleClass('active');
+                $('.site-wrapper').toggleClass('active');
                 var $sbar = $('#sidebar-tab');
-                if ($($sbar).hasClass('active')) {
-                    $($sbar).children('.mo-sidebar-content').css('display', 'block');
-                } else {
-                    setTimeout(function () {
-                        $($sbar).children('.mo-sidebar-content').css('display', 'none');
-                    }, 500);
-                }
+                // if ($($sbar).hasClass('active')) {
+                //     $($sbar).children('.mo-sidebar-content').css('display', 'block');
+                // } else {
+                //     setTimeout(function () {
+                //         $($sbar).children('.mo-sidebar-content').css('display', 'none');
+                //     }, 500);
+                // }
             });
         };
         self.sidebarSelection = function() {
