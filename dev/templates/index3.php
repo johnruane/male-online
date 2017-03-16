@@ -161,6 +161,8 @@ $sort_array = array();
         self.toggleCollapse = function() {
             $('[data-toggle="collapse"]').on('click', function() {
                 var $collapsable = $(this).data('target');
+                var $all = $(this).parent().children('[data-toggle="collapse"]');
+
                 if ($('.article-list-item').is(':visible')) {
                     $($collapsable).slideUp(300);
                 } else {
