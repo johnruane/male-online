@@ -35,48 +35,48 @@ $sort_array = array();
 
 <body>
     <div class="site-wrapper">
+        <header>
+            <nav data-bind="menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </nav>
+            <p class="close"><span class="flam-text">Male</span> <span class="thin-text">Online</span></p>
+            <p data-bind="navigation" class="archive-menu">ARCHIVE<span>&nbsp;></span></p>
+        </header>
         <div class="content-wrapper">
-            <header>
-                <nav data-bind="menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </nav>
-                <p class="close"><span class="flam-text">Male</span> <span class="thin-text">Online</span></p>
-                <p data-bind="navigation" class="archive-menu">ARCHIVE<span>&nbsp;></span></p>
-            </header>
             <main class="mo-content">
                 <?php include 'daily-list.php' ?>
             </main>
-        </div>
-        <!-- <div id="sidebar-tab" class="mo-sidebar-container" data-bind="sidebar">
-            <ul class="mo-sidebar-tabs">
-                <li><a href="#tab-1">Year</a></li>
-                <li><a href="#tab-2">Word</a></li>
-            </ul>
-            <div id="tab-1">
-                <ul class="mo-sidebar-content">
-                    <li><input type="radio" name="sidebar-year" value="today" id="year-today" checked>
-                        <label for="year-today" data-bind="sidebar-year-selection"><span>Today</span></label>
-                    </li>
-                    <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
-                        <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
-                            <label for="year-<?php echo $year_display_sidebar ?>" class="sidebar-year" data-bind="sidebar-year-selection"><span><?php echo $year_display_sidebar ?></span></label>
-                        </li>
-                    <?php } ?>
+            <div id="sidebar-tab" class="mo-sidebar-container" data-bind="sidebar">
+                <ul class="mo-sidebar-tabs">
+                    <li><a href="#tab-1">Year</a></li>
+                    <li><a href="#tab-2">Word</a></li>
                 </ul>
-            </div>
-            <div id="tab-2">
-                <ul class="mo-sidebar-content">
-                    <?php foreach (getBadWords() as $word_display_sidebar) { ?>
-                        <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="word-<?php echo $word_display_sidebar ?>">
-                            <label for="word-<?php echo $word_display_sidebar ?>" data-bind="sidebar-word-selection"><span><?php echo $word_display_sidebar ?></span></label>
+                <div id="tab-1">
+                    <ul class="mo-sidebar-content">
+                        <li><input type="radio" name="sidebar-year" value="today" id="year-today" checked>
+                            <label for="year-today" data-bind="sidebar-year-selection"><span>Today</span></label>
                         </li>
+                        <?php foreach (range(2017, 1996) as $year_display_sidebar) { ?>
+                            <li><input type="radio" name="sidebar-year" value="<?php echo $year_display_sidebar ?>" id="year-<?php echo $year_display_sidebar ?>">
+                                <label for="year-<?php echo $year_display_sidebar ?>" class="sidebar-year" data-bind="sidebar-year-selection"><span><?php echo $year_display_sidebar ?></span></label>
+                            </li>
                         <?php } ?>
                     </ul>
                 </div>
+                <div id="tab-2">
+                    <ul class="mo-sidebar-content">
+                        <?php foreach (getBadWords() as $word_display_sidebar) { ?>
+                            <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="word-<?php echo $word_display_sidebar ?>">
+                                <label for="word-<?php echo $word_display_sidebar ?>" data-bind="sidebar-word-selection"><span><?php echo $word_display_sidebar ?></span></label>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div> -->
+        </div>
     </div>
     <script src="//localhost:35729/livereload.js"></script>
 </body>
