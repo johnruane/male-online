@@ -251,7 +251,7 @@ main {
 // }
 .mo-sidebar-content {
     list-style: none;
-    padding: $global-padding 10px 0;
+    padding: $global-padding 10px;
     min-width: $sidebar-width-sm;
     span {
         border-bottom: $sidebar-label-border;
@@ -356,12 +356,13 @@ main {
 }
 .mo-results-list {
     //visibility: hidden;
+    margin: $global-padding 0;
     h2 {
         text-align: center;
     }
     ul {
         list-style: none;
-        margin-bottom: $global-padding;
+        //margin-bottom: $global-padding;
         padding: 0;
     }
     .article-list-item {
@@ -434,4 +435,8 @@ main {
 }
 .ct-point {
     stroke-width: 4px;
+}
+footer {
+    height: 60px;
+    background-color: #e4e0ec;
 }

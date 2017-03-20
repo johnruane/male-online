@@ -76,6 +76,9 @@ $sort_array = array();
                     </div>
                 </div>
             </div>
+            <footer>
+                Footer footer
+            </footer>
         </div>
     </div>
     <script src="//localhost:35729/livereload.js"></script>
