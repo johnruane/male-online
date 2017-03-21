@@ -9,7 +9,7 @@
     <?php if ($dailyResults) { ?>
         <ul class="mo-daily-list">
             <?php foreach ($dailyResults as $row): ?>
-                <li class="mo-list-item" data-toggle="collapse" data-target="#<?php echo $row['word'] ?>"><span class="word-key"><?php echo $row['word'] ?></span>
+                <li class="mo-list-item" data-toggle="collapse" data-target="#<?php echo $row['word'] ?>" aria-expanded="false"><span class="word-key"><?php echo $row['word'] ?></span>
                     <span class="word-value"><?php echo $row['total'] ?></span>
                 </li>
                 <div id="<?php echo $row['word'] ?>" class="daily-article-wrapper" style="display:none">

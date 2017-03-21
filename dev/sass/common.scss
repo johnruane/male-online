@@ -79,7 +79,17 @@ p:hover {
     // overflow-y: auto;
     // overflow-x: hidden;
     // -webkit-overflow-scrolling: touch;
+    transition: all .5s ease;
 }
+.mo-sidebar-container {
+    width: $sidebar-width-sm;
+    transition: all .5s ease;
+}
+.site-wrapper.archive .mo-sidebar-container {
+    width: 0;
+    transition: all .5s ease;
+}
+
 .site-wrapper.active {
     // .content-wrapper {
     //     position: fixed;
@@ -108,15 +118,7 @@ p:hover {
 //     flex-direction: column;
 //     flex: 1;
 // }
-header {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: #e8e8e8;
-    padding: $global-padding 0;
-    height: $header-height;
-    width: 100vw;
-}
+
 .flam-text {
     font-family: 'Bigshot One', cursive;
     &:before {
@@ -142,6 +144,18 @@ header {
     // word-spacing: -5px;
     position: relative;
 }
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #e8e8e8;
+    padding: $global-padding 0;
+    height: $header-height;
+    width: 100vw;
+    > * {
+        z-index: $z-index-high;
+    }
+}
 nav {
     width: 17px;
     height: 18px;
@@ -149,7 +163,6 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    z-index: $z-index-high;
     @media (min-width: $md) {
 
         display: none;
@@ -218,6 +231,7 @@ main,
     height: auto;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
+    transition: all .5s ease;
     // position: fixed;
     // overflow-y: scroll;
     // overflow-x: hidden;
@@ -309,7 +323,14 @@ main {
     a {
         color: #000;
         text-decoration: none;
-        padding: 20px 18px;
+        padding: 23px 18px;
+        font-size: 0.8rem;
+        float: left;
+        width: 100%;
+        &:focus {
+            outline: none;
+            user-select: none;
+        }
     }
     li {
         text-align: center;
@@ -320,15 +341,6 @@ main {
         user-select: none;
         display: flex;
         align-items: center;
-        a {
-            font-size: 0.8rem;
-            float: left;
-            width: 100%;
-            &:focus {
-                outline: none;
-                user-select: none;
-            }
-        }
     }
     &[aria-hidden=false] {
         background: $tab-active-color;

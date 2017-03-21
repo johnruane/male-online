@@ -41,8 +41,8 @@ $sort_array = array();
                 <span></span>
                 <span></span>
             </nav>
-            <p class="close"><span class="flam-text">Male</span> <span class="thin-text">Online</span></p>
-            <p data-bind="navigation" class="archive-menu">ARCHIVE<span>&nbsp;></span></p>
+            <a href="/index3.php"><p class="close"><span class="flam-text">Male</span> <span class="thin-text">Online</span></p></a>
+            <p data-bind="archive" class="archive-menu">ARCHIVE<span>&nbsp;></span></p>
         </header>
         <div class="content-wrapper">
             <main class="mo-content">
@@ -93,7 +93,8 @@ $sort_array = array();
         var $mychart;
 
         self.init = function() {
-            navToggle();
+            menuToggle();
+            archiveToggle();
             sidebarSelection();
             // $('[for="year-today"]').trigger('click');
             $('#sidebar-tab').tabs();
@@ -105,9 +106,9 @@ $sort_array = array();
                 $($mychart).get(0).__chartist__.update();
             }
         };
-        self.navToggle = function() {
-            $('[data-bind="navigation"]').on('click', function() {
-                $('.site-wrapper').toggleClass('active');
+        self.archiveToggle = function() {
+            $('[data-bind="archive"]').on('click', function() {
+                $('.site-wrapper').toggleClass('archive');
                 var $sbar = $('#sidebar-tab');
                 // if ($($sbar).hasClass('active')) {
                 //     $($sbar).children('.mo-sidebar-content').css('display', 'block');
@@ -116,6 +117,11 @@ $sort_array = array();
                 //         $($sbar).children('.mo-sidebar-content').css('display', 'none');
                 //     }, 500);
                 // }
+            });
+        };
+        self.menuToggle = function() {
+            $('[data-bind="menu"]').on('click', function() {
+                $('.site-wrapper').toggleClass('menu');
             });
         };
         self.sidebarSelection = function() {
@@ -163,13 +169,18 @@ $sort_array = array();
         };
         self.toggleCollapse = function() {
             $('[data-toggle="collapse"]').on('click', function() {
-                var $collapsable = $(this).data('target');
-                var $all = $(this).parent().children('[data-toggle="collapse"]');
-
-                if ($('.article-list-item').is(':visible')) {
-                    $($collapsable).slideUp(300);
+                if ($(this).attr('aria-expanded') == "true") {
+                    $(this).attr('aria-expanded', 'false');
+                    $($(this).data('target')).slideUp(300);
                 } else {
-                    $($collapsable).slideToggle(300);
+                    var $current = $('.mo-daily-list li[aria-expanded="true"]');
+                    $($current).attr('aria-expanded', 'false');
+                    $($($current).data('target')).slideUp(300);
+
+                    var $target = $(this).data('target');
+                    $(this).attr('aria-expanded', 'true');
+                    $($target).slideDown(300);
+                    $('.mo-content').animate({scrollTop: $($target).offset().top - 120}, 1000);
                 }
             });
         };
