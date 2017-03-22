@@ -28,6 +28,7 @@ $sort_array = array();
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bigshot+One" rel="stylesheet">
 
+
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
@@ -35,26 +36,45 @@ $sort_array = array();
 
 <body>
     <div class="site-wrapper">
-        <header>
-            <nav data-bind="menu">
+        <!-- <div id="off-canvas-menu" class="navigation-menu">
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+            <li>test</li>
+        </div> -->
+        <header class="main-header">
+            <!-- <nav class="nav-icon" data-bind="menu">
                 <span></span>
                 <span></span>
                 <span></span>
-            </nav>
-            <a href="/index3.php"><p class="close"><span class="flam-text">Male</span> <span class="thin-text">Online</span></p></a>
-            <p data-bind="archive" class="archive-menu">ARCHIVE<span>&nbsp;></span></p>
+            </nav> -->
+            <a class="site-logo" href="/index3.php">
+                <p class="close">
+                    <span class="flam-text">Male </span>
+                    <span class="thin-text">Online</span>
+                </p>
+            </a>
+            <p class="archive-icon" data-bind="archive" >ARCHIVE<span>&nbsp;></span></p>
         </header>
         <div class="content-wrapper">
-            <main class="mo-content">
+            <main class="main-content">
                 <?php include 'daily-list.php' ?>
             </main>
-            <div id="sidebar-tab" class="mo-sidebar-container" data-bind="sidebar">
-                <ul class="mo-sidebar-tabs">
+            <div class="sidebar-wrapper" id="sidebar-tab" data-bind="sidebar">
+                <ul class="sidebar-tabs-nav">
                     <li><a href="#tab-1">Year</a></li>
                     <li><a href="#tab-2">Word</a></li>
                 </ul>
                 <div id="tab-1">
-                    <ul class="mo-sidebar-content">
+                    <ul class="sidebar-panel">
                         <li><input type="radio" name="sidebar-year" value="today" id="year-today" checked>
                             <label for="year-today" data-bind="sidebar-year-selection"><span>Today</span></label>
                         </li>
@@ -66,7 +86,7 @@ $sort_array = array();
                     </ul>
                 </div>
                 <div id="tab-2">
-                    <ul class="mo-sidebar-content">
+                    <ul class="sidebar-panel">
                         <?php foreach (getBadWords() as $word_display_sidebar) { ?>
                             <li><input type="radio" name="sidebar-word" value="<?php echo $word_display_sidebar ?>" id="word-<?php echo $word_display_sidebar ?>">
                                 <label for="word-<?php echo $word_display_sidebar ?>" data-bind="sidebar-word-selection"><span><?php echo $word_display_sidebar ?></span></label>
@@ -111,10 +131,10 @@ $sort_array = array();
                 $('.site-wrapper').toggleClass('archive');
                 var $sbar = $('#sidebar-tab');
                 // if ($($sbar).hasClass('active')) {
-                //     $($sbar).children('.mo-sidebar-content').css('display', 'block');
+                //     $($sbar).children('.sidebar-panel').css('display', 'block');
                 // } else {
                 //     setTimeout(function () {
-                //         $($sbar).children('.mo-sidebar-content').css('display', 'none');
+                //         $($sbar).children('.sidebar-panel').css('display', 'none');
                 //     }, 500);
                 // }
             });
@@ -131,7 +151,7 @@ $sort_array = array();
                 $data = "";
                 if ($sidebar_value == "today") {
                     $.get("daily-list.php", function(data) {
-                        $('.mo-content').html(data);
+                        $('.main-content').html(data);
                         self.toggleCollapse();
                     });
                 } else {
@@ -142,7 +162,7 @@ $sort_array = array();
                             year: $sidebar_value
                         },
                         success: function(data) {
-                            $('.mo-content').html(data);
+                            $('.main-content').html(data);
                         }
                     });
                 }
@@ -160,7 +180,7 @@ $sort_array = array();
                             word: $sidebar_value
                         },
                         success: function(data) {
-                            $('.mo-content').html(data);
+                            $('.main-content').html(data);
                             self.wordGraph();
                         }
                     });
@@ -169,27 +189,32 @@ $sort_array = array();
         };
         self.toggleCollapse = function() {
             $('[data-toggle="collapse"]').on('click', function() {
-                if ($(this).attr('aria-expanded') == "true") {
-                    $(this).attr('aria-expanded', 'false');
-                    $($(this).data('target')).slideUp(300);
-                } else {
-                    var $current = $('.mo-daily-list li[aria-expanded="true"]');
-                    $($current).attr('aria-expanded', 'false');
-                    $($($current).data('target')).slideUp(300);
-
-                    var $target = $(this).data('target');
-                    $(this).attr('aria-expanded', 'true');
-                    $($target).slideDown(300);
-                    $('.mo-content').animate({scrollTop: $($target).offset().top - 120}, 1000);
-                }
+                // if ($(this).attr('aria-expanded') == "true") {
+                //     $(this).attr('aria-expanded', 'false');
+                //     $($(this).data('target')).slideUp(300);
+                // } else {
+                //     var $current = $('.results-list li[aria-expanded="true"]');
+                //     $($current).attr('aria-expanded', 'false');
+                //     $($($current).data('target')).slideUp(300);
+                //
+                //     var $target = $(this).data('target');
+                //     $(this).attr('aria-expanded', 'true');
+                //     $($target).slideDown(300);
+                // }
+                var $target = $(this).data('target');
+                $($target).dialog({
+                    modal: true,
+                    width: 'auto',
+                    height: 'auto'
+                });
             });
         };
         self.wordGraph = function() {
-            $('.mo-word-list .word-key').each(function() {
+            $('.hidden-word-results .word-key').each(function() {
                 var w = $(this).text();
                 $chartistWordLabels.push(w.slice(2));
             })
-            $('.mo-word-list .word-value').each(function() {
+            $('.hidden-word-results .word-value').each(function() {
                 $chartistWordValues.push(parseInt($(this).text()));
             });
             var data = {
