@@ -108,7 +108,7 @@ p:hover {
 }
 .main-header {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background: #e8e8e8;
     padding: $global-padding 0;
@@ -118,14 +118,15 @@ p:hover {
         z-index: $z-index-high;
     }
 }
-.nav-icon {
-    &:hover {
-        cursor: pointer;
-    }
-}
+// .nav-icon {
+//     &:hover {
+//         cursor: pointer;
+//     }
+// }
 .site-logo {
     text-decoration: none;
     color: #000;
+    margin-left: $global-padding;
     &:hover {
         cursor: pointer;
     }
@@ -146,20 +147,21 @@ nav {
         transform-origin: right;
     }
 }
-.navigation-menu {
-    position: absolute;
-    z-index: $z-index-high;
-    left: -$navigation-width;
-    width: $navigation-width;
-    transition: all .5s ease;
-}
-.menu .navigation-menu {
-    left: 0;
-    transition: all .5s ease;
-}
+// .navigation-menu {
+//     position: absolute;
+//     z-index: $z-index-high;
+//     left: -$navigation-width;
+//     width: $navigation-width;
+//     transition: all .5s ease;
+// }
+// .menu .navigation-menu {
+//     left: 0;
+//     transition: all .5s ease;
+// }
 .archive-icon {
     font-size: 0.7rem;
-    margin: 0;
+    margin-right: $global-padding;
+    margin-bottom: 0;
     @media (min-width: $md) {
         display: none;
     }
@@ -305,7 +307,7 @@ main {
 }
 .article-list-item {
     font-size: .7rem;
-    padding: 5%;
+    padding: $global-padding;
     a {
         display: flex;
         color: #000;
@@ -372,8 +374,45 @@ main {
 .ct-point {
     stroke-width: 4px;
 }
+// jQuery modal overides
 .ui-dialog {
     z-index: $z-index-high;
+}
+.ui-dialog-titlebar {
+    position: relative;
+}
+.ui-button-icon-primary {
+    display: none;
+}
+.ui-button-text {
+    display: block;
+    text-indent: 0;
+}
+.ui-widget-content {
+	background: #ffffff;
+	color: #333333;
+}
+.ui-widget-header {
+	background: #e9e9e9;
+	color: #333333;
+	font-weight: bold;
+    height: $header-height;
+}
+.ui-widget-header a {
+	color: #333333;
+}
+.ui-dialog .ui-dialog-titlebar {
+	padding: .4em 1em;
+	position: relative;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+	position: absolute;
+	right: .3em;
+	top: 50%;
+	width: 20px;
+	margin: -10px 0 0 0;
+	padding: 1px;
+	height: 20px;
 }
 footer {
     height: 60px;

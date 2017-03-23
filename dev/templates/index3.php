@@ -205,7 +205,10 @@ $sort_array = array();
                 $($target).dialog({
                     modal: true,
                     width: 'auto',
-                    height: 'auto'
+                    height: 'auto',
+                    show: 'fade',
+                    hide: 'fade',
+                    closeText: "X"
                 });
             });
         };
