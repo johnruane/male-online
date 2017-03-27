@@ -204,18 +204,17 @@ $sort_array = array();
                 var $target = $(this).data('target');
                 $($target).dialog({
                     modal: true,
-                    width: 'auto',
-                    height: 'auto',
                     show: 'fade',
                     hide: 'fade',
                     closeText: "X",
+                    resizable: false,
+                    draggable: false,
                     open: function(event, ui) {
                         $('body').addClass('modal-open');
                     },
                     beforeClose: function(event, ui) {
                         $('body').removeClass('modal-open');
-                    },
-                    position: { my: "left top", at: "left bottom", of: window }
+                    }
                 });
             });
         };

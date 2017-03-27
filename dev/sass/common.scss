@@ -400,6 +400,10 @@ main {
 .ui-widget-header a {
 	color: #333333;
 }
+.ui-dialog {
+    width: 100% !important;
+    height: 100vh !important;
+}
 .ui-dialog .ui-dialog-titlebar {
 	position: relative;
 }
