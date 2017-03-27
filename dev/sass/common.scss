@@ -385,34 +385,40 @@ main {
     display: none;
 }
 .ui-button-text {
+    @extend .thin-text;
     display: block;
     text-indent: 0;
+    font-size: 30px;
 }
 .ui-widget-content {
-	background: #ffffff;
+	background: transparent;
 	color: #333333;
 }
 .ui-widget-header {
-	background: #e9e9e9;
-	color: #333333;
-	font-weight: bold;
-    height: $header-height;
+    height: 0;
 }
 .ui-widget-header a {
 	color: #333333;
 }
 .ui-dialog .ui-dialog-titlebar {
-	padding: .4em 1em;
 	position: relative;
 }
 .ui-dialog .ui-dialog-titlebar-close {
-	position: absolute;
-	right: .3em;
-	top: 50%;
-	width: 20px;
-	margin: -10px 0 0 0;
-	padding: 1px;
-	height: 20px;
+    position: fixed;
+    right: -1px;
+    top: 0;
+    width: 50px;
+    margin: -1px 0 0 0;
+    padding: 0px;
+    height: 50px;
+    border: 1px solid #d7d7d7;
+    background: rgba(255,255,255,0.5);
+    &:hover {
+        background: rgba(255,255,255,1);
+    }
+}
+.modal-open .site-wrapper {
+    opacity: 0;
 }
 footer {
     height: 60px;

@@ -208,7 +208,14 @@ $sort_array = array();
                     height: 'auto',
                     show: 'fade',
                     hide: 'fade',
-                    closeText: "X"
+                    closeText: "X",
+                    open: function(event, ui) {
+                        $('body').addClass('modal-open');
+                    },
+                    beforeClose: function(event, ui) {
+                        $('body').removeClass('modal-open');
+                    },
+                    position: { my: "left top", at: "left bottom", of: window }
                 });
             });
         };
