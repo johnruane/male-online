@@ -214,6 +214,7 @@ $sort_array = array();
                     },
                     beforeClose: function(event, ui) {
                         $('body').removeClass('modal-open');
+                        $(this).dialog('destroy');
                     }
                 });
             });

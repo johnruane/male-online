@@ -319,8 +319,8 @@ main {
         margin-right: ($global-padding/2);
     }
 }
-.article-list-item + .article-list-item {
-    border-top: 1px solid #f9defc;
+.article-list-item {
+    border-bottom: 1px solid #f9defc;
 }
 .results-heading {
     text-align: center;
@@ -329,7 +329,8 @@ main {
 .results-list {
     list-style: none;
     padding: 0;
-    background: #fef4ff;
+    background: $results-list-background-color;
+
 }
 .results-list-item {
     font-size: 1.5rem;
@@ -390,22 +391,22 @@ main {
     text-indent: 0;
     font-size: 30px;
 }
-.ui-widget-content {
-	background: transparent;
-	color: #333333;
-}
-.ui-widget-header {
-    height: 0;
-}
 .ui-widget-header a {
 	color: #333333;
 }
 .ui-dialog {
     width: 100% !important;
     height: 100vh !important;
+    overflow-y: auto;
+    position: fixed;
+    top: 0 !important;
+    background-color: $results-list-background-color;
 }
 .ui-dialog .ui-dialog-titlebar {
 	position: relative;
+}
+.ui-dialog .ui-widget-header {
+    height: 0;
 }
 .ui-dialog .ui-dialog-titlebar-close {
     position: fixed;
