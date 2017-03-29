@@ -243,9 +243,9 @@ function randomArticleByWord($word) {
     return $db->select($sql_random_article);
 }
 function cmp($a, $b) {
-    if ($a['value'] == $b['value']) {
+    if ($a['count'] == $b['count']) {
         return 0;
     }
-    return ($a['value'] < $b['value']) ? -1 : 1;
+    return ($a['count'] < $b['count']) ? -1 : 1;
 }
 ?>

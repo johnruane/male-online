@@ -2,9 +2,9 @@
     require_once("mo.php");
     require_once("conf.php");
     require_once("db.php");
-    $word = $_POST['word'];
+    //$word = $_POST['word'];
 ?>
-<div class="results-container">
+<div class="results-container chart" id="<?php echo $word ?>-chart">
     <h2 class="results-heading"><?php echo $word ?></h2>
     <?php $wordResults = getWordCount($word); ?>
     <?php if ($wordResults) { ?>
@@ -15,9 +15,7 @@
             <?php endforeach ?>
         </ul>
     <?php } ?>
-    <div id="LineChart">
-        <div class="ct-chart ct-square"></div>
-    </div>
+    <div class="ct-chart ct-square <?php echo $word ?>-chart"></div>
     <?php usort($wordResults, "cmp"); ?>
     <div>
         <div id="word-year-lowest" class="graph-stat">

@@ -304,6 +304,8 @@ main {
 }
 .results-container {
     margin: $global-padding 0;
+    width: 200px;
+    float: left;
 }
 .article-list-item {
     font-size: .7rem;
