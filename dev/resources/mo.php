@@ -1,12 +1,11 @@
 <?php
-ini_set('max_execution_time', 0);
-
 $mo_home_domain="http://dailymail.co.uk/";
 
 $years_to_search = ['1994', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
 //$years_to_search = ['1994', '1996', '1997', '1998', '1999'];
-//$years_to_search = ['2001', '2002', '2003'];
+//$years_to_search = ['2016'];
+ // '2002', '2003'
 //$years_to_search = ['2004','2005','2006'];
 // $years_to_search = ['2007,'2008','2009'];
 // $years_to_search = ['2010','2011','2012'];
@@ -99,6 +98,7 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
         link = http://www.dailymail.co.uk/home/index.html
     */
     foreach ($ary_of_links as $link) {
+        error_log($link, 0);
         $html = file_get_contents($link);
         $dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -144,7 +144,6 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
                         }
                     }
                 }
-                error_log($node_text, 0);
             }
         }
     }
