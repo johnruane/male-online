@@ -4,7 +4,7 @@
     require_once("db.php");
     //$word = $_POST['word'];
 ?>
-<div class="results-container chart" id="<?php echo $word ?>-chart">
+<div class="results-container chart clearfix" id="<?php echo $word ?>-chart">
     <h2 class="results-heading"><?php echo $word ?></h2>
     <?php $wordResults = getWordCount($word); ?>
     <?php if ($wordResults) { ?>
@@ -18,7 +18,7 @@
     <div class="ct-chart ct-square <?php echo $word ?>-chart"></div>
     <?php usort($wordResults, "cmp"); ?>
     <div>
-        <div id="word-year-lowest" class="graph-stat">
+        <!-- <div id="word-year-lowest" class="graph-stat">
             <span class="graph-label">Lowest:</span>
             <span><?php echo current($wordResults)['count'] ?> times in <?php echo current($wordResults)['year'] ?></span>
         </div>
@@ -26,7 +26,7 @@
         <div id="word-year-highest" class="graph-stat">
             <span class="graph-label">Highest:</span>
             <span><?php echo end($wordResults)['count'] ?> times in <?php echo end($wordResults)['year'] ?></span>
-        </div>
+        </div> -->
         <?php $randomWord = randomArticleByWord($word); ?>
         <div id="word-year-lowest" class="graph-stat">
             <span class="graph-label" id="random-use">Random use in an article: </span>

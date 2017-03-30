@@ -302,10 +302,13 @@ main {
         background: $tab-color;
     }
 }
+.graph-wrapper {
+    display: flex;
+    flex-flow: wrap;
+}
 .results-container {
-    margin: $global-padding 0;
-    width: 200px;
-    float: left;
+    padding: $global-padding;
+    width: 50%;
 }
 .article-list-item {
     font-size: .7rem;
@@ -372,10 +375,23 @@ main {
     color: #000;
 }
 .ct-line {
-    stroke-width: 5px;
+    stroke-width: 2px;
 }
 .ct-point {
-    stroke-width: 4px;
+    stroke-width: 0px;
+}
+.ct-labels {
+    dominant-baseline: central;
+    text-anchor: middle;
+}
+.ct-labels > *:not(:first-child, :last-child) {
+    span {
+        display: none;
+    }
+}
+.ct-series {
+    border-left: 1px solid red;
+    border-bottom: 1px solid red;
 }
 // jQuery modal overides
 .ui-dialog {

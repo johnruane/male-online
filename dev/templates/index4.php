@@ -66,14 +66,16 @@ $sort_array = array();
         </header>
         <div class="content-wrapper">
             <main class="main-content">
-                <?php foreach (getBadWords() as $word): ?>
-                    <?php include 'word-graph.php' ?>
-                <?php endforeach ?>
+                <div class="graph-wrapper">
+                    <?php foreach (getBadWords() as $word): ?>
+                        <?php include 'word-graph.php' ?>
+                    <?php endforeach ?>
+                </div>
             </main>
-            <footer>
-                Footer footer
-            </footer>
         </div>
+        <footer>
+            Footer footer
+        </footer>
     </div>
     <script src="//localhost:35729/livereload.js"></script>
 </body>
@@ -199,24 +201,32 @@ $sort_array = array();
                 var $id = $(this).attr('id');
                 var $word = $(this).attr('id');
                 var $graph_vals = $(this).find('.word-value');
+                var $graph_labels = $(this).find('.word-key');
                 $($graph_vals).each(function() {
                     $chartistWordValues.push(parseInt($(this).text()));
                 });
+                $($graph_labels).each(function() {
+                    $chartistWordLabels.push(parseInt($(this).text()));
+                });
                 var data = {
                     series: [$chartistWordValues],
+                    labels: $chartistWordLabels
                 };
                 var options = {
                     lineSmooth: true,
                     showArea: true,
                     fullWidth: true,
+                    chartPadding: {
+                      right: 40
+                    },
                     axisX: {
                         showGrid: false,
-                        showLabel: false
+                        showLabel: true
                     },
                     axisY: {
                         offset: 0,
                         showGrid: false,
-                        showLabel: false
+                        showLabel: false,
                     }
                 };
                 $mychart = new Chartist.Line('.'+ $word, data, options);
