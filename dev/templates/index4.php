@@ -64,15 +64,13 @@ $sort_array = array();
             </a>
             <p class="archive-icon" data-bind="archive" >ARCHIVE<span>&nbsp;></span></p>
         </header>
-        <div class="content-wrapper">
-            <main class="main-content">
-                <div class="graph-wrapper">
-                    <?php foreach (getBadWords() as $word): ?>
-                        <?php include 'word-graph.php' ?>
-                    <?php endforeach ?>
-                </div>
-            </main>
-        </div>
+        <main class="main-content">
+            <div class="graph-wrapper">
+                <?php foreach (getBadWords() as $word): ?>
+                    <?php include 'word-graph.php' ?>
+                <?php endforeach ?>
+            </div>
+        </main>
         <footer>
             Footer footer
         </footer>
@@ -217,7 +215,7 @@ $sort_array = array();
                     showArea: true,
                     fullWidth: true,
                     chartPadding: {
-                      right: 40
+                      right: 10
                     },
                     axisX: {
                         showGrid: false,
