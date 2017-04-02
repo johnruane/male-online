@@ -15,10 +15,9 @@
             <?php endforeach ?>
         </ul>
         <div class="ct-chart ct-square <?php echo $word ?>-chart"></div>
-        <?php usort($wordResults, "cmp"); ?>
         <div class="graph-stat">
             <span class="graph-label" id="random-use">Random use in an article: </span>
-            <span><a class="graph-link" href="#" target="_blank">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vestibulum finibus commods.</a>
+            <span><a class="graph-link" href="#" target="_blank">What worrying does to your health and how to beat it</a>
         </div>
     </div>
 <?php } ?>

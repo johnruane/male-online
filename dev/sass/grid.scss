@@ -71,6 +71,9 @@ $xl:                        1400px;
 // .pull-right {
 //   float: right;
 // }
+body {
+    box-sizing: border-box;
+}
 .container {
     width: 80%;
     margin: 0 auto;
