@@ -1,7 +1,7 @@
 <?php
 $mo_home_domain="http://dailymail.co.uk/";
 
-$years_to_search = ['1994', '1996', '1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
+$years = [ '2016'];
 
 //$years_to_search = ['1994', '1996', '1997', '1998', '1999'];
 //$years_to_search = ['2016'];
@@ -45,8 +45,8 @@ $sql_select_all = 'SELECT * FROM archive_count';
 $list_of_bad_words = array (
     4 => ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp'],
     5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy'],
-    6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases',],
-    7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender',],
+    6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases'],
+    7 => ['ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender'],
     8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
     9 => ['posterior','revealing','under-boob'],
     10 => ['skin-tight','super-slim'],

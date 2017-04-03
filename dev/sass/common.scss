@@ -1,8 +1,6 @@
 body {
     background: #ffffff;
     font-family: Futura, Arial, sans-serif;
-    font-size: 14px;
-    line-height: initial;
 }
 
 .title-wrapper {
@@ -305,14 +303,17 @@ main {
 .graph-wrapper {
     display: flex;
     flex-flow: wrap;
-    max-width: 800px;
+    // max-width: 800px;
     margin: 0 auto;
 }
 .graph-container {
     padding: $global-padding;
-    width: 50%;
+    // width: 50%;
     @media (min-width: $md) {
         width: 25%;
+    }
+    @media (min-width: $md) {
+        width: 20%;
     }
 }
 .article-list-item {
@@ -383,22 +384,25 @@ main {
         font-size: 1rem;
     }
 }
-.ct-line {
+.word-chart .ct-line {
     stroke-width: $graph-line-width;
 }
-.ct-point {
+.word-chart .ct-point {
     stroke-width: $graph-point-width;
 }
-.ct-labels > *:not(:first-child, :last-child) {
+.word-chart .ct-labels > *:not(:first-child, :last-child) {
     span {
         display: none;
     }
 }
-.ct-labels > * {
+.word-chart .ct-labels > * {
     &:last-child span {
         position: relative;
         right: 25px;
     }
+}
+.yearly-chart .ct-bar {
+    stroke-width: 1px;
 }
 // Modal
 .ui-dialog {

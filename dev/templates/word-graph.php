@@ -6,7 +6,7 @@
 ?>
 <?php $wordResults = getWordCount($word); ?>
 <?php if ($wordResults != null && count($wordResults) > 1) { ?>
-    <div class="graph-container chart clearfix" id="<?php echo $word ?>-chart">
+    <div class="graph-container chart word-chart clearfix" id="<?php echo $word ?>-chart">
         <h2 class="results-heading"><?php echo $word ?></h2>
         <ul class="hidden-word-results">
             <?php foreach ($wordResults as $row): ?>

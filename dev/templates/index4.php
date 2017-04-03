@@ -48,8 +48,8 @@ $sort_array = array();
         <main class="main-content">
             <div>
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Trends</a></li>
-                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Years</a></li>
+                    <li role="presentation" class="active"><a id="trends-tab" href="#home" aria-controls="home" role="tab" data-toggle="tab">Trends</a></li>
+                    <li role="presentation"><a id="years-tab" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Years</a></li>
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
@@ -60,7 +60,11 @@ $sort_array = array();
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="profile">
-                        <p>test other page</p>
+                        <div class="graph-wrapper">
+                            <?php foreach ($years as $year): ?>
+                                <?php include 'yearly-graph.php' ?>
+                            <?php endforeach ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,10 +80,10 @@ $sort_array = array();
 (function(jQuery) {
     var MaleOnlineFunctions = function ($){
         var self = this;
-        var $chartistWordValues= [];
+        var $chartistWordValues = [];
         var $chartistWordLabels = [];
-        var $mychart;
-
+        var $chartistYearlyWordValues = [];
+        var $chartistYearlyWordLabels = [];
         self.init = function() {
             // menuToggle();
             // archiveToggle();
@@ -89,6 +93,7 @@ $sort_array = array();
             // toggleCollapse();
             // $('.content-wrapper').resize(resize);
             wordGraph();
+            tabShow();
         };
         self.resize = function() {
             if ( $($mychart).length > 0 ) {
@@ -156,6 +161,18 @@ $sort_array = array();
                 }
             });
         };
+        self.tabShow = function() {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var $tab = $(this).attr('id');
+                switch($tab) {
+                    case "years-tab":
+                        yearGraph();
+                        break;
+                    default:
+                        break;
+                }
+            });
+        };
         self.toggleCollapse = function() {
             $('[data-toggle="collapse"]').on('click', function() {
                 // if ($(this).attr('aria-expanded') == "true") {
@@ -189,16 +206,16 @@ $sort_array = array();
             });
         };
         self.wordGraph = function() {
-            $('.chart').each(function() {
+            $('.word-chart').each(function() {
                 var $id = $(this).attr('id');
                 var $word = $(this).attr('id');
-                var $graph_vals = $(this).find('.word-value');
-                var $graph_labels = $(this).find('.word-key');
+                var $graph_vals = $('#'+$id).find('.word-value');
+                var $graph_labels = $('#'+$id).find('.word-key');
                 $($graph_vals).each(function() {
                     $chartistWordValues.push(parseInt($(this).text()));
                 });
                 $($graph_labels).each(function() {
-                    $chartistWordLabels.push(parseInt($(this).text()));
+                    $chartistWordLabels.push($(this).text());
                 });
                 var data = {
                     series: [$chartistWordValues],
@@ -221,11 +238,40 @@ $sort_array = array();
                         showLabel: false,
                     }
                 };
-                $mychart = new Chartist.Line('.'+ $word, data, options);
+                var $mychart = new Chartist.Line('.'+ $word, data, options);
                 //$mychart = $('.'+ $word +'-chart');
                 // $mychart.get(0).__chartist__.update(data);
                 $chartistWordLabels = [];
                 $chartistWordValues = [];
+            });
+        };
+        self.yearGraph = function() {
+            $('.yearly-chart').each(function() {
+                var $id = $(this).attr('id');
+                var $year = $(this).attr('id');
+                var $yealry_graph_vals = $('#'+$id).find('.yearly-word-value');
+                var $yealry_graph_labels = $('#'+$id).find('.yearly-word-key');
+                $($yealry_graph_vals).each(function() {
+                    $chartistYearlyWordValues.push(parseInt($(this).text()));
+                });
+                $($yealry_graph_labels).each(function() {
+                    $chartistYearlyWordLabels.push($(this).text());
+                });
+                var data = {
+                    series: [$chartistYearlyWordValues],
+                    labels: $chartistYearlyWordLabels
+                };
+                var options = {
+                    seriesBarDistance: 50,
+                    height: '600px',
+                    reverseData: true,
+                    horizontalBars: true
+                };
+                var $myyearlychart = new Chartist.Bar('.'+ $year, data, options);
+                //$mychart = $('.'+ $word +'-chart');
+                // $mychart.get(0).__chartist__.update(data);
+                $chartistYearlyWordValues = [];
+                $chartistYearlyWordLabels = [];
             });
         };
         return {
