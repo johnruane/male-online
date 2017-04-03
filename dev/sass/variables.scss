@@ -26,16 +26,18 @@ $results-list-background-color: #fef4ff;
 
 // Graph
 $graph-label-color: #777777;
-$graph-link-color: #2d8eee;
+$graph-link-color: #6da7e0;
 $graph-link-font-size: 1.2rem;
 $graph-line-width: 1px;
 $graph-point-width: 0;
 
 // Colours
-$graph-col-1: #C1002F;
-$graph-col-2: #7C3C9E;
-$graph-col-3: #70A4E7;
-$graph-col-4: #E77400;
-$graph-col-5: #F5CC14;
-$graph-col-6: #57C133;
-$graph-col-7: #C1B19B;
+$graph-colors: (
+    1 #C1002F,
+    2 #7C3C9E,
+    3 #70A4E7,
+    4 #E77400,
+    5 #F5CC14,
+    6 #57C133,
+    7 #C1B19B
+);

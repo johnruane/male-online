@@ -19,9 +19,9 @@ $sort_array = array();
     <meta name="viewport" content="width=device-width; initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no;" />
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
-    <script src="jquery.resize.js"></script>
+    <script src="js/jquery.resize.js"></script>
+    <script src="js/bootstrap-tab.js"></script>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="css/styles.css?v=1.0">
@@ -36,26 +36,7 @@ $sort_array = array();
 
 <body>
     <div class="site-wrapper">
-        <!-- <div id="off-canvas-menu" class="navigation-menu">
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-            <li>test</li>
-        </div> -->
         <header class="main-header">
-            <!-- <nav class="nav-icon" data-bind="menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </nav> -->
             <a class="site-logo" href="/index3.php">
                 <p class="close">
                     <span class="flam-text">Male </span>
@@ -65,10 +46,23 @@ $sort_array = array();
             <p class="archive-icon" data-bind="archive" >ARCHIVE<span>&nbsp;></span></p>
         </header>
         <main class="main-content">
-            <div class="graph-wrapper">
-                <?php foreach (getBadWords() as $word): ?>
-                    <?php include 'word-graph.php' ?>
-                <?php endforeach ?>
+            <div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Trends</a></li>
+                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Years</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="graph-wrapper">
+                            <?php foreach (getBadWords() as $word): ?>
+                                <?php include 'word-graph.php' ?>
+                            <?php endforeach ?>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="profile">
+                        <p>test other page</p>
+                    </div>
+                </div>
             </div>
         </main>
         <footer>

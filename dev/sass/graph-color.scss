@@ -1,7 +1,11 @@
-.ct-series-a .ct-area {
-    fill: blue;
-}
-.ct-series-a .ct-line,
-.ct-series-a .ct-point {
-    stroke: blue;
+@each $value in $graph-colors {
+    .chart:nth-child( #{nth($value, 1)}n+1 ) {
+        .ct-series-a .ct-area {
+            fill: nth($value, 2);
+        }
+        .ct-series-a .ct-line,
+        .ct-series-a .ct-point {
+            stroke: nth($value, 2);
+        }
+    }
 }
