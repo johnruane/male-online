@@ -1,7 +1,7 @@
 <?php
 $mo_home_domain="http://dailymail.co.uk/";
 
-$years = [ '2016'];
+$years = ['1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
 //$years_to_search = ['1994', '1996', '1997', '1998', '1999'];
 //$years_to_search = ['2016'];
@@ -201,6 +201,11 @@ function getCurrentCountsForYear($year) {
 }
 function getYearlyTotals($year) {
     $sql_count_yearly = "SELECT * FROM yearly_count WHERE year=$year ORDER BY count DESC";
+    $db = new Db();
+    return $db->select($sql_count_yearly);
+}
+function getAllYearlyTotals() {
+    $sql_count_yearly = "SELECT * FROM yearly_count";
     $db = new Db();
     return $db->select($sql_count_yearly);
 }

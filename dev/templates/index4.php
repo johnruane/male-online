@@ -65,11 +65,19 @@ $sort_array = array();
                     </div>
                     <div role="tabpanel" class="tab-pane" id="profile">
                         <div class="graph-wrapper">
-                            <input type="range" min="1994" max="2017" value="1994" step="1" data-rangeslider>
-                            <output id="slider-output" class="year-range-slider">1994</output>
+                            <input type="range" min="1997" max="2017" value="1997" step="1" data-rangeslider>
+                            <output id="slider-output" class="year-range-slider">1997</output>
+                            <div class="graph-container yearly-chart clearfix">
                             <?php foreach ($years as $year): ?>
-                                <!-- <?php include 'yearly-graph.php' ?> -->
+                                <?php $yearlyResults = getYearlyTotals($year); ?>
+                                <ul class="hidden-word-results chart-values-<?php echo $year ?>">
+                                    <?php foreach ($yearlyResults as $row): ?>
+                                        <li><span class="yearly-word-key"><?php echo $row['word'] ?></span>
+                                        <span class="yearly-word-value"><?php echo $row['count'] ?></span></li>
+                                    <?php endforeach ?>
+                                </ul>
                             <?php endforeach ?>
+                            <div class="ct-chart yearly-chart"></div>
                         </div>
                     </div>
                 </div>
@@ -252,34 +260,33 @@ $sort_array = array();
                 $chartistWordValues = [];
             });
         };
-        self.yearGraph = function() {
-            $('.yearly-chart').each(function() {
-                var $id = $(this).attr('id');
-                var $year = $(this).attr('id');
-                var $yealry_graph_vals = $('#'+$id).find('.yearly-word-value');
-                var $yealry_graph_labels = $('#'+$id).find('.yearly-word-key');
-                $($yealry_graph_vals).each(function() {
-                    $chartistYearlyWordValues.push(parseInt($(this).text()));
-                });
-                $($yealry_graph_labels).each(function() {
-                    $chartistYearlyWordLabels.push($(this).text());
-                });
-                var data = {
-                    series: [$chartistYearlyWordValues],
-                    labels: $chartistYearlyWordLabels
-                };
-                var options = {
-                    seriesBarDistance: 50,
-                    height: '600px',
-                    reverseData: true,
-                    horizontalBars: true
-                };
-                var $myyearlychart = new Chartist.Bar('.'+ $year, data, options);
-                //$mychart = $('.'+ $word +'-chart');
-                // $mychart.get(0).__chartist__.update(data);
-                $chartistYearlyWordValues = [];
-                $chartistYearlyWordLabels = [];
+        self.yearGraph = function($year) {
+            if (typeof $year === "undefined") {
+                $year = $('#slider-output').text();
+            }
+            var $yealry_graph_vals = $('.chart-values-'+$year).find('.yearly-word-value');
+            var $yealry_graph_labels = $('.chart-values-'+$year).find('.yearly-word-key');
+            $($yealry_graph_vals).each(function() {
+                $chartistYearlyWordValues.push(parseInt($(this).text()));
             });
+            $($yealry_graph_labels).each(function() {
+                $chartistYearlyWordLabels.push($(this).text());
+            });
+            var data = {
+                series: [$chartistYearlyWordValues],
+                labels: $chartistYearlyWordLabels
+            };
+            var options = {
+                seriesBarDistance: 50,
+                height: '600px',
+                reverseData: true,
+                horizontalBars: true
+            };
+            var $myyearlychart = new Chartist.Bar('.yearly-chart', data, options);
+            //$mychart = $('.'+ $word +'-chart');
+            // $mychart.get(0).__chartist__.update(data);
+            $chartistYearlyWordValues = [];
+            $chartistYearlyWordLabels = [];
         };
         self.rangeslider = function() {
             $('input[type="range"]').rangeslider({
@@ -287,6 +294,9 @@ $sort_array = array();
                 onSlide: function(position, value) {
                     $('#slider-output').text(value);
                 },
+                onSlideEnd: function(position, value) {
+                    yearGraph(value);
+                }
             });
         };
         return {
