@@ -22,8 +22,10 @@ $sort_array = array();
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="js/jquery.resize.js"></script>
     <script src="js/bootstrap-tab.js"></script>
+    <script src="js/rangeslider.min.js"></script>
 
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <link rel="stylesheet" href="css/rangeslider.css?v=1.0">
     <link rel="stylesheet" href="css/styles.css?v=1.0">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bigshot+One" rel="stylesheet">
@@ -38,12 +40,14 @@ $sort_array = array();
     <div class="site-wrapper">
         <header class="main-header">
             <a class="site-logo" href="/index3.php">
-                <p class="close">
-                    <span class="flam-text">Male </span>
-                    <span class="thin-text">Online</span>
-                </p>
+                <span class="flam-text">Male </span>
+                <span class="thin-text">Online</span>
             </a>
-            <p class="archive-icon" data-bind="archive" >ARCHIVE<span>&nbsp;></span></p>
+            <nav class="nav-icon" data-bind="menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </nav>
         </header>
         <main class="main-content">
             <div>
@@ -53,7 +57,7 @@ $sort_array = array();
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
-                        <div class="graph-wrapper">
+                        <div class="graph-wrapper trends">
                             <?php foreach (getBadWords() as $word): ?>
                                 <?php include 'word-graph.php' ?>
                             <?php endforeach ?>
@@ -61,8 +65,10 @@ $sort_array = array();
                     </div>
                     <div role="tabpanel" class="tab-pane" id="profile">
                         <div class="graph-wrapper">
+                            <input type="range" min="1994" max="2017" value="1994" step="1" data-rangeslider>
+                            <output id="slider-output" class="year-range-slider">1994</output>
                             <?php foreach ($years as $year): ?>
-                                <?php include 'yearly-graph.php' ?>
+                                <!-- <?php include 'yearly-graph.php' ?> -->
                             <?php endforeach ?>
                         </div>
                     </div>
@@ -91,7 +97,7 @@ $sort_array = array();
             // // $('[for="year-today"]').trigger('click');
             // $('#sidebar-tab').tabs();
             // toggleCollapse();
-            // $('.content-wrapper').resize(resize);
+            // $('.content-wrapper').resize(resize)
             wordGraph();
             tabShow();
         };
@@ -167,6 +173,7 @@ $sort_array = array();
                 switch($tab) {
                     case "years-tab":
                         yearGraph();
+                        rangeslider();
                         break;
                     default:
                         break;
@@ -272,6 +279,14 @@ $sort_array = array();
                 // $mychart.get(0).__chartist__.update(data);
                 $chartistYearlyWordValues = [];
                 $chartistYearlyWordLabels = [];
+            });
+        };
+        self.rangeslider = function() {
+            $('input[type="range"]').rangeslider({
+                polyfill: false,
+                onSlide: function(position, value) {
+                    $('#slider-output').text(value);
+                },
             });
         };
         return {

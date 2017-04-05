@@ -83,14 +83,14 @@ p:hover {
 .flam-text {
     font-family: 'Bigshot One', cursive;
     &:before {
-        content: "THE";
+        content: "The";
         position: absolute;
         font-family: 'Quicksand', sans-serif;
-        font-size: 0.5rem;
+        font-size: 0.8rem;
         font-weight: bold;
         color: #272727;
-        top: -2px;
-        left: 5px;
+        top: -15px;
+        left: 9px;
     }
 }
 .thin-text {
@@ -99,16 +99,11 @@ p:hover {
     color: #5A6C7B
 }
 .close {
-    text-align: center;
-    margin: 0;
-    font-size: 1.3rem;
-    position: relative;
 }
 .main-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    background: #e8e8e8;
     padding: $global-padding 0;
     height: $header-height;
     width: 100vw;
@@ -116,15 +111,16 @@ p:hover {
         z-index: $z-index-high;
     }
 }
-// .nav-icon {
-//     &:hover {
-//         cursor: pointer;
-//     }
-// }
+.nav-icon {
+    &:hover {
+        cursor: pointer;
+    }
+}
 .site-logo {
     text-decoration: none;
     color: #000;
-    margin-left: $global-padding;
+    font-size: 2.5rem;
+    position: relative;
     &:hover {
         cursor: pointer;
     }
@@ -136,6 +132,8 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    position: absolute;
+    right: $global-padding;
     span {
         height: 2px;
         display: block;
@@ -306,15 +304,17 @@ main {
     // max-width: 800px;
     margin: 0 auto;
 }
-.graph-container {
-    padding: $global-padding;
-    // width: 50%;
+.trends .graph-container {
+    width: 50%;
     @media (min-width: $md) {
         width: 25%;
     }
     @media (min-width: $md) {
         width: 20%;
     }
+}
+.graph-container {
+    padding: $global-padding;
 }
 .article-list-item {
     font-size: .7rem;
@@ -453,6 +453,13 @@ main {
 }
 .modal-open .site-wrapper {
     opacity: 0;
+}
+// Rangeslider
+.rangeslider {
+    margin: $global-padding;
+}
+.year-range-slider {
+    width: 100%
 }
 // Footer
 footer {

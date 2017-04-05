@@ -59,6 +59,14 @@ module.exports = function(grunt) {
                   src: ['js/*.js'],
                   dest: '../build/js/'
                 }]
+            },
+            css: {
+                files: [{
+                  expand: true,
+                  flatten: true,
+                  src: ['css/*.css'],
+                  dest: '../build/css/'
+                }]
             }
         },
         // Clean build files
