@@ -404,6 +404,9 @@ main {
 .yearly-chart .ct-bar {
     stroke-width: 1px;
 }
+#myChart {
+    height: 500px;
+}
 // Modal
 .ui-dialog {
     z-index: $z-index-high;

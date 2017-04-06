@@ -77,7 +77,8 @@ $sort_array = array();
                                     <?php endforeach ?>
                                 </ul>
                             <?php endforeach ?>
-                            <div class="ct-chart yearly-chart"></div>
+                            <canvas id="myChart" height="600"></canvas>
+                            <!-- <div class="ct-chart yearly-chart"></div> -->
                         </div>
                     </div>
                 </div>
@@ -90,14 +91,16 @@ $sort_array = array();
     <script src="//localhost:35729/livereload.js"></script>
 </body>
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
 <script>
 (function(jQuery) {
     var MaleOnlineFunctions = function ($){
         var self = this;
         var $chartistWordValues = [];
         var $chartistWordLabels = [];
-        var $chartistYearlyWordValues = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-        var $chartistYearlyWordLabels = ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp','ample','busty','leggy','perky','saucy','thigh','toned','yummy','assets','curves','fuller','gushes','skimpy','skinny','steamy','teases','ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender','cleavage','enviable','flashing','plunging','sideboob','sizzling','posterior','revealing','under-boob','skin-tight','super-slim','eye-popping','figure-hugging'];
+        var $chartistYearlyWordValues = []
+        var $chartistYearlyWordLabels = []
+        var myChart
         self.init = function() {
             // menuToggle();
             // archiveToggle();
@@ -108,6 +111,54 @@ $sort_array = array();
             // $('.content-wrapper').resize(resize)
             wordGraph();
             tabShow();
+        };
+        self.chartjs = function() {
+            if (typeof $year === "undefined") {
+                $year = $('#slider-output').text();
+            }
+            var $yealry_graph_vals = $('.chart-values-'+$year).find('.yearly-word-value');
+            var $yealry_graph_labels = $('.chart-values-'+$year).find('.yearly-word-key');
+            $($yealry_graph_labels).each(function() {
+                $chartistYearlyWordLabels.push($(this).text());
+            });
+            $($yealry_graph_vals).each(function() {
+                $chartistYearlyWordValues.push(parseInt($(this).text()));
+            });
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'horizontalBar',
+                data: {
+                    labels: $chartistYearlyWordLabels,
+                    datasets: [{
+                        backgroundColor: "rgba(153,255,51,1)",
+                        borderColor: "rgba(153,255,51,1)",
+                        data: $chartistYearlyWordValues
+                    }]
+                },
+                options: {
+                    legend: false,
+                    scales: {
+                        xAxes: [{
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    }
+                }
+            });
+        };
+        self.updateChartjs = function($year) {
+            var $yealry_graph_vals = $('.chart-values-'+$year).find('.yearly-word-value');
+            $($yealry_graph_vals).each(function() {
+                $chartistYearlyWordValues.push(parseInt($(this).text()));
+            });
+            myChart = document.getElementById('myChart').getContext('2d');
+            for ( var i=0; i < $chartistYearlyWordValues.length; i++ ) {
+                myChart.datasets[0].bars[i].value = $chartistYearlyWordValues[i];
+                myChart.update();
+            }
         };
         self.resize = function() {
             if ( $($mychart).length > 0 ) {
@@ -180,8 +231,9 @@ $sort_array = array();
                 var $tab = $(this).attr('id');
                 switch($tab) {
                     case "years-tab":
-                        yearGraph();
+                        // yearGraph();
                         rangeslider();
+                        chartjs();
                         break;
                     default:
                         break;
@@ -295,7 +347,7 @@ $sort_array = array();
                     $('#slider-output').text(value);
                 },
                 onSlideEnd: function(position, value) {
-                    yearGraph(value);
+                    updateChartjs(value);
                 }
             });
         };
