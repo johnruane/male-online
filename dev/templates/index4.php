@@ -96,8 +96,8 @@ $sort_array = array();
         var self = this;
         var $chartistWordValues = [];
         var $chartistWordLabels = [];
-        var $chartistYearlyWordValues = [];
-        var $chartistYearlyWordLabels = [];
+        var $chartistYearlyWordValues = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        var $chartistYearlyWordLabels = ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp','ample','busty','leggy','perky','saucy','thigh','toned','yummy','assets','curves','fuller','gushes','skimpy','skinny','steamy','teases','ageless','braless','flashes','flaunts','midriff','scantly','sizable','slender','cleavage','enviable','flashing','plunging','sideboob','sizzling','posterior','revealing','under-boob','skin-tight','super-slim','eye-popping','figure-hugging'];
         self.init = function() {
             // menuToggle();
             // archiveToggle();

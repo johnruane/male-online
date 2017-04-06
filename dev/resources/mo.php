@@ -3,7 +3,7 @@ $mo_home_domain="http://dailymail.co.uk/";
 
 $years = ['1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
-//$years_to_search = ['1994', '1996', '1997', '1998', '1999'];
+$years_to_search = ['1994', '1996', '1997', '1998', '1999'];
 //$years_to_search = ['2016'];
  // '2002', '2003'
 //$years_to_search = ['2004','2005','2006'];
@@ -169,7 +169,17 @@ function setTodaysArticles($q_links) {
         $stmt->execute();
     }
 }
-function setYearlyTotalsByYear($year, $result) {
+function setYearlyTotalsByYear($year, $word, $count) {
+    $sql_count_yearly = 'INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)';
+    $db = new Db();
+    if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
+       $stmt->bind_param('ssi', $year, $word, $count);
+       $stmt->execute();
+    } else {
+        echo $db->error();
+    }
+}
+function setYearlyTotalsForWordByYear($year, $word) {
     $sql_count_yearly = 'INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)';
     $db = new Db();
     if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
@@ -196,6 +206,11 @@ function getWeeklyCount($today, $lastSevenDays) {
 }
 function getCurrentCountsForYear($year) {
     $sql_select_yearly = "SELECT word, count(*) AS 'total' FROM archive_count WHERE publication_date BETWEEN '$year-01-01' AND '$year-12-31' GROUP BY word";
+    $db = new Db();
+    return $db->select($sql_select_yearly);
+}
+function getCurrentCountsForYearByWord($year, $word) {
+    $sql_select_yearly = "SELECT word, count(*) AS 'total' FROM archive_count WHERE publication_date LIKE '$year-%' AND word = '$word'";
     $db = new Db();
     return $db->select($sql_select_yearly);
 }

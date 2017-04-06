@@ -37,8 +37,11 @@ if (isset($_POST['action'])) {
             error_log('Today count populated', 0);
             break;
         case 'set-yearly-count':
-            foreach($years_to_search as $year) {
-                setYearlyTotalsByYear($year, getCurrentCountsForYear($year));
+            foreach($years as $year) {
+                foreach (getBadWords() as $word) {
+                    $word_result = getCurrentCountsForYearByWord($year, $word);
+                    setYearlyTotalsByYear($year, $word, $word_result[0]['total']);
+                }
             }
             break;
     }
