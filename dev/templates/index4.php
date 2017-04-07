@@ -91,7 +91,7 @@ $sort_array = array();
     <script src="//localhost:35729/livereload.js"></script>
 </body>
 </html>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
 <script>
 (function(jQuery) {
     var MaleOnlineFunctions = function ($){
@@ -129,11 +129,11 @@ $sort_array = array();
             myChart = new Chart(ctx, {
                 type: 'horizontalBar',
                 data: {
-                    labels: $chartistYearlyWordLabels,
+                    labels: ['erwrw','rrewrw','rrewrw'],
                     datasets: [{
                         backgroundColor: "rgba(153,255,51,1)",
                         borderColor: "rgba(153,255,51,1)",
-                        data: $chartistYearlyWordValues
+                        data: [2,4,3]
                     }]
                 },
                 options: {
