@@ -186,21 +186,6 @@ nav {
 //         margin-right: 10%;
 //     }
 // }
-main,
-.sidebar-wrapper {
-    overflow: auto;
-    height: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;
-    transition: all .5s ease;
-    // position: fixed;
-    // overflow-y: scroll;
-    // overflow-x: hidden;
-    // -webkit-overflow-scrolling: touch;
-    // width: 100vw;
-    // height: 100%;
-    // top: $header-height;
-}
 main {
     flex: 1;
 }
@@ -400,6 +385,11 @@ main {
         position: relative;
         right: 25px;
     }
+}
+.yearly-chart {
+    width: 90%;
+    position: relative;
+    margin: 0 auto;
 }
 .yearly-chart .ct-bar {
     stroke-width: 1px;

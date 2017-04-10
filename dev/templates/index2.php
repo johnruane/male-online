@@ -37,8 +37,9 @@ if (isset($_POST['action'])) {
             error_log('Today count populated', 0);
             break;
         case 'set-yearly-count':
+            $bad_words = getBadWords();
             foreach($years as $year) {
-                foreach (getBadWords() as $word) {
+                foreach ($bad_words as $word) {
                     $word_result = getCurrentCountsForYearByWord($year, $word);
                     setYearlyTotalsByYear($year, $word, $word_result[0]['total']);
                 }

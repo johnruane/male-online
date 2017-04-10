@@ -77,7 +77,7 @@ $sort_array = array();
                                     <?php endforeach ?>
                                 </ul>
                             <?php endforeach ?>
-                            <canvas id="myChart" height="600"></canvas>
+                            <canvas id="myChart" height="700"></canvas>
                             <!-- <div class="ct-chart yearly-chart"></div> -->
                         </div>
                     </div>
@@ -98,9 +98,9 @@ $sort_array = array();
         var self = this;
         var $chartistWordValues = [];
         var $chartistWordLabels = [];
-        var $chartistYearlyWordValues = []
-        var $chartistYearlyWordLabels = []
-        var myChart
+        var $chartistYearlyWordValues = [];
+        var $chartistYearlyWordLabels = [];
+        var myChart;
         self.init = function() {
             // menuToggle();
             // archiveToggle();
@@ -129,15 +129,16 @@ $sort_array = array();
             myChart = new Chart(ctx, {
                 type: 'horizontalBar',
                 data: {
-                    labels: ['erwrw','rrewrw','rrewrw'],
+                    labels: $chartistYearlyWordLabels,
                     datasets: [{
-                        backgroundColor: "rgba(153,255,51,1)",
-                        borderColor: "rgba(153,255,51,1)",
-                        data: [2,4,3]
+                        data: $chartistYearlyWordValues
                     }]
                 },
                 options: {
-                    legend: false,
+                    responsive: true,
+                    legend: {
+                        display: false
+                    },
                     scales: {
                         xAxes: [{
                             stacked: true
@@ -151,14 +152,12 @@ $sort_array = array();
         };
         self.updateChartjs = function($year) {
             var $yealry_graph_vals = $('.chart-values-'+$year).find('.yearly-word-value');
+            var $chartistUpdatedYearlyWordValues = [];
             $($yealry_graph_vals).each(function() {
-                $chartistYearlyWordValues.push(parseInt($(this).text()));
+                $chartistUpdatedYearlyWordValues.push(parseInt($(this).text()));
             });
-            myChart = document.getElementById('myChart').getContext('2d');
-            for ( var i=0; i < $chartistYearlyWordValues.length; i++ ) {
-                myChart.datasets[0].bars[i].value = $chartistYearlyWordValues[i];
-                myChart.update();
-            }
+            myChart.data.datasets[0].data = $chartistUpdatedYearlyWordValues;
+            myChart.update();
         };
         self.resize = function() {
             if ( $($mychart).length > 0 ) {
