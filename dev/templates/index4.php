@@ -141,7 +141,8 @@ $sort_array = array();
                     },
                     scales: {
                         xAxes: [{
-                            stacked: true
+                            stacked: true,
+                            position: "top"
                         }],
                         yAxes: [{
                             stacked: true
