@@ -114,36 +114,44 @@ $sort_array = array();
             wordGraph();
             tabShow();
         };
-        self.chartPi = function() {
-            if (typeof $year === "undefined") {
-                $year = $('#slider-output').text();
-            }
-            var $yealry_graph_vals = $('.chart-values-'+$year).find('.yearly-word-value');
-            var $yealry_graph_labels = $('.chart-values-'+$year).find('.yearly-word-key');
-            $($yealry_graph_labels).each(function() {
-                $chartistYearlyWordLabels.push($(this).text());
-            });
-            $($yealry_graph_vals).each(function() {
-                $chartistYearlyWordValues.push(parseInt($(this).text()));
-            });
-            var ctx = document.getElementById('myChart').getContext('2d');
-            myPieChart = new Chart(ctx,{
-                type: 'pie',
-                data: {
-                    labels: $chartistYearlyWordLabels,
-                    datasets: [{
-                        data: $chartistYearlyWordValues,
-                        backgroundColor: barBackgroundColors($yealry_graph_labels.length)
-                    }]
-                },
-                options: {
-                    legend: {
-                        display: false
-                    }
-                }
-            });
-        };
-        self.chartjs = function() {
+        // self.chartPi = function() {
+        //     if (typeof $year === "undefined") {
+        //         $year = $('#slider-output').text();
+        //     }
+        //     var $yealry_graph_vals = $('.chart-values-'+$year).find('.yearly-word-value');
+        //     var $yealry_graph_labels = $('.chart-values-'+$year).find('.yearly-word-key');
+        //     $($yealry_graph_labels).each(function() {
+        //         $chartistYearlyWordLabels.push($(this).text());
+        //     });
+        //     $($yealry_graph_vals).each(function() {
+        //         $chartistYearlyWordValues.push(parseInt($(this).text()));
+        //     });
+        //     var ctx = document.getElementById('myChart').getContext('2d');
+        //     myPieChart = new Chart(ctx,{
+        //         type: 'pie',
+        //         data: {
+        //             labels: $chartistYearlyWordLabels,
+        //             datasets: [{
+        //                 data: $chartistYearlyWordValues,
+        //                 backgroundColor: barBackgroundColors($yealry_graph_labels.length)
+        //             }]
+        //         },
+        //         options: {
+        //             legend: {
+        //                 display: false
+        //             },
+        //             elements: {
+        //                 arc: {
+        //                     borderWidth: 0
+        //                 }
+        //             },
+        //             tooltips: {
+        //                enabled: false
+        //             }
+        //         }
+        //     });
+        // };
+        self.yearChart = function() {
             if (typeof $year === "undefined") {
                 $year = $('#slider-output').text();
             }
@@ -193,8 +201,8 @@ $sort_array = array();
             $($yealry_graph_vals).each(function() {
                 $chartistUpdatedYearlyWordValues.push(parseInt($(this).text()));
             });
-            myPieChart.data.datasets[0].data = $chartistUpdatedYearlyWordValues;
-            myPieChart.update();
+            myChart.data.datasets[0].data = $chartistUpdatedYearlyWordValues;
+            myChart.update();
         };
         self.resize = function() {
             if ( $($mychart).length > 0 ) {
@@ -276,7 +284,7 @@ $sort_array = array();
                     case "years-tab":
                         // yearGraph();
                         rangeslider();
-                        chartPi();
+                        yearChart();
                         break;
                     default:
                         break;

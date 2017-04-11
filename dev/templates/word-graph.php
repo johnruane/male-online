@@ -17,7 +17,8 @@
         <div class="ct-chart ct-square <?php echo $word ?>-chart"></div>
         <div class="graph-stat">
             <span class="graph-label" id="random-use">Random use in an article: </span>
-            <span><a class="graph-link" href="#" target="_blank">What worrying does to your health and how to beat it</a>
+            <?php $randomWord = randomArticleByWord($word); ?>
+            <span><a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank"><?php echo $randomWord[0]['article_text']; ?></a>
         </div>
     </div>
 <?php } ?>

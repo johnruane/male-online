@@ -12,7 +12,6 @@ $years_to_search = ['2000'];
 // $years_to_search = ['2013','2014','2015'];
 // $years_to_search = ['2016','2017'];
 
-//Create table
 $sql_create_count_table = 'CREATE TABLE archive_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     publication_date DATE,
@@ -31,7 +30,6 @@ $sql_create_today_count_table = 'CREATE TABLE today_count (
     thumbnail_link TEXT(10000)
     )';
 
-//Create table
 $sql_create_yearly_table = 'CREATE TABLE yearly_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
     year VARCHAR(4),
@@ -39,7 +37,15 @@ $sql_create_yearly_table = 'CREATE TABLE yearly_count (
     count INT(3)
     )';
 
-// Select all
+$sql_create_today_count_table = 'CREATE TABLE random_articles (
+    entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    publication_date DATE,
+    word VARCHAR(20),
+    article_text TEXT(1000),
+    article_link TEXT(10000),
+    thumbnail_link TEXT(10000)
+    )';
+
 $sql_select_all = 'SELECT * FROM archive_count';
 
 $list_of_bad_words = array (
@@ -193,6 +199,12 @@ function setYearlyTotalsForWordByYear($year, $word) {
         echo $db->error();
     }
 }
+function populateRandomArticles($word) {
+    $db = new Db();
+    $sql = "INSERT INTO random_articles (publication_date, word, article_text, article_link, thumbnail_link) SELECT publication_date, word, article_text, article_link, thumbnail_link FROM archive_count WHERE word = '$word' ORDER BY rand() LIMIT 20";
+    $stmt = $db->connect()->prepare($sql);
+    $stmt->execute();
+}
 /* GETTERS */
 function getDailyCount() {
     $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word ORDER BY total DESC LIMIT 11";
@@ -257,7 +269,7 @@ function getBadWords() {
     return $list_of_bad_words_sorted;
 }
 function randomArticleByWord($word) {
-    $sql_random_article = "SELECT article_text, article_link FROM archive_count WHERE word = '$word' ORDER BY rand() LIMIT 1";
+    $sql_random_article = "SELECT article_text, article_link FROM random_articles WHERE word = '$word' ORDER BY rand() LIMIT 1";
     $db = new Db();
     return $db->select($sql_random_article);
 }
@@ -267,4 +279,5 @@ function cmp($a, $b) {
     }
     return ($a['count'] < $b['count']) ? -1 : 1;
 }
+
 ?>

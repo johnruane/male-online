@@ -388,6 +388,7 @@ main {
 }
 .yearly-chart {
     width: 90%;
+    max-width: 800px;
     position: relative;
     margin: 0 auto;
 }
@@ -453,6 +454,30 @@ main {
 }
 .year-range-slider {
     width: 100%
+}
+// Slider
+.rangeslider {
+  background-color: $bright-color;
+  border-radius: 0;
+  height: 0.2rem;
+}
+
+.rangeslider__fill {
+  background-color: $base-color;
+  border-radius: 0;
+}
+.rangeslider__handle {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  transition: transform .1s ease-in-out;
+  &::after {
+    display: none;
+  }
+  &:hover, &:active {
+    transform: scale(1.2,1.2);
+    transition: transform .1s ease-in-out;
+  }
 }
 // Footer
 footer {

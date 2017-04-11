@@ -31,7 +31,7 @@ if (isset($_POST['action'])) {
             }
             error_log('Archive populated from years array', 0);
             break;
-        case 'populate-today-count': // populate today_count
+        case 'populate-today-count':
             getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string);
             setTodaysArticles($matched_articles);
             error_log('Today count populated', 0);
@@ -44,6 +44,13 @@ if (isset($_POST['action'])) {
                     setYearlyTotalsByYear($year, $word, $word_result[0]['total']);
                 }
             }
+            break;
+        case 'populate-random-articles':
+            $bad_words = getBadWords();
+            foreach ($bad_words as $word) {
+                populateRandomArticles($word);
+            }
+            error_log('Random table populated', 0);
             break;
     }
 }
@@ -77,6 +84,7 @@ if (isset($_POST['action'])) {
             <p>Populate archive_count: <input type="button" value="populate-current-count-from-years"></p>
             <p>Set yearly count: <input type="button" value="set-yearly-count"></p>
             <p>Populate today_count: <input type="button" value="populate-today-count"></p>
+            <p>Populate random table: <input type="button" value="populate-random-articles"></p>
         </div>
     <?php } ?>
     <nav class="title-wrapper">
