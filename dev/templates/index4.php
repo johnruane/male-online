@@ -21,6 +21,7 @@ $sort_array = array();
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="js/jquery.resize.js"></script>
+    <script src="js/jquery.randomColor.js"></script>
     <script src="js/bootstrap-tab.js"></script>
     <script src="js/rangeslider.min.js"></script>
 
@@ -101,6 +102,7 @@ $sort_array = array();
         var $chartistYearlyWordValues = [];
         var $chartistYearlyWordLabels = [];
         var myChart;
+        var myPieChart;
         self.init = function() {
             // menuToggle();
             // archiveToggle();
@@ -111,6 +113,35 @@ $sort_array = array();
             // $('.content-wrapper').resize(resize)
             wordGraph();
             tabShow();
+        };
+        self.chartPi = function() {
+            if (typeof $year === "undefined") {
+                $year = $('#slider-output').text();
+            }
+            var $yealry_graph_vals = $('.chart-values-'+$year).find('.yearly-word-value');
+            var $yealry_graph_labels = $('.chart-values-'+$year).find('.yearly-word-key');
+            $($yealry_graph_labels).each(function() {
+                $chartistYearlyWordLabels.push($(this).text());
+            });
+            $($yealry_graph_vals).each(function() {
+                $chartistYearlyWordValues.push(parseInt($(this).text()));
+            });
+            var ctx = document.getElementById('myChart').getContext('2d');
+            myPieChart = new Chart(ctx,{
+                type: 'pie',
+                data: {
+                    labels: $chartistYearlyWordLabels,
+                    datasets: [{
+                        data: $chartistYearlyWordValues,
+                        backgroundColor: barBackgroundColors($yealry_graph_labels.length)
+                    }]
+                },
+                options: {
+                    legend: {
+                        display: false
+                    }
+                }
+            });
         };
         self.chartjs = function() {
             if (typeof $year === "undefined") {
@@ -124,15 +155,20 @@ $sort_array = array();
             $($yealry_graph_vals).each(function() {
                 $chartistYearlyWordValues.push(parseInt($(this).text()));
             });
-
             var ctx = document.getElementById('myChart').getContext('2d');
             myChart = new Chart(ctx, {
                 type: 'horizontalBar',
                 data: {
                     labels: $chartistYearlyWordLabels,
                     datasets: [{
-                        data: $chartistYearlyWordValues
+                        data: $chartistYearlyWordValues,
+                        backgroundColor: barBackgroundColors($yealry_graph_labels.length)
                     }]
+                },
+                axisOptions: {
+                    gridLines: {
+                        offsetGridLines: true
+                    }
                 },
                 options: {
                     responsive: true,
@@ -157,8 +193,8 @@ $sort_array = array();
             $($yealry_graph_vals).each(function() {
                 $chartistUpdatedYearlyWordValues.push(parseInt($(this).text()));
             });
-            myChart.data.datasets[0].data = $chartistUpdatedYearlyWordValues;
-            myChart.update();
+            myPieChart.data.datasets[0].data = $chartistUpdatedYearlyWordValues;
+            myPieChart.update();
         };
         self.resize = function() {
             if ( $($mychart).length > 0 ) {
@@ -178,6 +214,13 @@ $sort_array = array();
                 // }
             });
         };
+        self.barBackgroundColors = function(len) {
+            var colorAry = [];
+            for (i=0;i<len;i++) {
+                colorAry.push(randomColor());
+            }
+            return colorAry;
+        }
         self.menuToggle = function() {
             $('[data-bind="menu"]').on('click', function() {
                 $('.site-wrapper').toggleClass('menu');
@@ -233,7 +276,7 @@ $sort_array = array();
                     case "years-tab":
                         // yearGraph();
                         rangeslider();
-                        chartjs();
+                        chartPi();
                         break;
                     default:
                         break;
