@@ -44,6 +44,7 @@ if (isset($_POST['action'])) {
                     setYearlyTotalsByYear($year, $word, $word_result[0]['total']);
                 }
             }
+            error_log('Yearly count populated', 0);
             break;
         case 'populate-random-articles':
             $bad_words = getBadWords();
