@@ -395,9 +395,6 @@ main {
 .yearly-chart .ct-bar {
     stroke-width: 1px;
 }
-#myChart {
-    height: 500px;
-}
 // Modal
 .ui-dialog {
     z-index: $z-index-high;
@@ -450,20 +447,21 @@ main {
 }
 // Rangeslider
 .rangeslider {
-    margin: $global-padding;
+    margin: $global-padding ($global-padding * 2)  0;
 }
 .year-range-slider {
-    width: 100%
+    width: 100%;
+    text-align: center;
 }
 // Slider
 .rangeslider {
-  background-color: $bright-color;
+  background-color: #fff;
   border-radius: 0;
   height: 0.2rem;
 }
 
 .rangeslider__fill {
-  background-color: $base-color;
+  background-color: #F01F14;
   border-radius: 0;
 }
 .rangeslider__handle {
