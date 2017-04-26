@@ -40,7 +40,7 @@ $sort_array = array();
 <body>
     <div class="site-wrapper">
         <header class="main-header">
-            <a class="site-logo" href="/index3.php">
+            <a class="site-logo" href="/index4.php">
                 <span class="flam-text">Male </span>
                 <span class="thin-text">Online</span>
             </a>
@@ -72,8 +72,8 @@ $sort_array = array();
                     </div>
                     <div role="tabpanel" class="tab-pane" id="years">
                         <div class="graph-wrapper">
-                            <input type="range" min="1997" max="2017" value="1997" step="1" data-rangeslider>
-                            <h3 id="slider-output" class="year-range-slider">1997</h3>
+                            <input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
+                            <h3 id="slider-output" class="year-range-slider">2001</h3>
                             <div class="graph-container yearly-chart clearfix">
                             <?php foreach ($years as $year): ?>
                                 <?php $yearlyResults = getYearlyTotals($year); ?>
@@ -162,6 +162,8 @@ $sort_array = array();
                     }
                 }
             });
+            $chartistYearlyWordLabels = [];
+            $chartistYearlyWordValues = [];
         };
         self.updateYearsChart = function($year) {
             var $yealry_graph_vals = $('.chart-values-'+$year).find('.yearly-word-value');
@@ -193,7 +195,10 @@ $sort_array = array();
         self.barBackgroundColors = function(len) {
             var colorAry = [];
             for (i=0;i<len;i++) {
-                colorAry.push(randomColor());
+                colorAry.push(randomColor({
+                    format: 'rgba',
+                    alpha: 0.3})
+                );
             }
             return colorAry;
         }
@@ -253,7 +258,6 @@ $sort_array = array();
         self.setTrendsChart = function() {
             $('.word-chart').each(function() {
                 var $id = $(this).attr('id');
-                var $word = $(this).attr('id');
                 var $graph_vals = $('#'+$id).find('.word-value');
                 var $graph_labels = $('#'+$id).find('.word-key');
                 $($graph_vals).each(function() {
@@ -262,28 +266,46 @@ $sort_array = array();
                 $($graph_labels).each(function() {
                     $chartistWordLabels.push($(this).text());
                 });
-                var data = {
-                    series: [$chartistWordValues],
-                    labels: $chartistWordLabels
-                };
-                var options = {
-                    lineSmooth: true,
-                    showArea: true,
-                    fullWidth: true,
-                    chartPadding: {
-                      right: 10
+                var $chartcolor = barBackgroundColors(1);
+                var ctx = document.getElementById($id + '-canvas').getContext('2d');
+                yearsChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: $chartistWordLabels,
+                        datasets: [{
+                            data: $chartistWordValues,
+                            radius: 0,
+                            borderWidth: 1,
+                            borderColor: $chartcolor,
+                            backgroundColor: $chartcolor
+                        }]
                     },
                     axisX: {
                         showGrid: false,
                         showLabel: true
                     },
-                    axisY: {
-                        offset: 0,
-                        showGrid: false,
-                        showLabel: false,
+                    axisOptions: {
+                        gridLines: {
+                            offsetGridLines: true
+                        }
+                    },
+                    options: {
+                        responsive: true,
+                        animation: false,
+                        maintainAspectRatio: true,
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                             xAxes: [{
+                                 display: false
+                             }],
+                             yAxes: [{
+                                 display: false
+                             }]
+                         }
                     }
-                };
-                var trendsChart = new Chartist.Line('.'+ $word, data, options);
+                });
                 $chartistWordLabels = [];
                 $chartistWordValues = [];
             });

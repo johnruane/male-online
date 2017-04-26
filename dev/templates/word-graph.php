@@ -14,7 +14,7 @@
                 <span class="word-value"><?php echo $row['count'] ?></span></li>
             <?php endforeach ?>
         </ul>
-        <div class="ct-chart ct-square <?php echo $word ?>-chart"></div>
+        <canvas id="<?php echo $word ?>-chart-canvas" height="300"></canvas>
         <div class="graph-stat">
             <span class="graph-label" id="random-use">Random use in an article: </span>
             <?php $randomWord = randomArticleByWord($word); ?>
