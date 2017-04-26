@@ -369,23 +369,26 @@ main {
         font-size: 1rem;
     }
 }
-.word-chart .ct-line {
-    stroke-width: $graph-line-width;
+.word-chart canvas {
+    margin-bottom: $global-padding;
 }
-.word-chart .ct-point {
-    stroke-width: $graph-point-width;
-}
-.word-chart .ct-labels > *:not(:first-child, :last-child) {
-    span {
-        display: none;
-    }
-}
-.word-chart .ct-labels > * {
-    &:last-child span {
-        position: relative;
-        right: 25px;
-    }
-}
+// .word-chart .ct-line {
+//     stroke-width: $graph-line-width;
+// }
+// .word-chart .ct-point {
+//     stroke-width: $graph-point-width;
+// }
+// .word-chart .ct-labels > *:not(:first-child, :last-child) {
+//     span {
+//         display: none;
+//     }
+// }
+// .word-chart .ct-labels > * {
+//     &:last-child span {
+//         position: relative;
+//         right: 25px;
+//     }
+// }
 .yearly-chart {
     width: 90%;
     max-width: 800px;

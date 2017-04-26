@@ -280,19 +280,8 @@ $sort_array = array();
                             backgroundColor: $chartcolor
                         }]
                     },
-                    axisX: {
-                        showGrid: false,
-                        showLabel: true
-                    },
-                    axisOptions: {
-                        gridLines: {
-                            offsetGridLines: true
-                        }
-                    },
                     options: {
-                        responsive: true,
                         animation: false,
-                        maintainAspectRatio: true,
                         legend: {
                             display: false
                         },
