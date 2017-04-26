@@ -194,14 +194,20 @@ $sort_array = array();
         };
         self.barBackgroundColors = function(len) {
             var colorAry = [];
-            for (i=0;i<len;i++) {
-                colorAry.push(randomColor({
+            if (len === 1) {
+                return randomColor({
                     format: 'rgba',
-                    alpha: 0.3})
-                );
+                    alpha: 0.3});
+            } else {
+                for (i=0;i<len;i++) {
+                    colorAry.push(randomColor({
+                        format: 'rgba',
+                        alpha: 0.3})
+                    );
+                }
+                return colorAry;
             }
-            return colorAry;
-        }
+        };
         self.menuToggle = function() {
             $('[data-bind="menu"]').on('click', function() {
                 $('.site-wrapper').toggleClass('menu');
