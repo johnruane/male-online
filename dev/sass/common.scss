@@ -298,6 +298,14 @@ main {
         width: 20%;
     }
 }
+.trends-labels {
+    display: flex;
+    justify-content: space-between;
+    span {
+        font-size: 10px;
+        font-style: italic;
+    }
+}
 .graph-container {
     padding: $global-padding;
 }
@@ -320,7 +328,7 @@ main {
 }
 .results-heading {
     text-align: center;
-    margin:0;
+    margin-bottom: $global-padding;;
 }
 .results-list {
     list-style: none;
@@ -365,12 +373,13 @@ main {
 .graph-link {
     //font-size: $graph-link-font-size;
     color: $graph-link-color;
+    text-decoration: none;
     @media (min-width: $md) {
         font-size: 1rem;
     }
-}
-.word-chart canvas {
-    margin-bottom: $global-padding;
+    span {
+        text-decoration: underline;
+    }
 }
 // .word-chart .ct-line {
 //     stroke-width: $graph-line-width;

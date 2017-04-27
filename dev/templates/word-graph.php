@@ -15,10 +15,14 @@
             <?php endforeach ?>
         </ul>
         <canvas id="<?php echo $word ?>-chart-canvas" height="200"></canvas>
+        <div class="trends-labels">
+            <span>2000</span>
+            <span>2017</span>
+        </div>
         <div class="graph-stat">
             <span class="graph-label" id="random-use">Random use in an article: </span>
             <?php $randomWord = randomArticleByWord($word); ?>
-            <span><a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank"><?php echo $randomWord[0]['article_text']; ?></a>
+            <span><a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">"<span><?php echo substr($randomWord[0]['article_text'], 1, -1); ?></span>"</a>
         </div>
     </div>
 <?php } ?>

@@ -222,7 +222,9 @@ $sort_array = array();
                         break;
                     case "years-tab":
                         rangeslider();
-                        setYearChart();
+                        if ( $('.chartjs-hidden-iframe').length == 0 ) {
+                            setYearChart();
+                        }
                         break;
                     default:
                         break;
