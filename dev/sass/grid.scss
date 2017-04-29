@@ -10,16 +10,11 @@ $sm:                        540px;
 $md:                        760px;
 $lg:                        970px;
 $xl:                        1400px;
-//
+
 // @mixin generate-columns($n, $class) {
 //     @for $i from 1 through $n {
 //       .col-#{$class}-#{$i} {
 //         width: $i * (100% / $n);
-//         padding-left: $column-padding;
-//         padding-right: $column-padding;
-//         min-height: 1px;
-//         position: relative;
-//         float: left;
 //       }
 //   }
 // }
@@ -38,29 +33,43 @@ $xl:                        1400px;
 // @media (min-width: $xl) {
 //   @include generate-columns($cols, xl);
 // }
-// @mixin container {
+@mixin container {
+    padding-left: $column-padding;
+    padding-right: $column-padding;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: $container-width;
+    @media (max-width: $sm) {
+        padding-left: $column-padding/2;
+        padding-right: $column-padding/2;
+    }
+}
+// [class^="col-"] {
 //     padding-left: $column-padding;
 //     padding-right: $column-padding;
-//     margin-right: auto;
-//     margin-left: auto;
-//     max-width: $container-width;
-//     @media (max-width: $sm) {
-//         padding-left: $column-padding/2;
-//         padding-right: $column-padding/2;
-//     }
+//     min-height: 1px;
+//     position: relative;
+//     float: left;
 // }
-// .container {
-//     @include container;
-// }
-// .container-fluid {
-//     width: 100%;
-// }
-// .container-narrow {
-//     @include container;
-//     @media (min-width: $md) {
-//         width: $narrow-container-width;
-//     }
-// }
+.container {
+    @include container;
+}
+.container-fluid {
+    width: 100%;
+}
+.container-narrow {
+    @include container;
+    @media (min-width: $md) {
+        width: $narrow-container-width;
+    }
+}
+.tile-wrapper {
+    display: flex;
+    flex-flow: wrap;
+}
+.tile {
+    width: 50%;
+}
 // .row {
 //   margin-left: -$column-padding;
 //   margin-right: -$column-padding;
@@ -71,22 +80,3 @@ $xl:                        1400px;
 // .pull-right {
 //   float: right;
 // }
-body {
-    box-sizing: border-box;
-}
-.container {
-    width: 80%;
-    margin: 0 auto;
-}
-.row {
-    display: flex;
-    justify-content: space-between;
-    & + .row {
-        margin-top: 20px;
-    }
-}
-.col {
-    flex: 1;
-    border: 1px solid #000;
-    justify-content: space-around;
-}

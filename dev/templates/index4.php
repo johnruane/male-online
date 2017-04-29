@@ -54,29 +54,29 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 <span></span>
             </nav>
         </header>
-        <main class="main-content">
-            <div>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a id="today-tab" href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li>
-                    <li role="presentation"><a id="trends-tab" href="#trends" aria-controls="trends" role="tab" data-toggle="tab">Trends</a></li>
-                    <li role="presentation"><a id="years-tab" href="#years" aria-controls="years" role="tab" data-toggle="tab">Years</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="today">
-                        <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
-                        <?php cleanTable('today_count'); ?>
-                        <?php setTodaysArticles($matched_articles); ?>
-                        <?php include 'daily-list.php' ?>
+        <main class="container">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a id="today-tab" href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li>
+                <li role="presentation"><a id="trends-tab" href="#trends" aria-controls="trends" role="tab" data-toggle="tab">Trends</a></li>
+                <li role="presentation"><a id="years-tab" href="#years" aria-controls="years" role="tab" data-toggle="tab">Years</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="today">
+                    <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
+                    <?php cleanTable('today_count'); ?>
+                    <?php setTodaysArticles($matched_articles); ?>
+                    <?php include 'daily-list.php' ?>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="trends">
+                    <div class="tile-wrapper">
+                        <?php foreach (getBadWords() as $word): ?>
+                            <?php include 'word-graph.php' ?>
+                        <?php endforeach ?>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="trends">
-                        <div class="graph-wrapper trends">
-                            <?php foreach (getBadWords() as $word): ?>
-                                <?php include 'word-graph.php' ?>
-                            <?php endforeach ?>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="years">
-                        <div class="graph-wrapper">
+                </div>
+                <div role="tabpanel" class="tab-pane" id="years">
+                    <div class="row">
+                        <div class="col-xs-12">
                             <input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
                             <h3 id="slider-output" class="year-range-slider">2001</h3>
                             <div class="graph-container yearly-chart clearfix">
@@ -90,7 +90,6 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                                 </ul>
                             <?php endforeach ?>
                             <canvas id="yearsChart" height="600"></canvas>
-                            <!-- <div class="ct-chart yearly-chart"></div> -->
                         </div>
                     </div>
                 </div>
@@ -236,7 +235,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
             });
         };
         self.setTrendsChart = function() {
-            $('.word-chart').each(function() {
+            $('[data-bind="word-chart"]').each(function() {
                 var $id = $(this).attr('id');
                 var $graph_vals = $('#'+$id).find('.word-value');
                 var $graph_labels = $('#'+$id).find('.word-key');

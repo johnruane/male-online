@@ -1,0 +1,59 @@
+.flam-text {
+    font-family: 'Bigshot One', cursive;
+    &:before {
+        content: "The";
+        position: absolute;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #272727;
+        top: -15px;
+        left: 9px;
+    }
+}
+.thin-text {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 200;
+    color: #5A6C7B
+}
+.main-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $global-padding 0;
+    height: $header-height;
+    width: 100vw;
+    > * {
+        z-index: $z-index-high;
+    }
+}
+.site-logo {
+    text-decoration: none;
+    color: #000;
+    font-size: 2.5rem;
+    position: relative;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.nav-icon {
+    width: 17px;
+    height: 18px;
+    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: absolute;
+    right: $global-padding;
+    span {
+        height: 2px;
+        display: block;
+        position: relative;
+        background: #000;
+        transition: all .5s ease;
+        transform-origin: right;
+    }
+    &:hover {
+        cursor: pointer;
+    }
+}
