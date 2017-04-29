@@ -257,6 +257,11 @@ function cleanAllTables() {
     $db->query($sql_clean_today_count);
     $db->query($sql_clean_yearly_count);
 }
+function cleanTable($table) {
+    $sql_clean_table = "DELETE FROM $table";
+    $db = new Db();
+    $db->query($sql_clean_table);
+}
 function getBadWords() {
     $list_of_bad_words_sorted = [];
     global $list_of_bad_words;

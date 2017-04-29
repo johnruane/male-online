@@ -6,6 +6,9 @@ ini_set("error_reporting","-1");
 ini_set("display_errors","On");
 
 $sort_array = array();
+$matched_articles = array();
+$mo_homepage_url = "http://www.dailymail.co.uk/home/index.html";
+$xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 ?>
 <!doctype html>
 
@@ -22,6 +25,7 @@ $sort_array = array();
     <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="js/jquery.resize.js"></script>
     <script src="js/jquery.randomColor.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
     <script src="js/bootstrap-tab.js"></script>
     <script src="js/rangeslider.min.js"></script>
 
@@ -59,9 +63,10 @@ $sort_array = array();
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="today">
-                        <div class="graph-wrapper trends">
-
-                        </div>
+                        <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
+                        <?php cleanTable('today_count'); ?>
+                        <?php setTodaysArticles($matched_articles); ?>
+                        <?php include 'daily-list.php' ?>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="trends">
                         <div class="graph-wrapper trends">
@@ -91,9 +96,9 @@ $sort_array = array();
                 </div>
             </div>
         </main>
-        <footer>
+        <!-- <footer>
             Footer footer
-        </footer>
+        </footer> -->
     </div>
     <script src="//localhost:35729/livereload.js"></script>
 </body>
@@ -111,12 +116,7 @@ $sort_array = array();
         var trendsChart;
         self.init = function() {
             // menuToggle();
-            // archiveToggle();
-            // sidebarSelection();
-            // // $('[for="year-today"]').trigger('click');
-            // $('#sidebar-tab').tabs();
-            // toggleCollapse();
-            // $('.content-wrapper').resize(resize)
+            toggleCollapse();
             tabShow();
         };
         self.setYearChart = function() {
@@ -174,24 +174,6 @@ $sort_array = array();
             yearsChart.data.datasets[0].data = $chartistUpdatedYearlyWordValues;
             yearsChart.update();
         };
-        self.resize = function() {
-            if ( $(trendsChart).length > 0 ) {
-                $(trendsChart).get(0).__chartist__.update();
-            }
-        };
-        self.archiveToggle = function() {
-            $('[data-bind="archive"]').on('click', function() {
-                $('.site-wrapper').toggleClass('archive');
-                var $sbar = $('#sidebar-tab');
-                // if ($($sbar).hasClass('active')) {
-                //     $($sbar).children('.sidebar-panel').css('display', 'block');
-                // } else {
-                //     setTimeout(function () {
-                //         $($sbar).children('.sidebar-panel').css('display', 'none');
-                //     }, 500);
-                // }
-            });
-        };
         self.barBackgroundColors = function(len) {
             var colorAry = [];
             if (len === 1) {
@@ -218,11 +200,13 @@ $sort_array = array();
                 var $tab = $(this).attr('id');
                 switch($tab) {
                     case "trends-tab":
-                        setTrendsChart();
+                        if ( $('.word-chart .chartjs-hidden-iframe').length == 0 ) {
+                            setTrendsChart();
+                        }
                         break;
                     case "years-tab":
                         rangeslider();
-                        if ( $('.chartjs-hidden-iframe').length == 0 ) {
+                        if ( $('.yearly-chart .chartjs-hidden-iframe').length == 0 ) {
                             setYearChart();
                         }
                         break;
@@ -232,19 +216,7 @@ $sort_array = array();
             });
         };
         self.toggleCollapse = function() {
-            $('[data-toggle="collapse"]').on('click', function() {
-                // if ($(this).attr('aria-expanded') == "true") {
-                //     $(this).attr('aria-expanded', 'false');
-                //     $($(this).data('target')).slideUp(300);
-                // } else {
-                //     var $current = $('.results-list li[aria-expanded="true"]');
-                //     $($current).attr('aria-expanded', 'false');
-                //     $($($current).data('target')).slideUp(300);
-                //
-                //     var $target = $(this).data('target');
-                //     $(this).attr('aria-expanded', 'true');
-                //     $($target).slideDown(300);
-                // }
+            $('[data-toggle="modal"]').on('click', function() {
                 var $target = $(this).data('target');
                 $($target).dialog({
                     modal: true,
