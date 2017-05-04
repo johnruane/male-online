@@ -61,10 +61,11 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 <li role="presentation"><a id="years-tab" href="#years" aria-controls="years" role="tab" data-toggle="tab">Years</a></li>
             </ul>
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="today">
+                <div role="tabpanel" class="tab-pane tab-pane-today active" id="today">
                     <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
                     <?php cleanTable('today_count'); ?>
                     <?php setTodaysArticles($matched_articles); ?>
+                    <h4>On today's homepage</h4>
                     <?php include 'daily-list.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">

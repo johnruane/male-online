@@ -5,12 +5,17 @@
     padding: $global-padding;
     margin: 0 auto;
 }
+.tab-pane h4 {
+    text-align: center;
+    margin: $global-padding 0;
+}
 .nav {
     padding-left: 0;
     list-style: none;
     display: flex;
     justify-content: center;
     margin-bottom: 0;
+    background-color: $navigattio-background-color;
 }
 .nav > li {
     position: relative;

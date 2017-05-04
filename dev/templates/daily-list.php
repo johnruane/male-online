@@ -5,9 +5,10 @@
 ?>
 <?php $dailyResults = getDailyCount(); ?>
 <?php if ($dailyResults) { ?>
-    <ul class="reset-list">
+    <ul class="reset-list card-list">
         <?php foreach ($dailyResults as $row): ?>
-            <li class="today-list-item" data-toggle="modal" data-target="#<?php echo $row['word'] ?>" aria-expanded="false"><span class="word-key"><?php echo $row['word'] ?></span>
+            <li class="today-list-item card" data-toggle="modal" data-target="#<?php echo $row['word'] ?>" aria-expanded="false">
+                <span class="word-key"><?php echo $row['word'] ?></span>
                 <span class="word-value"><?php echo $row['total'] ?></span>
             </li>
             <div id="<?php echo $row['word'] ?>" class="daily-article-wrapper" style="display:none">

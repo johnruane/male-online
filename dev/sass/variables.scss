@@ -1,6 +1,3 @@
-$sidebar-background: #add8e6;
-$sidebar-width-sm: 120px;
-$sidebar-width: 200px;
 $header-height: 35px;
 $global-padding: 15px;
 $global-margin: $global-padding;
@@ -11,18 +8,11 @@ $z-index-low: 1;
 $z-index-med: 5;
 $z-index-high: 10;
 
-$mo-main-border-color: #000;
-$mo-border: 1px dashed $mo-main-border-color;
-$radio-background-color-active: #ffe37b;
-
-$tab-active-color: #bfd8d2;
-$tab-color: #93a6a1;
-
-$sidebar-label-border: 3px solid transparent;
-$sidebar-label-border-color: #000;
+$today-list-item-border: 1px dashed #000;
+$today-list-background-color: #fef4ff;
 
 $navigation-width: 90%;
-$today-list-background-color: #fef4ff;
+$navigattio-background-color: #e8e8e8;
 
 // Graph
 $graph-label-color: #777777;
