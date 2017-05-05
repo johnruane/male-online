@@ -114,8 +114,22 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
         var $chartistYearlyWordLabels = [];
         var yearsChart;
         var trendsChart;
+        var alpha = 1;
+        var todayColors = [
+            [0, 'rgba(28, 186, 184)'],
+            [10, 'rgba(0, 142, 135)'],
+            [20, 'rgba(6, 143, 69)'],
+            [30, 'rgba(103, 189, 69)'],
+            [40, 'rgba(254, 231, 1)'],
+            [50, 'rgba(248, 150, 29)'],
+            [60, 'rgba(243, 111, 32)'],
+            [70, 'rgba(238, 49, 36)'],
+            [80, 'rgba(202, 57, 144)'],
+            [90, 'rgba(42, 75, 155)']
+        ];
         self.init = function() {
             // menuToggle();
+            setTodayColor();
             toggleCollapse();
             tabShow();
         };
@@ -290,6 +304,27 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 }
             });
         };
+        self.setTodayColor = function() {
+            var $percentVal = 0;
+            var $highestVal = parseInt($('.card-list .card:first-child .word-value').text());
+
+            $('.card-list .card').each(function() {
+                var $colVal = $(this).find('.word-value').text();
+                $percentVal = 100 * (parseInt($colVal) / $highestVal);
+                for (var i = todayColors.length - 1; i >=0; --i ) {
+                    if ($percentVal > todayColors[i][0]) {
+                        var a = todayColors[i][1];
+                        var alpha = ', 0.1';
+                        var col1 = [a.slice(0, a.length - 1), alpha, a.slice(a.length - 2)].join('')
+                        $(this).css('background-color', col1);
+                        var alpha = ', 0.3';
+                        var col2 = [a.slice(0, a.length - 1), alpha, a.slice(a.length - 2)].join('')
+                        $(this).css('border', '1px solid ' + col2);
+                        break;
+                    }
+                }
+            });
+        }
         return {
             init: init,
         }
