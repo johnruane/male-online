@@ -69,30 +69,28 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                     <?php include 'daily-list.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">
-                    <div class="tile-wrapper">
+                    <h4>Mentions over time</h4>
+                    <div class="trends-grid">
                         <?php foreach (getBadWords() as $word): ?>
                             <?php include 'word-graph.php' ?>
                         <?php endforeach ?>
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="years">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
-                            <h3 id="slider-output" class="year-range-slider">2001</h3>
-                            <div class="graph-container yearly-chart clearfix">
-                            <?php foreach ($years as $year): ?>
-                                <?php $yearlyResults = getYearlyTotals($year); ?>
-                                <ul class="hidden-word-results chart-values-<?php echo $year ?>">
-                                    <?php foreach ($yearlyResults as $row): ?>
-                                        <li><span class="yearly-word-key"><?php echo $row['word'] ?></span>
-                                        <span class="yearly-word-value"><?php echo $row['count'] ?></span></li>
-                                    <?php endforeach ?>
-                                </ul>
+                    <h4>Mentions during the year: <span id="slider-output" class="year-range-slider">2001</span></h4>
+                    <input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
+
+                    <div class="graph-container yearly-chart clearfix">
+                    <?php foreach ($years as $year): ?>
+                        <?php $yearlyResults = getYearlyTotals($year); ?>
+                        <ul class="hidden-word-results chart-values-<?php echo $year ?>">
+                            <?php foreach ($yearlyResults as $row): ?>
+                                <li><span class="yearly-word-key"><?php echo $row['word'] ?></span>
+                                <span class="yearly-word-value"><?php echo $row['count'] ?></span></li>
                             <?php endforeach ?>
-                            <canvas id="yearsChart" height="600"></canvas>
-                        </div>
-                    </div>
+                        </ul>
+                    <?php endforeach ?>
+                    <canvas id="yearsChart" height="600"></canvas>
                 </div>
             </div>
         </main>
@@ -129,7 +127,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
         ];
         self.init = function() {
             // menuToggle();
-            setTodayColor();
+            // setTodayColor();
             toggleCollapse();
             tabShow();
         };
@@ -146,13 +144,16 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 $chartistYearlyWordValues.push(parseInt($(this).text()));
             });
             var ctx = document.getElementById('yearsChart').getContext('2d');
+            var barColour = barBackgroundColors($yealry_graph_labels.length);
             yearsChart = new Chart(ctx, {
                 type: 'horizontalBar',
                 data: {
                     labels: $chartistYearlyWordLabels,
                     datasets: [{
                         data: $chartistYearlyWordValues,
-                        backgroundColor: barBackgroundColors($yealry_graph_labels.length)
+                        backgroundColor: barColour,
+                        borderColor: barColour,
+                        borderWidth: 1,
                     }]
                 },
                 axisOptions: {
@@ -163,15 +164,14 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
+                    scaleShowVerticalLines = false,
                     legend: {
                         display: false
                     },
                     scales: {
-                        xAxes: [{
-                            stacked: true,
-                        }],
                         yAxes: [{
-                            stacked: true
+                            stacked: true,
+                            categoryPercentage: 1.0
                         }]
                     }
                 }

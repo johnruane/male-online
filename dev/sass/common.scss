@@ -10,6 +10,20 @@ body {
         font-style: italic;
     }
 }
+.trends-grid {
+    display: flex;
+    flex-flow: wrap;
+}
+.tile {
+    width: 50%;
+    padding-top: $global-padding;
+}
+.tile:nth-child(odd) {
+    padding-right: ($global-padding / 2);
+}
+.tile:nth-child(even) {
+    padding-left: ($global-padding / 2);
+}
 .article-list-item {
     font-size: .7rem;
     padding: ($global-padding / 2);
@@ -57,10 +71,10 @@ body {
 .today-list-item.list:first-child {
     border-top: none;
 }
-.tab-pane-today .card-list {
+.tab-pane-today .today-grid {
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 20px;
 }
@@ -75,27 +89,17 @@ body {
 .today-list-item span {
     display: block;
 }
-// .card-list .card-item {
-//     width: 33.3%;
-//     padding: 5px;
-//     display: flex;
-//     justify-content: center;
-//     min-height: 100px;
-//     align-items: center;
-// }
-// .card-list .card {
-//     align-self: center;
-//     background-color: grey;
-//     flex: 1;
-// }
-// .card-list .today-list-item span {
-//     display: block;
-//     text-align: center;
-// }
 .today-results-list {
     margin: 0;
     padding: 0;
     list-style: none;
+}
+.word-key {
+    @extend .h2;
+    margin-top: 0;
+}
+.word-value {
+    @extend .h3;
 }
 .hidden-word-results {
     visibility: hidden;
@@ -187,7 +191,7 @@ body {
 }
 // Rangeslider
 .rangeslider {
-    margin: $global-padding ($global-padding * 2)  0;
+    margin: $global-padding 0 ($global-padding * 2);
 }
 .year-range-slider {
     width: 100%;

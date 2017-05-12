@@ -6,8 +6,7 @@
 ?>
 <?php $wordResults = getWordCount($word); ?>
 <?php if ($wordResults != null && count($wordResults) > 1) { ?>
-    <div class="tile clearfix">
-        <div id="<?php echo $word ?>-chart" data-bind="word-chart">
+        <div id="<?php echo $word ?>-chart" data-bind="word-chart" class="tile clearfix">
             <h2 class="results-heading"><?php echo $word ?></h2>
             <ul class="hidden-word-results">
                 <?php foreach ($wordResults as $row): ?>
@@ -26,5 +25,4 @@
                 <span><a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">"<span><?php echo substr($randomWord[0]['article_text'], 1, -1); ?></span>"</a>
             </div>
         </div>
-    </div>
 <?php } ?>

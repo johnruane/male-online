@@ -63,20 +63,3 @@ $xl:                        1400px;
         width: $narrow-container-width;
     }
 }
-.tile-wrapper {
-    display: flex;
-    flex-flow: wrap;
-}
-.tile {
-    width: 50%;
-}
-// .row {
-//   margin-left: -$column-padding;
-//   margin-right: -$column-padding;
-//   + .row {
-//       margin-top: $row-margin;
-//   }
-// }
-// .pull-right {
-//   float: right;
-// }
