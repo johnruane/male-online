@@ -25,23 +25,26 @@ body {
     padding-left: ($global-padding / 2);
 }
 .article-list-item {
-    font-size: .7rem;
-    padding: ($global-padding / 2);
+    // font-size: .7rem;
+    // padding: ($global-padding / 2);
+    // border-bottom: 1px solid #f9defc;
     a {
-        display: flex;
+        // display: flex;
         color: #000;
         text-decoration: none;
-        align-items: center;
+        // align-items: center;
     }
     img {
-        height: 50px;
+        height: 40
+        px;
         width: auto;
         margin-right: ($global-padding/2);
     }
+    .article-text {
+        display: none;
+    }
 }
-.article-list-item {
-    border-bottom: 1px solid #f9defc;
-}
+
 .results-heading {
     text-align: center;
     margin-top: 0;
@@ -71,28 +74,34 @@ body {
 .today-list-item.list:first-child {
     border-top: none;
 }
-.tab-pane-today .today-grid {
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    grid-gap: 20px;
-}
-.today-list-item.card {
-    text-align: center;
-    min-height: 100px;
+.today-grid {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+}
+// .tab-pane-today .today-grid {
+//     margin: 0 auto;
+//     display: grid;
+//     grid-template-columns: 1fr 1fr;
+//     grid-template-rows: auto;
+//     grid-gap: 20px;
+// }
+.today-list-item.card {
+    margin-bottom: $global-padding*3;
+    // text-align: center;
+    // min-height: 100px;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    // flex-direction: column;
 }
 .today-list-item span {
     display: block;
 }
 .today-results-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 5px;
 }
 .word-key {
     @extend .h2;
@@ -100,6 +109,7 @@ body {
 }
 .word-value {
     @extend .h3;
+    margin-top: 0;
 }
 .hidden-word-results {
     visibility: hidden;

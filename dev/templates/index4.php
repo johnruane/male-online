@@ -164,7 +164,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
-                    scaleShowVerticalLines = false,
+                    scaleShowVerticalLines: false,
                     legend: {
                         display: false
                     },
