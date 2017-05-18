@@ -230,6 +230,14 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
             });
         };
         self.toggleCollapse = function() {
+            $('[data-toggle="collapse"]').on('click', function(event) {
+                event.stopImmediatePropagation();
+                var $target = $(this).data('target');
+                $
+            });
+        };
+
+        self.toggleModal = function() {
             $('[data-toggle="modal"]').on('click', function() {
                 var $target = $(this).data('target');
                 $($target).dialog({

@@ -35,10 +35,10 @@ body {
         // align-items: center;
     }
     img {
-        height: 40
-        px;
+        height: 35px;
         width: auto;
-        margin-right: ($global-padding/2);
+        vertical-align: text-top;
+        // margin-right: ($global-padding/2);
     }
     .article-text {
         display: none;
@@ -75,7 +75,13 @@ body {
     border-top: none;
 }
 .today-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: $global-padding;
+}
+.today-times-display {
+    display: inline;
 }
 // .tab-pane-today .today-grid {
 //     margin: 0 auto;
@@ -84,8 +90,10 @@ body {
 //     grid-template-rows: auto;
 //     grid-gap: 20px;
 // }
+.daily-article-wrapper,
 .today-list-item.card {
-    margin-bottom: $global-padding*3;
+    margin-bottom: $global-padding*2;
+    text-align: right;
     // text-align: center;
     // min-height: 100px;
     // display: flex;
@@ -93,19 +101,19 @@ body {
     // align-items: center;
     // flex-direction: column;
 }
-.today-list-item span {
-    display: block;
-}
+
 .today-results-list {
-    margin: 0 auto;
+    margin: 25px auto 0;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 5px;
 }
 .word-key {
     @extend .h2;
     margin-top: 0;
+    margin-bottom: 5px;
+    border-bottom: 2px solid #f50000;
 }
 .word-value {
     @extend .h3;
