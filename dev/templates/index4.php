@@ -230,10 +230,10 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
             });
         };
         self.toggleCollapse = function() {
-            $('[data-toggle="collapse"]').on('click', function(event) {
-                event.stopImmediatePropagation();
-                var $target = $(this).data('target');
-                $
+            $('[data-toggle="trends-reveal"]').on('click', function(event) {
+                $('.article-text').css('display', 'none');
+                $id = $(this).data('id');
+                $($id).css('display', 'block');
             });
         };
 

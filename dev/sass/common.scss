@@ -25,26 +25,21 @@ body {
     padding-left: ($global-padding / 2);
 }
 .article-list-item {
-    // font-size: .7rem;
-    // padding: ($global-padding / 2);
-    // border-bottom: 1px solid #f9defc;
+    height: auto;
+    max-width: 100%;
+    width: 100%;
+    vertical-align: text-top;
     a {
         // display: flex;
         color: #000;
         text-decoration: none;
         // align-items: center;
     }
-    img {
-        height: 35px;
-        width: auto;
-        vertical-align: text-top;
-        // margin-right: ($global-padding/2);
-    }
-    .article-text {
-        display: none;
-    }
 }
-
+.article-text {
+    display: none;
+    margin-right: 15px;
+}
 .results-heading {
     text-align: center;
     margin-top: 0;
@@ -75,10 +70,7 @@ body {
     border-top: none;
 }
 .today-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-    grid-gap: $global-padding;
+
 }
 .today-times-display {
     display: inline;
@@ -92,7 +84,7 @@ body {
 // }
 .daily-article-wrapper,
 .today-list-item.card {
-    margin-bottom: $global-padding*2;
+    margin-bottom: $global-padding;
     text-align: right;
     // text-align: center;
     // min-height: 100px;
@@ -102,28 +94,41 @@ body {
     // flex-direction: column;
 }
 
-.today-results-list {
-    margin: 25px auto 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: auto;
-    grid-gap: 5px;
+.daily-article-wrapper {
+    display: flex;
+    .today-word-articles-text {
+        flex: 4;
+    }
+    .today-word-articles-images {
+        flex: 7;
+    }
 }
 .word-key {
     @extend .h2;
-    margin-top: 0;
-    margin-bottom: 5px;
-    border-bottom: 2px solid #f50000;
+    margin: 0;
 }
 .word-value {
     @extend .h3;
     margin-top: 0;
+}
+.today-word-articles-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 5px;
 }
 .hidden-word-results {
     visibility: hidden;
     position: absolute;
     height: 0;
     left: -9999px;
+}
+.item-card-heading {
+    margin-bottom: $global-padding/2;
+    border-bottom: 2px solid #f50000;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 // Graph
 .graph-stat {
