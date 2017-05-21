@@ -93,7 +93,6 @@ body {
     // align-items: center;
     // flex-direction: column;
 }
-
 .daily-article-wrapper {
     display: flex;
     .today-word-articles-text {
@@ -102,6 +101,12 @@ body {
     .today-word-articles-images {
         flex: 7;
     }
+}
+.article-highlight {
+    background: #ffff00;
+}
+.read-link {
+    display: block;
 }
 .word-key {
     @extend .h2;

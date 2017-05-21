@@ -129,6 +129,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
             // menuToggle();
             // setTodayColor();
             toggleCollapse();
+            highlightArticleText();
             tabShow();
         };
         self.setYearChart = function() {
@@ -231,12 +232,23 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
         };
         self.toggleCollapse = function() {
             $('[data-toggle="trends-reveal"]').on('click', function(event) {
-                $('.article-text').css('display', 'none');
+                $(this).parents('.today-list-item').find('.article-text').css('display', 'none');
                 $id = $(this).data('id');
                 $($id).css('display', 'block');
             });
         };
-
+        self.highlightArticleText = function() {
+            $('.daily-article-wrapper').each(function() {
+                var $id = $(this).attr('id');
+                $(this).find('.article-text').each(function() {
+                    var $articleSpan = $(this).find('span');
+                    var $articleText = $($articleSpan).text();
+                    var start = $articleText.indexOf($id.charAt(0).toLowerCase());
+                    var newText = [$articleText.slice(0, start), '<span class="article-highlight">'+$id+'</span>', $articleText.slice(start+$id.length)].join('');
+                    $($articleSpan).html(newText);
+                });
+            });
+        };
         self.toggleModal = function() {
             $('[data-toggle="modal"]').on('click', function() {
                 var $target = $(this).data('target');

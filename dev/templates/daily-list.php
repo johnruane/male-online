@@ -26,9 +26,9 @@
                     <div class="today-word-articles-text">
                         <?php $index=0 ?>
                         <?php foreach ($articleResults as $list): ?>
-                            <div id="trends-word-<?php echo $index ?>" class="article-text">
+                            <div id="<?php echo $row['word'] ?>-word-<?php echo $index ?>" class="article-text">
                                 <span><?php echo $list['article_text'] ?></span>
-                                <a href="<?php echo $mo_home_domain ?><?php echo $list['article_link'] ?>" target="_blank">Read</a>
+                                <a class="read-link" href="<?php echo $mo_home_domain ?><?php echo $list['article_link'] ?>" target="_blank">Go to full article</a>
                             </div>
                             <?php $index++ ?>
                         <?php endforeach ?>
@@ -36,7 +36,7 @@
                     <div class="today-word-articles-images">
                         <?php $index=0 ?>
                         <?php foreach ($articleResults as $list): ?>
-                            <img data-id="#trends-word-<?php echo $index ?>" data-toggle="trends-reveal" class="article-list-item" src="<?php echo $list['thumbnail_link'] ?>">
+                            <img data-id="#<?php echo $row['word'] ?>-word-<?php echo $index ?>" data-toggle="trends-reveal" class="article-list-item" src="<?php echo $list['thumbnail_link'] ?>">
                             <?php $index++ ?>
                         <?php endforeach ?>
                     </div>
