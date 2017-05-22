@@ -29,12 +29,16 @@ body {
     max-width: 100%;
     width: 100%;
     vertical-align: text-top;
+    opacity: 0.6;
     a {
         // display: flex;
         color: #000;
         text-decoration: none;
         // align-items: center;
     }
+}
+.article-list-item.active {
+    opacity: 1;
 }
 .article-text {
     display: none;

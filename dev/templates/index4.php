@@ -232,6 +232,8 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
         };
         self.toggleCollapse = function() {
             $('[data-toggle="trends-reveal"]').on('click', function(event) {
+                $(this).parents('.today-word-articles-images').find('img').removeClass('active');
+                $(this).addClass('active');
                 $(this).parents('.today-list-item').find('.article-text').css('display', 'none');
                 $id = $(this).data('id');
                 $($id).css('display', 'block');
@@ -243,11 +245,19 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 $(this).find('.article-text').each(function() {
                     var $articleSpan = $(this).find('span');
                     var $articleText = $($articleSpan).text();
-                    var start = $articleText.indexOf($id.charAt(0).toLowerCase());
-                    var newText = [$articleText.slice(0, start), '<span class="article-highlight">'+$id+'</span>', $articleText.slice(start+$id.length)].join('');
+
+                    var wordStart = $articleText.toLowerCase().indexOf($id);
+                    var beforeWord = $articleText.slice(0, wordStart);
+                    var word = $articleText.slice(wordStart, wordStart+$id.length);
+                    var afterWord = $articleText.slice(wordStart+$id.length, $articleText.length);
+
+                    var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
                     $($articleSpan).html(newText);
                 });
+                $(this).find('.today-word-articles-text .article-text:first-child').css('display', 'block');
+                $(this).find('.today-word-articles-images .article-list-item:first-child').addClass('active');
             });
+
         };
         self.toggleModal = function() {
             $('[data-toggle="modal"]').on('click', function() {
