@@ -26,23 +26,24 @@ body {
 }
 .article-list-item {
     height: auto;
-    max-width: 100%;
     width: 100%;
-    vertical-align: text-top;
-    opacity: 0.6;
+	max-width: 154px;
     a {
-        // display: flex;
         color: #000;
         text-decoration: none;
-        // align-items: center;
     }
 }
-.article-list-item.active {
-    opacity: 1;
+.thumbnail-placeholder {
+	margin-right: $global-padding;
+	display: block;
+	img {
+		margin-bottom: ($global-padding/2);
+		max-width: 154px;
+	}
 }
 .article-text {
     display: none;
-    margin-right: 15px;
+	margin-right: $global-padding;
 }
 .results-heading {
     text-align: center;
@@ -79,31 +80,25 @@ body {
 .today-times-display {
     display: inline;
 }
-// .tab-pane-today .today-grid {
-//     margin: 0 auto;
-//     display: grid;
-//     grid-template-columns: 1fr 1fr;
-//     grid-template-rows: auto;
-//     grid-gap: 20px;
-// }
 .daily-article-wrapper,
 .today-list-item.card {
     margin-bottom: $global-padding;
     text-align: right;
-    // text-align: center;
-    // min-height: 100px;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // flex-direction: column;
 }
 .daily-article-wrapper {
     display: flex;
     .today-word-articles-text {
-        flex: 4;
+        flex: 6;
+		@media(min-width: $md) {
+			flex: 4;
+		}
     }
     .today-word-articles-images {
-        flex: 7;
+        flex: 6;
+		align-content: flex-start;
+		@media(min-width: $md) {
+			flex: 7;
+		}
     }
 }
 .article-highlight {
@@ -125,6 +120,15 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
     grid-gap: 5px;
+	@media(min-width: $sm) {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+	@media(min-width: $lg) {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	}
+	@media(min-width: $xl) {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	}
 }
 .hidden-word-results {
     visibility: hidden;
@@ -152,7 +156,6 @@ body {
     color: $graph-label-color;
 }
 .graph-link {
-    //font-size: $graph-link-font-size;
     color: $graph-link-color;
     text-decoration: none;
     @media (min-width: $md) {

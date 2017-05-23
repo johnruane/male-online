@@ -24,6 +24,7 @@
                 <div id="<?php echo $row['word'] ?>" class="daily-article-wrapper">
                     <?php $articleResults = getDailyArticlesFromWord($row['word']); ?>
                     <div class="today-word-articles-text">
+						<div id="<?php echo $row['word'] ?>-thumbnail-placeholder" class="thumbnail-placeholder"></div>
                         <?php $index=0 ?>
                         <?php foreach ($articleResults as $list): ?>
                             <div id="<?php echo $row['word'] ?>-word-<?php echo $index ?>" class="article-text">

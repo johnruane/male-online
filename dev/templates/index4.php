@@ -232,11 +232,11 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
         };
         self.toggleCollapse = function() {
             $('[data-toggle="trends-reveal"]').on('click', function(event) {
-                $(this).parents('.today-word-articles-images').find('img').removeClass('active');
-                $(this).addClass('active');
                 $(this).parents('.today-list-item').find('.article-text').css('display', 'none');
                 $id = $(this).data('id');
                 $($id).css('display', 'block');
+				$('#article-image-holder').empty();
+				$(this).clone().appendTo('[id^="-thumbnail-placeholder"');
             });
         };
         self.highlightArticleText = function() {
@@ -254,10 +254,9 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                     var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
                     $($articleSpan).html(newText);
                 });
-                $(this).find('.today-word-articles-text .article-text:first-child').css('display', 'block');
-                $(this).find('.today-word-articles-images .article-list-item:first-child').addClass('active');
+                $(this).find('.today-word-articles-text .article-text:nth-child(2)').css('display', 'block');
+				$(this).find('.today-word-articles-images img:first-child').clone().appendTo('#'+$id+'-thumbnail-placeholder');
             });
-
         };
         self.toggleModal = function() {
             $('[data-toggle="modal"]').on('click', function() {
