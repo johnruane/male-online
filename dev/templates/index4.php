@@ -129,7 +129,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
             // menuToggle();
             // setTodayColor();
             toggleCollapse();
-            highlightArticleText();
+            highlightArticleTextAndCloneThumbnail();
             tabShow();
         };
         self.setYearChart = function() {
@@ -239,7 +239,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
 				$(this).clone().appendTo('[id^="-thumbnail-placeholder"');
             });
         };
-        self.highlightArticleText = function() {
+        self.highlightArticleTextAndCloneThumbnail = function() {
             $('.daily-article-wrapper').each(function() {
                 var $id = $(this).attr('id');
                 $(this).find('.article-text').each(function() {

@@ -14,7 +14,7 @@
                     <span class="word-value"><?php echo $row['count'] ?></span></li>
                 <?php endforeach ?>
             </ul>
-            <canvas id="<?php echo $word ?>-chart-canvas" height="200"></canvas>
+            <canvas id="<?php echo $word ?>-chart-canvas" width="100"></canvas>
             <div class="trends-labels">
                 <span>2000</span>
                 <span>2017</span>

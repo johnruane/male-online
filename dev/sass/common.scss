@@ -16,7 +16,7 @@ body {
 }
 .tile {
     width: 50%;
-    padding-top: $global-padding;
+    padding-bottom: $global-padding;
 }
 .tile:nth-child(odd) {
     padding-right: ($global-padding / 2);
