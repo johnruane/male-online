@@ -1,0 +1,51 @@
+.trends-wrapper {
+	display: flex;
+	.graph-stat {
+		flex: 4;
+		margin-right: $global-padding;
+	}
+	.trends-graph-wrapper {
+		flex: 8;
+	}
+}
+.trends-labels {
+    display: flex;
+    justify-content: space-between;
+    span {
+        font-size: 10px;
+        font-style: italic;
+    }
+}
+.trends-grid {
+    display: flex;
+    flex-flow: wrap;
+}
+.results-heading {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: $global-padding;
+}
+.results-container {
+    width: 100%;
+}
+.graph-stat {
+    text-align: center;
+    & + .graph-stat {
+        margin-top: $global-padding;
+    }
+}
+.graph-label {
+    display: block;
+    font-style: italic;
+    color: $graph-label-color;
+}
+.graph-link {
+    color: $graph-link-color;
+    text-decoration: none;
+    @media (min-width: $md) {
+        font-size: 1rem;
+    }
+    span {
+        text-decoration: underline;
+    }
+}

@@ -1,9 +1,5 @@
-.tab-wrapper {
-    display: flex;
-    flex-flow: wrap;
-    width: 100%;
-    padding: $global-padding;
-    margin: 0 auto;
+.tab-content {
+	@include container;
 }
 .tab-pane h4 {
     text-align: center;

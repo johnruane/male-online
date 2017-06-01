@@ -1,6 +1,6 @@
 /* Grid.scss
    ========================================================================== */
-$container-width:           90%;
+$container-width:           95%;
 $narrow-container-width:    70%;
 $column-padding:            15px;
 $row-margin:                20px;
@@ -34,14 +34,14 @@ $xl:                        1400px;
 //   @include generate-columns($cols, xl);
 // }
 @mixin container {
-    padding-left: $column-padding;
-    padding-right: $column-padding;
+    // padding-left: $column-padding;
+    // padding-right: $column-padding;
     margin-right: auto;
     margin-left: auto;
     max-width: $container-width;
     @media (max-width: $sm) {
-        padding-left: $column-padding/2;
-        padding-right: $column-padding/2;
+        // padding-left: $column-padding/2;
+        // padding-right: $column-padding/2;
     }
 }
 // [class^="col-"] {
@@ -51,15 +51,15 @@ $xl:                        1400px;
 //     position: relative;
 //     float: left;
 // }
-.container {
-    @include container;
-}
+// .container {
+//     @include container;
+// }
 .container-fluid {
     width: 100%;
 }
-.container-narrow {
-    @include container;
-    @media (min-width: $md) {
-        width: $narrow-container-width;
-    }
-}
+// .container-narrow {
+//     @include container;
+//     @media (min-width: $md) {
+//         width: $narrow-container-width;
+//     }
+// }

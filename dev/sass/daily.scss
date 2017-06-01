@@ -1,0 +1,117 @@
+.tile {
+    padding-bottom: $global-padding;
+}
+.tile:nth-child(odd) {
+    padding-right: ($global-padding / 2);
+}
+.tile:nth-child(even) {
+    padding-left: ($global-padding / 2);
+}
+.article-list-item {
+    height: auto;
+    width: 100%;
+	max-width: 154px;
+    a {
+        color: #000;
+        text-decoration: none;
+    }
+}
+.thumbnail-placeholder {
+	margin-right: $global-padding;
+	display: block;
+	img {
+		margin-bottom: ($global-padding/2);
+		max-width: 154px;
+	}
+}
+.article-text {
+    display: none;
+	margin-right: $global-padding;
+}
+.today-list {
+    background: $today-list-background-color;
+    width: 80%;
+    margin: $global-padding auto;
+
+}
+.today-list-item.list {
+    display: flex;
+    justify-content: space-between;
+    padding: ($global-padding / 2) 0;
+    &:hover {
+        cursor: pointer;
+    }
+}
+.today-list-item.list {
+    border-top: $today-list-item-border;
+    background-color: white;
+}
+.today-list-item.list:first-child {
+    border-top: none;
+}
+.today-times-display {
+    display: inline;
+}
+.daily-article-wrapper,
+.today-list-item.card {
+    margin-bottom: $global-padding;
+    text-align: right;
+}
+.daily-article-wrapper {
+    display: flex;
+    .today-word-articles-text {
+        flex: 6;
+		@media(min-width: $md) {
+			flex: 4;
+		}
+    }
+    .today-word-articles-images {
+        flex: 6;
+		align-content: flex-start;
+		@media(min-width: $md) {
+			flex: 7;
+		}
+    }
+}
+.article-highlight {
+    background: #ffff00;
+}
+.read-link {
+    display: block;
+}
+.word-key {
+    @extend .h2;
+    margin: 0;
+}
+.word-value {
+    @extend .h3;
+    margin-top: 0;
+}
+.today-word-articles-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-gap: 5px;
+	@media(min-width: $sm) {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
+	@media(min-width: $lg) {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	}
+	@media(min-width: $xl) {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	}
+}
+.hidden-word-results {
+    visibility: hidden;
+    position: absolute;
+    height: 0;
+    left: -9999px;
+}
+.item-card-heading {
+    margin-bottom: $global-padding/2;
+    border-bottom: 2px solid #f50000;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
