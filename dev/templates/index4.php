@@ -22,14 +22,12 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
     <meta name="viewport" content="width=device-width; initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no;" />
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="js/jquery.resize.js"></script>
     <script src="js/jquery.randomColor.js"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
     <script src="js/bootstrap-tab.js"></script>
     <script src="js/rangeslider.min.js"></script>
 
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="css/rangeslider.css?v=1.0">
     <link rel="stylesheet" href="css/styles.css?v=1.0">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500" rel="stylesheet">

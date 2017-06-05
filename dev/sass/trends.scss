@@ -1,11 +1,14 @@
 .trends-wrapper {
 	display: flex;
+	flex-flow: row wrap;
+
+	margin-bottom: $global-padding;
 	.graph-stat {
-		flex: 4;
-		margin-right: $global-padding;
+
 	}
 	.trends-graph-wrapper {
-		flex: 8;
+		width: 250px;
+		margin: 0 auto;
 	}
 }
 .trends-labels {
@@ -29,7 +32,9 @@
     width: 100%;
 }
 .graph-stat {
-    text-align: center;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
     & + .graph-stat {
         margin-top: $global-padding;
     }

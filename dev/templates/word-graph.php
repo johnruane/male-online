@@ -11,11 +11,6 @@
                 <h2 class="word-key"><?php echo $word ?></h2>
             </div>
 			<div class="trends-wrapper">
-				<div class="graph-stat today-word-articles-text">
-					<span class="graph-label" id="random-use">Random use in an article: </span>
-					<?php $randomWord = randomArticleByWord($word); ?>
-					<span><a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">"<span><?php echo substr($randomWord[0]['article_text'], 1, -1); ?></span>"</a>
-				</div>
 				<div class="trends-graph-wrapper">
 		            <ul class="hidden-word-results">
 		                <?php foreach ($wordResults as $row): ?>
@@ -28,6 +23,11 @@
 		                <span>2000</span>
 		                <span>2017</span>
 		            </div>
+				</div>
+				<div class="graph-stat today-word-articles-text">
+					<span class="graph-label" id="random-use">Random use in an article: </span>
+					<?php $randomWord = randomArticleByWord($word); ?>
+					<span><a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">"<span><?php echo substr($randomWord[0]['article_text'], 1, -1); ?></span>"</a>
 				</div>
 			</div>
         </div>

@@ -86,6 +86,7 @@
             var colorAry = [];
             if (len === 1) {
                 return randomColor({
+					luminosity: 'dark',
                     format: 'rgba',
                     alpha: 0.3});
             } else {
@@ -162,7 +163,7 @@
                 });
                 var $chartcolor = barBackgroundColors(1);
                 var ctx = document.getElementById($id + '-canvas').getContext('2d');
-                yearsChart = new Chart(ctx, {
+                trendsChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: $chartistWordLabels,
@@ -186,7 +187,10 @@
                              yAxes: [{
                                  display: false
                              }]
-                         }
+                         },
+						 gridLines: {
+							 display: true
+						 }
                     }
                 });
                 $chartistWordLabels = [];
