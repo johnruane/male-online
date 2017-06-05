@@ -9,6 +9,9 @@ $sort_array = array();
 $matched_articles = array();
 $mo_homepage_url = "http://www.dailymail.co.uk/home/index.html";
 $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
+
+yearArchiveSearch();
+
 ?>
 <!doctype html>
 

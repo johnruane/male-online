@@ -3,14 +3,7 @@ $mo_home_domain="http://dailymail.co.uk/";
 
 $years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
-$years_to_search = ['2000'];
-//$years_to_search = ['2016'];
- // '2002', '2003'
-//$years_to_search = ['2004','2005','2006'];
-// $years_to_search = ['2007,'2008','2009'];
-// $years_to_search = ['2010','2011','2012'];
-// $years_to_search = ['2013','2014','2015'];
-// $years_to_search = ['2016','2017'];
+$current_year = "2017";
 
 $sql_create_count_table = 'CREATE TABLE archive_count (
     entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -46,7 +39,10 @@ $sql_create_today_count_table = 'CREATE TABLE random_articles (
     thumbnail_link TEXT(10000)
     )';
 
-$sql_select_all = 'SELECT * FROM archive_count';
+$sql_create_visited_table = 'CREATE TABLE visited_links (
+    entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    article_link TEXT(10000)
+    )';
 
 $list_of_bad_words = array (
     4 => ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp'],
@@ -60,13 +56,24 @@ $list_of_bad_words = array (
     14 => ['figure-hugging']
 );
 
-// $list_of_bad_words = array (
-//     3 => ['for','all','hot'],
-//     4 => ['peep','lion','mend'],
-//     5 => ['world', 'china'],
-//     6 => ['likely'],
-//     9 => ['possessed'],
-// );
+$xpath_archive_year_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' split ')]/li";
+$xpath_archive_article_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li";
+$xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
+
+function yearArchiveSearch() {
+    global $current_year;
+    global $xpath_archive_year_query_string;
+
+    $year_list = array();
+    $visited_list = array();
+    $year_string = "http://www.dailymail.co.uk/home/sitemaparchive/year_".$current_year.".html";
+
+    $year_list = getDailyArchiveLinks($year_string, $xpath_archive_year_query_string);
+    // setVisitedLinks($year_list);
+    $visited_list = getVisitedLinks();
+    // $links_not_visited = array_diff($year_list, $visited_list);
+    var_dump($visited_list);
+}
 
 /*
     Gets all the Date links from a Yearly archive page and return them as an array
@@ -199,6 +206,16 @@ function setYearlyTotalsForWordByYear($year, $word) {
         echo $db->error();
     }
 }
+function setVisitedLinks($v_links) {
+    $db = new Db();
+    $sql = 'INSERT INTO visited_links (article_link) VALUES (?)';
+    $stmt = $db->connect()->prepare($sql);
+
+    foreach($v_links as $link) {
+        $stmt->bind_param('s', $link);
+        $stmt->execute();
+    }
+}
 function populateRandomArticles($word) {
     $db = new Db();
     $sql = "INSERT INTO random_articles (publication_date, word, article_text, article_link, thumbnail_link) SELECT publication_date, word, article_text, article_link, thumbnail_link FROM archive_count WHERE word = '$word' ORDER BY rand() LIMIT 20";
@@ -206,6 +223,11 @@ function populateRandomArticles($word) {
     $stmt->execute();
 }
 /* GETTERS */
+function getVisitedLinks() {
+    $sql_get_visited = "SELECT article_link FROM visited_links";
+    $db = new Db();
+    return $db->select($sql_get_visited);
+}
 function getDailyCount() {
     $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word ORDER BY total DESC";
     $db = new Db();
@@ -237,7 +259,6 @@ function getAllYearlyTotals() {
     return $db->select($sql_count_yearly);
 }
 function getWordCount($word) {
-    error_log($word, 0);
     $sql_select_word = "SELECT year, count FROM yearly_count WHERE word = '$word'";
     $db = new Db();
     return $db->select($sql_select_word);
