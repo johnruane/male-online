@@ -6,12 +6,13 @@
 ?>
 <?php $wordResults = getWordCount($word); ?>
 <?php if ($wordResults != null && count($wordResults) > 1) { ?>
-        <div id="<?php echo $word ?>-chart" data-bind="word-chart" class="tile clearfix">
+        <div id="<?php echo $word ?>-chart" data-bind="word-chart" class="word-chart clearfix">
 			<div class="item-card-heading">
                 <h2 class="word-key"><?php echo $word ?></h2>
             </div>
 			<div class="trends-wrapper">
 				<div class="trends-graph-wrapper">
+					<p class="mentions">Mentions</p>
 		            <ul class="hidden-word-results">
 		                <?php foreach ($wordResults as $row): ?>
 		                    <li><span class="word-key"><?php echo $row['year'] ?></span>
@@ -19,15 +20,16 @@
 		                <?php endforeach ?>
 		            </ul>
 		            <canvas id="<?php echo $word ?>-chart-canvas" width="100"></canvas>
-		            <div class="trends-labels">
-		                <span>2000</span>
-		                <span>2017</span>
-		            </div>
+					<div class="trends-labels">
+						<span>2000</span>
+						<span>2017</span>
+					</div>
 				</div>
 				<div class="graph-stat today-word-articles-text">
 					<span class="graph-label" id="random-use">Random use in an article: </span>
 					<?php $randomWord = randomArticleByWord($word); ?>
-					<span><a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">"<span><?php echo substr($randomWord[0]['article_text'], 1, -1); ?></span>"</a>
+					<span class="graph-article">"<?php echo substr($randomWord[0]['article_text'], 1, -1); ?>"</span>
+					<a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">Go to full article	</a>
 				</div>
 			</div>
         </div>

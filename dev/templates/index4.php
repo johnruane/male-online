@@ -10,7 +10,7 @@ $matched_articles = array();
 $mo_homepage_url = "http://www.dailymail.co.uk/home/index.html";
 $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
-yearArchiveSearch();
+// yearArchiveSearch();
 
 ?>
 <!doctype html>
@@ -66,11 +66,11 @@ yearArchiveSearch();
                     <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
                     <?php cleanTable('today_count'); ?>
                     <?php setTodaysArticles($matched_articles); ?>
-                    <h4>On today's homepage</h4>
+                    <h4>Today's homepage</h4>
                     <?php include 'daily-list.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">
-                    <h4>Mentions over time</h4>
+                    <h4>Usage fluctuations</h4>
                     <div class="trends-grid">
                         <?php foreach (getBadWords() as $word): ?>
                             <?php include 'word-graph.php' ?>
@@ -78,9 +78,10 @@ yearArchiveSearch();
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="years">
-                    <h4>Mentions during the year: <span id="slider-output" class="year-range-slider">2001</span></h4>
-                    <input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
-
+                    <h4>Mentions in <span id="slider-output" class="year-range-slider">2001</span></h4>
+					<div class="rangeslider-wrapper">
+                    	<input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
+					</div>
                     <div class="graph-container yearly-chart clearfix">
                     <?php foreach ($years as $year): ?>
                         <?php $yearlyResults = getYearlyTotals($year); ?>

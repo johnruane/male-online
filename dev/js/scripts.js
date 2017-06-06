@@ -182,10 +182,17 @@
                         },
                         scales: {
                              xAxes: [{
-                                 display: false
+								 display: false
                              }],
                              yAxes: [{
-                                 display: false
+								display: false,
+								gridLines: {
+									display: false
+								},
+								scaleLabel: {
+									display: false,
+									labelString: "Mentions"
+								}
                              }]
                          },
 						 gridLines: {

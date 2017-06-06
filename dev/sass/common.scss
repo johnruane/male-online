@@ -1,40 +1,33 @@
 body {
-    background: #ffffff;
-    font-family: Futura, Arial, sans-serif;
+	background: #ffffff;
+	font-family: Futura, Arial, sans-serif;
 }
 // Rangeslider
-.rangeslider {
-    margin: $global-padding 0 ($global-padding * 2);
+.rangeslider-wrapper {
+	width: 85%;
+	margin: 25px auto 25px;
 }
 .year-range-slider {
-    width: 100%;
-    text-align: center;
+	width: 100%;
+	text-align: center;
 }
 // Slider
 .rangeslider {
-  background-color: #fff;
-  border-radius: 0;
-  height: 0.2rem;
+	background-color: $rangeslider-bar-background;
+	border-radius: 0;
+	height: 5px;
 }
 .rangeslider__fill {
-  background-color: #F01F14;
-  border-radius: 0;
+	background-color: darken($rangeslider-bar-background, 10%);;
 }
+
 .rangeslider__handle {
-  width: 1.5rem;
-  height: 1.5rem;
-  position: absolute;
-  transition: transform .1s ease-in-out;
-  &::after {
-    display: none;
-  }
-  &:hover, &:active {
-    transform: scale(1.2,1.2);
-    transition: transform .1s ease-in-out;
-  }
+	box-shadow: none;
+	width: 1.5rem;
+	height: 1.5rem;
 }
 // Footer
 footer {
-    height: 200px;
-    background-color: #e4e0ec;
+	height: 200px;
+	background-color: #e4e0ec;
 }
