@@ -80,7 +80,12 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 <div role="tabpanel" class="tab-pane" id="years">
                     <h4>Mentions in <span id="slider-output" class="year-range-slider">2001</span></h4>
 					<div class="rangeslider-wrapper">
+
                     	<input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
+						<div class="trends-labels">
+							<span>2000</span>
+							<span>2017</span>
+						</div>
 					</div>
                     <div class="graph-container yearly-chart clearfix">
                     <?php foreach ($years as $year): ?>

@@ -50,11 +50,6 @@
                         borderWidth: 1,
                     }]
                 },
-                axisOptions: {
-                    gridLines: {
-                        offsetGridLines: true
-                    }
-                },
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
@@ -64,8 +59,8 @@
                     },
                     scales: {
                         yAxes: [{
-                            stacked: true,
-                            categoryPercentage: 1.0
+                            // stacked: true,
+							barThickness: 25
                         }]
                     }
                 }

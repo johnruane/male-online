@@ -5,7 +5,10 @@ body {
 // Rangeslider
 .rangeslider-wrapper {
 	width: 85%;
-	margin: 25px auto 25px;
+	margin: 0px auto 25px;
+	.trends-labels {
+		margin-top: 5px;
+	}
 }
 .year-range-slider {
 	width: 100%;
@@ -20,7 +23,9 @@ body {
 .rangeslider__fill {
 	background-color: darken($rangeslider-bar-background, 10%);;
 }
-
+.rangeslider--horizontal .rangeslider__handle {
+	top: -7px;
+}
 .rangeslider__handle {
 	box-shadow: none;
 	width: 1.5rem;
