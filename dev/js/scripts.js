@@ -51,17 +51,38 @@
                     }]
                 },
                 options: {
+					animation: {
+					  onProgress: drawBarValues,
+					  onComplete: drawBarValues
+					},
+					hover: { animationDuration: 0 },
                     responsive: true,
                     maintainAspectRatio: true,
                     scaleShowVerticalLines: false,
+					showTooltips: true,
+					onAnimationComplete: function() {
+						this.showTooltip(this.data.datasets[0].points, true);
+					},
                     legend: {
                         display: false
                     },
                     scales: {
-                        yAxes: [{
-                            // stacked: true,
-							barThickness: 25
-                        }]
+                        yAxes: [{ // horizontal lines
+							categoryPercentage: 1,
+							gridLines: {
+								 display: true,
+								 drawBorder: true,
+								 drawOnChartArea: false
+							},
+                        }],
+						xAxes: [{ // vertical lines
+							position: 'top',
+							gridLines: {
+								 display: true,
+								 drawBorder: true,
+								 drawOnChartArea: true
+							},
+						}]
                     }
                 }
             });
@@ -241,3 +262,22 @@
         window.MaleOnlineFunctions.init();
     });
 })(jQuery);
+
+function drawBarValues()
+{
+  // render the value of the chart above the bar
+  var ctx = this.chart.ctx;
+  ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'normal', Chart.defaults.global.defaultFontFamily);
+  ctx.fillStyle = this.chart.config.options.defaultFontColor;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  this.data.datasets.forEach(function (dataset) {
+    for (var i = 0; i < dataset.data.length; i++) {
+      if(dataset.hidden === true && dataset._meta[Object.keys(dataset._meta)[0]].hidden !== false){ continue; }
+      var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+      if(dataset.data[i] !== null && dataset.data[i] != 0){
+        ctx.fillText(dataset.data[i], model.x + 10, model.y + 7);
+      }
+    }
+  });
+}
