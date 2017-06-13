@@ -4,8 +4,8 @@ body {
 }
 // Rangeslider
 .rangeslider-wrapper {
-	width: 85%;
-	margin: 0px auto 25px;
+	width: 95%;
+	margin: 0px auto $global-padding;
 	.trends-labels {
 		margin-top: 5px;
 	}
@@ -16,12 +16,15 @@ body {
 }
 // Slider
 .rangeslider {
-	background-color: $rangeslider-bar-background;
+	background-color: $rangeslider-track-color;
+	box-shadow: none;
 	border-radius: 0;
 	height: 5px;
+	width: 75%;
+	margin: 0 auto;
 }
 .rangeslider__fill {
-	background-color: darken($rangeslider-bar-background, 10%);;
+	background-color: $rangeslider-track-color;
 }
 .rangeslider--horizontal .rangeslider__handle {
 	top: -7px;
@@ -30,6 +33,9 @@ body {
 	box-shadow: none;
 	width: 1.5rem;
 	height: 1.5rem;
+	background-color: $rangeslider-handle-color;
+	box-shadow: none;
+	border: none
 }
 // Footer
 footer {

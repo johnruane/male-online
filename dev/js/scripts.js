@@ -47,33 +47,37 @@
                         data: $chartistYearlyWordValues,
                         backgroundColor: barColour,
                         borderColor: barColour,
-                        borderWidth: 1,
+                        borderWidth: 0
                     }]
                 },
                 options: {
 					animation: {
 					  onProgress: drawBarValues,
-					  onComplete: drawBarValues
+					  onComplete: drawBarValues,
+					  duration: 1000,
+					  easing: 'easeOutBounce'
 					},
 					hover: { animationDuration: 0 },
                     responsive: true,
                     maintainAspectRatio: true,
                     scaleShowVerticalLines: false,
 					showTooltips: true,
-					onAnimationComplete: function() {
-						this.showTooltip(this.data.datasets[0].points, true);
+					layout: {
+						padding: {
+							left: 5,
+							right: 15
+						}
 					},
                     legend: {
                         display: false
                     },
                     scales: {
                         yAxes: [{ // horizontal lines
-							categoryPercentage: 1,
 							gridLines: {
 								 display: true,
 								 drawBorder: true,
 								 drawOnChartArea: false
-							},
+							}
                         }],
 						xAxes: [{ // vertical lines
 							position: 'top',
@@ -81,7 +85,7 @@
 								 display: true,
 								 drawBorder: true,
 								 drawOnChartArea: true
-							},
+							}
 						}]
                     }
                 }
@@ -263,21 +267,19 @@
     });
 })(jQuery);
 
-function drawBarValues()
-{
-  // render the value of the chart above the bar
-  var ctx = this.chart.ctx;
-  ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, 'normal', Chart.defaults.global.defaultFontFamily);
-  ctx.fillStyle = this.chart.config.options.defaultFontColor;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'bottom';
-  this.data.datasets.forEach(function (dataset) {
-    for (var i = 0; i < dataset.data.length; i++) {
-      if(dataset.hidden === true && dataset._meta[Object.keys(dataset._meta)[0]].hidden !== false){ continue; }
-      var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-      if(dataset.data[i] !== null && dataset.data[i] != 0){
-        ctx.fillText(dataset.data[i], model.x + 10, model.y + 7);
-      }
-    }
-  });
+function drawBarValues() {
+	var ctx = this.chart.ctx;
+	ctx.font = Chart.helpers.fontString(8, 'normal', Chart.defaults.global.defaultFontFamily);
+	ctx.fillStyle = this.chart.config.options.defaultFontColor;
+	ctx.textAlign = 'left';
+	ctx.textBaseline = 'bottom';
+	this.data.datasets.forEach(function (dataset) {
+		for (var i = 0; i < dataset.data.length; i++) {
+			if(dataset.hidden === true && dataset._meta[Object.keys(dataset._meta)[0]].hidden !== false){ continue; }
+			var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
+			if(dataset.data[i] !== null && dataset.data[i] != 0){
+				ctx.fillText(dataset.data[i], model.x + 2, model.y + 5); // x=hor, y=vert
+			}
+		}
+	});
 }
