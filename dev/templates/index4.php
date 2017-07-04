@@ -66,11 +66,13 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                     <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
                     <?php cleanTable('today_count'); ?>
                     <?php setTodaysArticles($matched_articles); ?>
-                    <h4>Today's homepage</h4>
+                    <h4 class="tab-heading">Today</h4>
+					<h5 class="sub-heading">Current stats on today's homepage</h5>
                     <?php include 'daily-list.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">
-                    <h4>Usage fluctuations</h4>
+                    <h4 class="tab-heading">Trends</h4>
+					<h5 class="sub-heading">Usage over time</h5>
                     <div class="trends-grid">
                         <?php foreach (getBadWords() as $word): ?>
                             <?php include 'word-graph.php' ?>
@@ -78,15 +80,16 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="years">
-                    <h4>Mentions in <span id="slider-output" class="year-range-slider">2001</span></h4>
+					<h4 class="tab-heading">Years</h4>
+                    <h5 class="sub-heading">Mentions in <span id="slider-output" class="year-range-slider">2001</span></h5>
 					<div class="rangeslider-wrapper">
-
                     	<input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
 						<div class="trends-labels">
-							<span>2000</span>
+							<span>2001</span>
 							<span>2017</span>
 						</div>
 					</div>
+					<p class="small-text">(Drag slider to change year)</p>
                     <div class="graph-container yearly-chart clearfix">
                     <?php foreach ($years as $year): ?>
                         <?php $yearlyResults = getYearlyTotals($year); ?>

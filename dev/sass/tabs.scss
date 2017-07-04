@@ -1,9 +1,15 @@
 .tab-content {
 	@include container;
 }
-.tab-pane h4 {
+.tab-heading {
     text-align: center;
-    margin: $global-padding 0;
+    margin: $global-padding 0 0;
+}
+.sub-heading {
+    text-align: center;
+    margin: 0 0 $global-padding;
+	font-family: serif;
+    font-weight: 100;
 }
 .nav {
     padding-left: 0;
@@ -42,15 +48,15 @@
     text-decoration: none;
     color: #000;
 }
-// .nav-tabs > li > a:hover {
-//     border-color: #eee #eee #ddd;
-// }
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
     // color: #555;
     text-decoration: underline;
     cursor: default;
+}
+.nav-tabs .active {
+	background-color: #fff;
 }
 .tab-content > .tab-pane {
     display: none;

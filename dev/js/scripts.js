@@ -65,11 +65,11 @@
 					layout: {
 						padding: {
 							left: 5,
-							right: 15
+							right: 20
 						}
 					},
                     legend: {
-                        display: false
+                        display: false,
                     },
                     scales: {
                         yAxes: [{ // horizontal lines
@@ -77,6 +77,9 @@
 								 display: true,
 								 drawBorder: true,
 								 drawOnChartArea: false
+							},
+							ticks: {
+								fontColor: '#000'
 							}
                         }],
 						xAxes: [{ // vertical lines
@@ -120,7 +123,7 @@
             }
         };
         self.showTabs = function() {
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
                 var $tab = $(this).attr('id');
                 switch($tab) {
                     case "trends-tab":
@@ -196,6 +199,8 @@
                         }]
                     },
                     options: {
+						responsive: true,
+						maintainAspectRatio: true,
                         animation: false,
                         legend: {
                             display: false

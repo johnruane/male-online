@@ -5,9 +5,9 @@ body {
 // Rangeslider
 .rangeslider-wrapper {
 	width: 95%;
-	margin: 0px auto $global-padding;
+	margin: 0px auto 0;
 	.trends-labels {
-		margin-top: 5px;
+		margin-top: -11px;
 	}
 }
 .year-range-slider {
@@ -16,15 +16,15 @@ body {
 }
 // Slider
 .rangeslider {
-	background-color: $rangeslider-track-color;
+	background: $rangeslider-track-color;
 	box-shadow: none;
 	border-radius: 0;
-	height: 5px;
+	height: 3px;
 	width: 75%;
 	margin: 0 auto;
 }
 .rangeslider__fill {
-	background-color: $rangeslider-track-color;
+	background: $rangeslider-track-color;
 }
 .rangeslider--horizontal .rangeslider__handle {
 	top: -7px;

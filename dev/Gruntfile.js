@@ -35,7 +35,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: [ 'js/{,*/}*.js', '!js/combined*.js' ],
-                tasks: [ 'uglify:all', 'copy:js' ],
+                tasks: [ 'copy:js' ],
                 options: {
                   spawn: false,
                   livereload: true
@@ -82,7 +82,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-contrib-clean');
 
