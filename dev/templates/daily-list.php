@@ -29,7 +29,7 @@
                         <?php foreach ($articleResults as $list): ?>
                             <div id="<?php echo $row['word'] ?>-word-<?php echo $index ?>" class="article-text">
                                 <span><?php echo $list['article_text'] ?></span>
-                                <a class="read-link" href="<?php echo $mo_home_domain ?><?php echo $list['article_link'] ?>" target="_blank">Go to full article</a>
+                                <a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $list['article_link'] ?>" target="_blank">Go to full article</a>
                             </div>
                             <?php $index++ ?>
                         <?php endforeach ?>

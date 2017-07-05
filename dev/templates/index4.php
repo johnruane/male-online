@@ -67,12 +67,12 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                     <?php cleanTable('today_count'); ?>
                     <?php setTodaysArticles($matched_articles); ?>
                     <h4 class="tab-heading">Today</h4>
-					<h5 class="sub-heading">Current stats on today's homepage</h5>
+					<p class="sub-heading">Current articles on today's homepage</p>
                     <?php include 'daily-list.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">
                     <h4 class="tab-heading">Trends</h4>
-					<h5 class="sub-heading">Usage over time</h5>
+					<p class="sub-heading">Graph mapping usage over time</p>
                     <div class="trends-grid">
                         <?php foreach (getBadWords() as $word): ?>
                             <?php include 'word-graph.php' ?>
@@ -81,7 +81,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 </div>
                 <div role="tabpanel" class="tab-pane" id="years">
 					<h4 class="tab-heading">Years</h4>
-                    <h5 class="sub-heading">Mentions in <span id="slider-output" class="year-range-slider">2001</span></h5>
+                    <p class="sub-heading">Number of mentions in <span id="slider-output" class="year-range-slider">2001</span></p>
 					<div class="rangeslider-wrapper">
                     	<input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
 						<div class="trends-labels">

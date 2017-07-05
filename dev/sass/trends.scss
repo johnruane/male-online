@@ -20,8 +20,8 @@
     }
 }
 .trends-grid {
-    display: flex;
-    flex-flow: wrap;
+    // display: flex;
+    // flex-flow: wrap;
 }
 .word-chart {
 	width: 100%;
@@ -55,6 +55,7 @@
 .graph-link {
     color: $graph-link-color;
     text-decoration: underline;
+	display: block;
     @media (min-width: $md) {
         font-size: 1rem;
     }

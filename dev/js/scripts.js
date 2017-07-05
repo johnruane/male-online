@@ -79,7 +79,8 @@
 								 drawOnChartArea: false
 							},
 							ticks: {
-								fontColor: '#000'
+								fontColor: '#000',
+								fontStyle: 'italic'								
 							}
                         }],
 						xAxes: [{ // vertical lines
