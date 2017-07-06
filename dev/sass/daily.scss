@@ -27,6 +27,8 @@
 .article-text {
     display: none;
 	margin-right: $global-padding;
+	max-width: 300px;
+	float: right;
 }
 .today-list {
     background: $today-list-background-color;
@@ -63,12 +65,18 @@
 		@media(min-width: $md) {
 			flex: 4;
 		}
+		@media(min-width: $lg) {
+			flex: 3;
+		}
     }
     .today-word-articles-images {
         flex: 6;
 		align-content: flex-start;
 		@media(min-width: $md) {
-			flex: 7;
+			flex: 8;
+		}
+		@media(min-width: $lg) {
+			flex: 9;
 		}
     }
 }

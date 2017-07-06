@@ -55,12 +55,12 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                 <span></span>
             </nav>
         </header>
+		<ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a id="today-tab" href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li>
+			<li role="presentation"><a id="trends-tab" href="#trends" aria-controls="trends" role="tab" data-toggle="tab">Trends</a></li>
+			<li role="presentation"><a id="years-tab" href="#years" aria-controls="years" role="tab" data-toggle="tab">Years</a></li>
+		</ul>
         <main class="container">
-            <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a id="today-tab" href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li>
-                <li role="presentation"><a id="trends-tab" href="#trends" aria-controls="trends" role="tab" data-toggle="tab">Trends</a></li>
-                <li role="presentation"><a id="years-tab" href="#years" aria-controls="years" role="tab" data-toggle="tab">Years</a></li>
-            </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane tab-pane-today active" id="today">
                     <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
