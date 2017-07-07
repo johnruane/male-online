@@ -11,55 +11,12 @@ $md:                        760px;
 $lg:                        970px;
 $xl:                        1400px;
 
-// @mixin generate-columns($n, $class) {
-//     @for $i from 1 through $n {
-//       .col-#{$class}-#{$i} {
-//         width: $i * (100% / $n);
-//       }
-//   }
-// }
-// @media (min-width: $xs) {
-//   @include generate-columns($cols, xs);
-// }
-// @media (min-width: $sm) {
-//   @include generate-columns($cols, sm);
-// }
-// @media (min-width: $md) {
-//   @include generate-columns($cols, md);
-// }
-// @media (min-width: $lg) {
-//   @include generate-columns($cols, lg);
-// }
-// @media (min-width: $xl) {
-//   @include generate-columns($cols, xl);
-// }
-@mixin container {
-    // padding-left: $column-padding;
-    // padding-right: $column-padding;
-    margin-right: auto;
-    margin-left: auto;
-    max-width: $container-width;
-    @media (max-width: $sm) {
-        // padding-left: $column-padding/2;
-        // padding-right: $column-padding/2;
-    }
+.container {
+	margin-right: auto;
+	margin-left: auto;
+	width: $container-width;
+	max-width: 1050px;
 }
-// [class^="col-"] {
-//     padding-left: $column-padding;
-//     padding-right: $column-padding;
-//     min-height: 1px;
-//     position: relative;
-//     float: left;
-// }
-// .container {
-//     @include container;
-// }
 .container-fluid {
     width: 100%;
 }
-// .container-narrow {
-//     @include container;
-//     @media (min-width: $md) {
-//         width: $narrow-container-width;
-//     }
-// }

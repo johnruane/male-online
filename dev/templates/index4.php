@@ -68,14 +68,14 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                     <?php setTodaysArticles($matched_articles); ?>
                     <h4 class="tab-heading">Today</h4>
 					<p class="sub-heading">Current articles on today's homepage</p>
-                    <?php include 'daily-list.php' ?>
+                    <?php include 'today.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">
                     <h4 class="tab-heading">Trends</h4>
 					<p class="sub-heading">Graph mapping usage over time</p>
                     <div class="trends-grid">
                         <?php foreach (getBadWords() as $word): ?>
-                            <?php include 'word-graph.php' ?>
+                            <?php include 'trends.php' ?>
                         <?php endforeach ?>
                     </div>
                 </div>
