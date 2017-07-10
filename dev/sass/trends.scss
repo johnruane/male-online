@@ -58,6 +58,7 @@
 .graph-label {
     font-style: italic;
 	color: $graph-label-color;
+	display: block;
 }
 .graph-link {
     color: $graph-link-color;
