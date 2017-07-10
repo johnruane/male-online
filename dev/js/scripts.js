@@ -80,7 +80,7 @@
 							},
 							ticks: {
 								fontColor: '#000',
-								fontStyle: 'italic'								
+								fontStyle: 'italic'
 							}
                         }],
 						xAxes: [{ // vertical lines
@@ -130,6 +130,7 @@
                     case "trends-tab":
                         if ( $('.word-chart .chartjs-hidden-iframe').length == 0 ) {
                             setTrendsChart();
+							highlightWordInArticle('.word-chart', '.graph-article');
                         }
                         break;
                     case "years-tab":
@@ -156,20 +157,9 @@
             });
         };
         self.highlightArticleTextAndCloneThumbnail = function() {
+			highlightWordInArticle('.daily-article-wrapper', '.article-text');
             $('.daily-article-wrapper').each(function() {
-                var $id = $(this).attr('id');
-                $(this).find('.article-text').each(function() {
-                    var $articleSpan = $(this).find('span');
-                    var $articleText = $($articleSpan).text();
-
-                    var wordStart = $articleText.toLowerCase().indexOf($id);
-                    var beforeWord = $articleText.slice(0, wordStart);
-                    var word = $articleText.slice(wordStart, wordStart+$id.length);
-                    var afterWord = $articleText.slice(wordStart+$id.length, $articleText.length);
-
-                    var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
-                    $($articleSpan).html(newText);
-                });
+				var $id = $(this).attr('id');
                 $(this).find('.today-word-articles-text .article-text:nth-child(2)').css('display', 'block');
 				$(this).find('.today-word-articles-images img:first-child').clone().appendTo('#'+$id+'-thumbnail-placeholder');
             });
@@ -216,8 +206,7 @@
 									display: false
 								},
 								scaleLabel: {
-									display: false,
-									labelString: "Mentions"
+									display: false
 								}
                              }]
                          },
@@ -287,5 +276,23 @@ function drawBarValues() {
 				ctx.fillText(dataset.data[i], model.x + 2, model.y + 5); // x=hor, y=vert
 			}
 		}
+	});
+}
+
+function highlightWordInArticle(articleContainerClass, articleTextClass) {
+	$(articleContainerClass).each(function() {
+		var $id = $(this).data('highlighter');
+		$(this).find(articleTextClass).each(function() {
+			var $articleSpan = $(this);
+			var $articleText = $($articleSpan).text();
+
+			var wordStart = $articleText.toLowerCase().indexOf($id);
+			var beforeWord = $articleText.slice(0, wordStart);
+			var word = $articleText.slice(wordStart, wordStart+$id.length);
+			var afterWord = $articleText.slice(wordStart+$id.length, $articleText.length);
+
+			var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
+			$($articleSpan).html(newText);
+		});
 	});
 }

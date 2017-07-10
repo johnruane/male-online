@@ -6,13 +6,12 @@
 ?>
 <?php $wordResults = getWordCount($word); ?>
 <?php if ($wordResults != null && count($wordResults) > 1) { ?>
-        <div id="<?php echo $word ?>-chart" data-bind="word-chart" class="word-chart clearfix">
+        <div id="<?php echo $word ?>-chart" data-bind="word-chart" data-highlighter="<?php echo $word ?>" class="word-chart clearfix">
 			<div class="item-card-heading">
                 <h2 class="word-key"><?php echo $word ?></h2>
             </div>
 			<div class="trends-wrapper">
 				<div class="trends-graph-wrapper">
-					<p class="mentions">Mentions</p>
 		            <ul class="hidden-word-results">
 		                <?php foreach ($wordResults as $row): ?>
 		                    <li><span class="word-key"><?php echo $row['year'] ?></span>

@@ -7,16 +7,32 @@
     }
 }
 .trends-grid {
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: auto;
-	grid-gap: 15px;
+	// display: grid;
+	// grid-template-columns: 1fr;
+	// grid-template-rows: auto;
+	// grid-gap: 15px;
+	display: flex;
+	flex-flow: row wrap;
+	margin-left: -$global-padding;
+	.word-chart {
+		width: 50%;
+		padding-left: $global-padding;
+		margin-bottom: $global-padding;
+	}
 	@media(min-width: $sm) {
-		grid-template-columns: 1fr 1fr;
+		.word-chart {
+			width: 33.333333%;
+		}
+	}
+	@media(min-width: $md) {
+		.word-chart {
+			width: 25%;
+		}
 	}
 	@media(min-width: $lg) {
-	}
-	@media(min-width: $xl) {
+		.word-chart {
+			width: 20%;
+		}
 	}
 }
 .word-chart {
@@ -38,15 +54,10 @@
     & + .graph-stat {
         margin-top: $global-padding;
     }
-	span {
-		display: block;
-	}
 }
 .graph-label {
     font-style: italic;
-}
-.graph-article {
-    color: $graph-label-color;
+	color: $graph-label-color;
 }
 .graph-link {
     color: $graph-link-color;
@@ -58,13 +69,4 @@
     span {
         text-decoration: underline;
     }
-}
-.mentions {
-	position: absolute;
-	transform: rotate(-90deg);
-    left: -20px;
-    top: 50%;
-    right: 100%;
-    color: #818181;
-    font-style: italic;
 }
