@@ -58,7 +58,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a id="today-tab" href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li>
 			<li role="presentation"><a id="trends-tab" href="#trends" aria-controls="trends" role="tab" data-toggle="tab">Trends</a></li>
-			<li role="presentation"><a id="years-tab" href="#years" aria-controls="years" role="tab" data-toggle="tab">Years</a></li>
+			<!-- <li role="presentation"><a id="years-tab" href="#years" aria-controls="years" role="tab" data-toggle="tab">Years</a></li> -->
 		</ul>
         <main class="container">
             <div class="tab-content">
@@ -79,7 +79,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                         <?php endforeach ?>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="years">
+                <!-- <div role="tabpanel" class="tab-pane" id="years">
 					<h4 class="tab-heading">Years</h4>
                     <p class="sub-heading">Number of mentions in <span id="slider-output" class="year-range-slider">2001</span></p>
 					<div class="rangeslider-wrapper">
@@ -100,8 +100,8 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                             <?php endforeach ?>
                         </ul>
                     <?php endforeach ?>
-                    <canvas id="yearsChart" height="600"></canvas>
-                </div>
+                    <canvas id="yearsChart" height="1000"></canvas>
+                </div> -->
             </div>
         </main>
         <!-- <footer>
@@ -112,4 +112,5 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
 </body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+<script src="js/lazysizes.min.js" async=""></script>
 <script src="js/scripts.js"></script>

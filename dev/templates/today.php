@@ -37,7 +37,7 @@
                     <div class="today-word-articles-images">
                         <?php $index=0 ?>
                         <?php foreach ($articleResults as $list): ?>
-                            <img data-id="#<?php echo $row['word'] ?>-word-<?php echo $index ?>" data-toggle="trends-reveal" class="article-list-item" src="<?php echo $list['thumbnail_link'] ?>">
+                            <img data-id="#<?php echo $row['word'] ?>-word-<?php echo $index ?>" data-toggle="trends-reveal" class="article-list-item lazyload" data-src="<?php echo $list['thumbnail_link'] ?>">
                             <?php $index++ ?>
                         <?php endforeach ?>
                     </div>

@@ -1,12 +1,3 @@
-// .tile {
-//     padding-bottom: $global-padding;
-// }
-// .tile:nth-child(odd) {
-//     padding-right: ($global-padding / 2);
-// }
-// .tile:nth-child(even) {
-//     padding-left: ($global-padding / 2);
-// }
 .article-list-item {
     height: auto;
     width: 100%;
@@ -15,6 +6,9 @@
         color: #000;
         text-decoration: none;
     }
+	&:hover {
+		cursor: pointer;
+	}
 }
 .thumbnail-placeholder {
 	margin-right: $global-padding;

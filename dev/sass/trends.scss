@@ -17,7 +17,7 @@
 	.word-chart {
 		width: 50%;
 		padding-left: $global-padding;
-		margin-bottom: $global-padding;
+		margin-bottom: $global-padding*2;
 	}
 	@media(min-width: $sm) {
 		.word-chart {
