@@ -60,6 +60,22 @@ class Db {
     }
 
     /**
+     * Fetch rows from the database as an array without setting a 'key'
+     *
+     */
+    public function fetch($query) {
+        $rows = array();
+        $result = $this -> query($query);
+        if($result === false) {
+            return false;
+        }
+        while ($row = $result -> fetch_assoc()) {
+            $rows[array_shift($row)] = $row;
+        }
+        return $rows;
+    }
+
+    /**
      * Fetch the last error from the database
      *
      * @return string Database error message

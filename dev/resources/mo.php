@@ -60,7 +60,7 @@ $xpath_archive_year_query_string = "//ul[contains(concat(' ', normalize-space(@c
 $xpath_archive_article_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li";
 $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
-function yearArchiveSearch() {
+function currentYearArchiveSearch() {
     global $current_year;
     global $xpath_archive_year_query_string;
 
@@ -68,11 +68,12 @@ function yearArchiveSearch() {
     $visited_list = array();
     $year_string = "http://www.dailymail.co.uk/home/sitemaparchive/year_".$current_year.".html";
 
-    $year_list = getDailyArchiveLinks($year_string, $xpath_archive_year_query_string);
-    // setVisitedLinks($year_list);
+    // Get all links on year page
+    $current_year_links = getDailyArchiveLinks($year_string, $xpath_archive_year_query_string);
+    // Get all links from visited_links table
     $visited_list = getVisitedLinks();
-    // $links_not_visited = array_diff($year_list, $visited_list);
-    var_dump($visited_list);
+    $links_not_visited = array_diff($current_year_links, $visited_list);
+    var_dump($links_not_visited);
 }
 
 /*
@@ -226,7 +227,7 @@ function populateRandomArticles($word) {
 function getVisitedLinks() {
     $sql_get_visited = "SELECT article_link FROM visited_links";
     $db = new Db();
-    return $db->select($sql_get_visited);
+    return $db->fetch($sql_get_visited);
 }
 function getDailyCount() {
     $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word ORDER BY total DESC";
