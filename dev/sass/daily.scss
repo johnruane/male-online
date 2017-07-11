@@ -30,6 +30,13 @@
     margin: $global-padding auto;
 
 }
+.article-list-item {
+	opacity: 0;
+}
+.article-list-item.loaded {
+	opacity: 1;
+	transition: opacity .25s ease-in-out;
+}
 .today-list-item.list {
     display: flex;
     justify-content: space-between;

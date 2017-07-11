@@ -35,8 +35,6 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
     <link rel="stylesheet" href="css/styles.css?v=1.0">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bigshot+One" rel="stylesheet">
-
-
     <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
     <![endif]-->
@@ -63,9 +61,9 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
         <main class="container">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane tab-pane-today active" id="today">
-                    <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
+                    <!-- <?php getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string); ?>
                     <?php cleanTable('today_count'); ?>
-                    <?php setTodaysArticles($matched_articles); ?>
+                    <?php setTodaysArticles($matched_articles); ?> -->
                     <h4 class="tab-heading">Today</h4>
 					<p class="sub-heading">Current articles on today's homepage</p>
                     <?php include 'today.php' ?>
@@ -79,29 +77,6 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
                         <?php endforeach ?>
                     </div>
                 </div>
-                <!-- <div role="tabpanel" class="tab-pane" id="years">
-					<h4 class="tab-heading">Years</h4>
-                    <p class="sub-heading">Number of mentions in <span id="slider-output" class="year-range-slider">2001</span></p>
-					<div class="rangeslider-wrapper">
-                    	<input type="range" min="2001" max="2017" value="2001" step="1" data-rangeslider>
-						<div class="trends-labels">
-							<span>2001</span>
-							<span>2017</span>
-						</div>
-					</div>
-					<p class="small-text">(Drag slider to change year)</p>
-                    <div class="graph-container yearly-chart clearfix">
-                    <?php foreach ($years as $year): ?>
-                        <?php $yearlyResults = getYearlyTotals($year); ?>
-                        <ul class="hidden-word-results chart-values-<?php echo $year ?>">
-                            <?php foreach ($yearlyResults as $row): ?>
-                                <li><span class="yearly-word-key"><?php echo $row['word'] ?></span>
-                                <span class="yearly-word-value"><?php echo $row['count'] ?></span></li>
-                            <?php endforeach ?>
-                        </ul>
-                    <?php endforeach ?>
-                    <canvas id="yearsChart" height="1000"></canvas>
-                </div> -->
             </div>
         </main>
         <!-- <footer>
@@ -112,5 +87,5 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
 </body>
 </html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
-<script src="js/lazysizes.min.js" async=""></script>
+<script src="js/lazysides.min.js"></script>
 <script src="js/scripts.js"></script>

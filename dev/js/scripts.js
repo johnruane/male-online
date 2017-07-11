@@ -18,10 +18,12 @@
             [90, 'rgba(42, 75, 155)']
         ];
         self.init = function() {
+			$(window).scrollTop(0);
             toggleDailyArticleSelection();
             highlightArticleTextAndCloneThumbnail();
-			setTrendsChart();
 			highlightWordInArticle('.word-chart', '.graph-article');
+			scrollIntoView();
+			setVisible();
         };
         self.barBackgroundColors = function(len) {
             var colorAry = [];
@@ -60,61 +62,78 @@
 				$(this).find('.today-word-articles-images img:first-child').clone().appendTo('#'+$id+'-thumbnail-placeholder');
             });
         };
-        self.setTrendsChart = function() {
-            $('[data-bind="word-chart"]').each(function() {
-                var $id = $(this).attr('id');
-                var $graph_vals = $('#'+$id).find('.word-value');
-                var $graph_labels = $('#'+$id).find('.word-key');
-                $($graph_vals).each(function() {
-                    $chartistWordValues.push(parseInt($(this).text()));
-                });
-                $($graph_labels).each(function() {
-                    $chartistWordLabels.push($(this).text());
-                });
-                var $chartcolor = barBackgroundColors(1);
-                var ctx = document.getElementById($id + '-canvas').getContext('2d');
-                trendsChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: $chartistWordLabels,
-                        datasets: [{
-                            data: $chartistWordValues,
-                            radius: 0,
-                            borderWidth: 1,
-                            borderColor: $chartcolor,
-                            backgroundColor: $chartcolor
-                        }]
-                    },
-                    options: {
-						responsive: true,
-						maintainAspectRatio: true,
-                        animation: false,
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                             xAxes: [{
-								 display: false
-                             }],
-                             yAxes: [{
-								display: false,
-								gridLines: {
-									display: false
-								},
-								scaleLabel: {
-									display: false
-								}
-                             }]
-                         },
-						 gridLines: {
-							 display: true
-						 }
-                    }
-                });
-                $chartistWordLabels = [];
-                $chartistWordValues = [];
+        self.setTrendsChart = function(chartid) {
+            var $graph_vals = $('#'+chartid).find('.word-value');
+            var $graph_labels = $('#'+chartid).find('.word-key');
+            $($graph_vals).each(function() {
+                $chartistWordValues.push(parseInt($(this).text()));
             });
+            $($graph_labels).each(function() {
+                $chartistWordLabels.push($(this).text());
+            });
+            var $chartcolor = barBackgroundColors(1);
+        	trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: $chartistWordLabels,
+                    datasets: [{
+                        data: $chartistWordValues,
+                        radius: 0,
+                        borderWidth: 1,
+                        borderColor: $chartcolor,
+                        backgroundColor: $chartcolor
+                    }]
+                },
+                options: {
+					responsive: true,
+					maintainAspectRatio: true,
+                    animation: false,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                         xAxes: [{
+							 display: false
+                         }],
+                         yAxes: [{
+							display: false,
+							gridLines: {
+								display: false
+							},
+							scaleLabel: {
+								display: false
+							}
+                         }]
+                     },
+					 gridLines: {
+						 display: true
+					 }
+                }
+            });
+            $chartistWordLabels = [];
+            $chartistWordValues = [];
         };
+		self.scrollIntoView = function() {
+			var didScroll = false;
+			window.onscroll = doThisStuffOnScroll;
+			function doThisStuffOnScroll() {
+			    didScroll = true;
+			}
+			setInterval(function() {
+			    if(didScroll) {
+			        didScroll = false;
+					setVisible();
+			    }
+			}, 100);
+		};
+		self.setVisible = function() {
+			$('.word-chart').each( function() {
+				if ($(this).isOnScreen() && !$(this).hasClass('loaded'))) {
+					setTrendsChart($(this).attr('id'));
+					$(this).addClass('loaded');
+				}
+			});
+		};
         return {
             init: init,
         }
@@ -143,3 +162,17 @@ function highlightWordInArticle(articleContainerClass, articleTextClass) {
 		});
 	});
 }
+
+$.fn.isOnScreen = function(){
+    var win = $(window);
+    var viewport = {
+        top : win.scrollTop(),
+        left : win.scrollLeft()
+    };
+    viewport.right = viewport.left + win.width();
+    viewport.bottom = viewport.top + win.height();
+    var bounds = this.offset();
+    bounds.right = bounds.left + this.outerWidth();
+    bounds.bottom = bounds.top + this.outerHeight();
+    return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+};
