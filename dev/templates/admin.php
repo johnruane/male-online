@@ -1,4 +1,6 @@
 <?php
+ini_set("error_reporting","-1");
+ini_set("display_errors","On");
 require_once("mo.php");
 
 if (isset($_POST['action'])) {
@@ -38,6 +40,8 @@ if (isset($_POST['action'])) {
             }
             error_log('Random table populated', 0);
             break;
+		case 'get-yearly-totals-by-word':
+			break;
     }
 }
 ?>
@@ -80,6 +84,19 @@ if (isset($_POST['action'])) {
 			<div class="admin-panel">
 				<span class="admin-heading">DB functions</span>
 				<div class="admin-body">
+					<div class="admin-messages"></div>
+					<div class="admin-section">
+						<div>
+							<label class="php-action-label">Get yearly totals for word</label>
+							<p class="admin-markup"></p>
+						</div>
+						<div class="admin-action">
+							<form>
+								<input type="text" name="admin-input">
+								<button type="submit" class="admin-btn-success" data-btn="submit" value="get-yearly-totals-by-word">Go</button>
+							</form>
+						</div>
+					</div>
 					<div class="admin-section">
 						<div>
 							<label class="php-action-label">Delete data from table</label>
@@ -93,7 +110,7 @@ if (isset($_POST['action'])) {
 							<?php } ?>
 								<option value="all">ALL</option>
 							</select>
-							<button type="button" class="admin-btn-warning">Go</button>
+							<button type="button" data-btn="submit" class="admin-btn-warning">Go</button>
 						</div>
 					</div>
 					<div class="admin-section">
@@ -109,7 +126,7 @@ if (isset($_POST['action'])) {
 									</li>
 								<?php } ?>
 							</form>
-							<button type="button" class="admin-btn-success">Go</button>
+							<button type="button" data-btn="submit" class="admin-btn-success">Go</button>
 						</div>
 					</div>
 					<div class="admin-section">
@@ -128,7 +145,7 @@ if (isset($_POST['action'])) {
 										<input id="all-checkbox" type="checkbox" value="all">
 									</li>
 							</form>
-							<button type="button" class="admin-btn-success">Go</button>
+							<button type="button" data-btn="submit" class="admin-btn-success">Go</button>
 						</div>
 					</div>
 					<div class="admin-section">
@@ -137,7 +154,7 @@ if (isset($_POST['action'])) {
 							<p class="admin-markup">For each 'bad word' it selects 20 random articles from the 'archive', and populates the 'random' table</p>
 						</div>
 						<div class="admin-action">
-							<button type="button" class="admin-btn-success">Go</button>
+							<button type="button" data-btn="submit" class="admin-btn-success">Go</button>
 						</div>
 					</div>
 					<div class="admin-section">
@@ -148,7 +165,7 @@ if (isset($_POST['action'])) {
 						<div class="admin-action">
 							<form>
 								<input type="text" name="new-word">
-								<button type="button" class="admin-btn-success admin-long-btn">Add</button>
+								<button type="button" data-btn="submit" class="admin-btn-success admin-long-btn">Add</button>
 							</form>
 						</div>
 					</div>
@@ -165,19 +182,32 @@ if (isset($_POST['action'])) {
 									<option value="<?php echo $w ?>"><?php echo $w ?></option>
 								<?php } ?>
 								</select>
-								<button type="button" class="admin-btn-warning admin-long-btn">Delete</button>
+								<button type="button" data-btn="submit" class="admin-btn-warning admin-long-btn">Delete</button>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<!-- <p>Clean tables: <input type="button" value="clean-all-tables"></p>
-			<p>Populate archive_count: <input type="button" value="populate-current-count-from-years"></p>
-			<p>Set yearly count: <input type="button" value="set-yearly-count"></p>
-			<p>Populate today_count: <input type="button" value="populate-today-count"></p>
-			<p>Populate random table: <input type="button" value="populate-random-articles"></p> -->
 		</main>
 	</div>
 </body>
 </html>
+
+<script>
+$(function() {
+    $('[data-btn="submit"]').on('click', function() {
+        var clickBtnValue = $(this).val();
+		var adminInput = $(this).closest('form').children('input').val();
+        var ajaxurl = 'admin.php',
+        data =  {
+			'action': clickBtnValue,
+			'input': adminInput
+		};
+        $.post(ajaxurl, data, function (response) {
+			var res = response;
+			$(res).find('.admin-messages').append('<p>Test</p>');
+            $('body').html(res);
+        });
+    });
+});
+</script>
