@@ -70,9 +70,9 @@ function currentYearArchiveSearch() {
 
     // Get all links on year page
     $current_year_links = getDailyArchiveLinks($year_string, $xpath_archive_year_query_string);
+	//setVisitedLinks($current_year_links);
     // Get all links from visited_links table
-    $visited_list = getVisitedLinks();
-    $links_not_visited = array_diff($current_year_links, $visited_list);
+    $links_not_visited = array_diff($current_year_links, getVisitedLinks());
     var_dump($links_not_visited);
 }
 
@@ -227,7 +227,7 @@ function populateRandomArticles($word) {
 function getVisitedLinks() {
     $sql_get_visited = "SELECT article_link FROM visited_links";
     $db = new Db();
-    return $db->fetch($sql_get_visited);
+    return $db->fetch($sql_get_visited, 'article_link');
 }
 function getDailyCount() {
     $sql_select_daily = "SELECT word, count(*) AS total FROM today_count GROUP BY word ORDER BY total DESC";

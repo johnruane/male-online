@@ -60,17 +60,17 @@ class Db {
     }
 
     /**
-     * Fetch rows from the database as an array without setting a 'key'
+     * Fetch rows from the database as a non 'key/value' pair.
      *
      */
-    public function fetch($query) {
+    public function fetch($query, $column) {
         $rows = array();
         $result = $this -> query($query);
         if($result === false) {
             return false;
         }
         while ($row = $result -> fetch_assoc()) {
-            $rows[array_shift($row)] = $row;
+			array_push($rows, $row[$column]);
         }
         return $rows;
     }
