@@ -56,24 +56,22 @@ $list_of_bad_words = array (
     14 => ['figure-hugging']
 );
 
-$xpath_archive_year_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' split ')]/li";
 $xpath_archive_article_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li";
 $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
 function currentYearArchiveSearch() {
     global $current_year;
-    global $xpath_archive_year_query_string;
 
-    $year_list = array();
-    $visited_list = array();
-    $year_string = "http://www.dailymail.co.uk/home/sitemaparchive/year_".$current_year.".html";
+    // Get all links on year page - return as an array
+    $current_year_links = getDailyArchiveLinks("http://www.dailymail.co.uk/home/sitemaparchive/year_".$current_year.".html", "//ul[contains(concat(' ', normalize-space(@class), ' '), ' split ')]/li");
+	// 1. Query archive_count table for all current year links - return publication_date
+	// 2. Loop through current_year_links and filter out the ones whose date already appears in above article_string_array
+	// 3. Send unvisited links to getDailyArchiveLinks function
 
-    // Get all links on year page
-    $current_year_links = getDailyArchiveLinks($year_string, $xpath_archive_year_query_string);
 	//setVisitedLinks($current_year_links);
     // Get all links from visited_links table
-    $links_not_visited = array_diff($current_year_links, getVisitedLinks());
-    var_dump($links_not_visited);
+    // $links_not_visited = array_diff($current_year_links, getVisitedLinks());
+    // var_dump($links_not_visited);
 }
 
 /*
@@ -88,10 +86,10 @@ function getDailyArchiveLinks($url, $xpath_string) {
     libxml_use_internal_errors($internalErrors); // Restore error level
 
     $xpath = new DomXpath($dom);
-    $article_list = $xpath->query($xpath_string); // Returns all list items from a yearly page
+    $daily_link_list = $xpath->query($xpath_string); // Returns all list items from a yearly page
 
-    $article_links = array();
-    foreach ($article_list as $article) {
+    $daily_headline_list = array();
+    foreach ($daily_link_list as $article) {
     	$node = $xpath->query('descendant::a/attribute::href', $article);
     	array_push($article_links, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
     }

@@ -1,0 +1,61 @@
+.admin-panel {
+	border: 1px solid #ddd;
+}
+.admin-heading {
+	font-size: 1.5rem;
+	background: #4c91cc;
+	color: #fff;
+	padding: $global-padding;
+	display: block;
+}
+.admin-body {
+	padding: $global-padding;
+}
+.admin-btn-success {
+	color: #fff;
+	background-color: #4B9626;
+	border-color: #4B9626;
+	font-weight: bold;
+}
+.admin-btn-warning {
+	color: #fff;
+	background-color: #ff0000;
+    border-color: #962626;
+    font-weight: bold;
+}
+.admin-long-btn {
+	width: 80px;
+}
+.admin-markup {
+	color: lighten(#000, 50%);
+	font-style: italic;
+	margin: 0;
+}
+.admin-section {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: $global-padding;
+	margin-bottom: $global-padding;
+	& + .admin-section {
+		border-top: 1px solid #ddd;
+		padding-top: $global-padding;
+	}
+}
+.admin-action{
+	text-align: right;
+}
+.input-matrix {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	li {
+		list-style: none;
+	}
+}
+.php-action-label {
+	text-transform: uppercase;
+}
+.jumbotron {
+	margin-bottom: 2rem;
+	background-color: #eceeef;
+	border-radius: .3rem;
+}

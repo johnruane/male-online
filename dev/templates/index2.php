@@ -135,15 +135,6 @@ if (isset($_POST['action'])) {
 
 <script>
 $(function() {
-    $('[data-collapse]').on('click', function() {
-        var $moList = $(this).children('.keyword-wrapper')
-        if ( $moList.is(':visible') ) {
-            $($moList).slideUp(300);
-        } else {
-            $('.keyword-wrapper').slideUp(300);
-            $($moList).slideDown(300);
-        }
-    });
     $('.admin-panel input').on('click', function() {
         var clickBtnValue = $(this).val();
         var ajaxurl = 'index2.php',
