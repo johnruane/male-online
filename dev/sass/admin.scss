@@ -32,14 +32,16 @@
 	margin: 0;
 }
 .admin-section {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-column-gap: $global-padding;
 	margin-bottom: $global-padding;
 	& + .admin-section {
 		border-top: 1px solid #ddd;
 		padding-top: $global-padding;
 	}
+}
+.admin-section-columns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: $global-padding;
 }
 .admin-action {
 	text-align: right;

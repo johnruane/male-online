@@ -2,5 +2,5 @@
     $db_host = "localhost";
     $db_user = "root";
     $db_passwd = "password";
-    $db_database = "mail_online_db";
+    $db_database = "moail_online_test";
 ?>

@@ -2,7 +2,6 @@
 require_once("mo.php");
 require_once("conf.php");
 require_once("db.php");
-	;
 ?>
 <div class="admin-results clearfix">
 	<span>Results for <?php echo $_POST['input'] ?></span>

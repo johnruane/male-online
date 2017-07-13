@@ -267,16 +267,12 @@ function getDailyArticlesFromWord($word) {
     $db = new Db();
     return $db->select($sql_select_word_articles);
 }
-/* Other functions */
-function cleanAllTables() {
-    $sql_clean_archive_count = "DELETE FROM archive_count";
-    $sql_clean_today_count = "DELETE FROM today_count";
-    $sql_clean_yearly_count = "DELETE FROM yearly_count";
+function getTableNames() {
+	$sql_select_table_names = "SHOW TABLES";
     $db = new Db();
-    $db->query($sql_clean_archive_count);
-    $db->query($sql_clean_today_count);
-    $db->query($sql_clean_yearly_count);
+    return $db->fetch($sql_select_table_names, 'Tables_in_moail_online_test');
 }
+/* Other functions */
 function cleanTable($table) {
     $sql_clean_table = "DELETE FROM $table";
     $db = new Db();

@@ -2,6 +2,8 @@
 ini_set("error_reporting","-1");
 ini_set("display_errors","On");
 require_once("mo.php");
+require_once("conf.php");
+require_once("db.php");
 ?>
 <!doctype html>
 
@@ -42,75 +44,85 @@ require_once("mo.php");
 			<div class="admin-panel">
 				<span class="admin-heading">DB functions</span>
 				<div class="admin-body">
-					<div id="admin-messages"></div>
 					<div class="admin-section">
-						<div>
-							<label class="php-action-label">Get yearly totals for word</label>
-							<p class="admin-markup"></p>
-						</div>
-						<div class="admin-action">
-							<input type="text" name="admin-input">
-							<button id="getYearlyTotals" type="submit" class="admin-btn-success" onclick="getYearlyTotals(this);">Go</button>
+						<div data-id="get-yearly-totals" class="admin-db-message"></div>
+						<div class="admin-section-columns">
+							<div>
+								<label class="php-action-label">Get yearly totals for word</label>
+								<p class="admin-markup"></p>
+							</div>
+							<div class="admin-action">
+								<input type="text" name="admin-input">
+								<button id="getYearlyTotals" type="submit" class="admin-btn-success" onclick="getYearlyTotals(this);">Go</button>
+							</div>
 						</div>
 					</div>
 					<div class="admin-section">
-						<div>
-							<label class="php-action-label">Delete data from table</label>
-							<p class="admin-markup">function cleanTable($table)</p>
-						</div>
-						<div class="admin-action">
-							<select>
-								<option value="-1">Select a year</option>
-							<?php foreach($years as $y) { ?>
-								<option value="<?php echo $y ?>"><?php echo $y ?></option>
-							<?php } ?>
-								<option value="all">ALL</option>
-							</select>
-							<button type="button" data-btn="submit" class="admin-btn-warning">Go</button>
-						</div>
-					</div>
-					<div class="admin-section">
-						<div>
-							<label class="php-action-label">Search and archive</label>
-							<p class="admin-markup">Performs full word search against years selected</p>
-						</div>
-						<div class="admin-action">
-							<form class="input-matrix">
-								<?php foreach($years as $y) { ?>
-									<li><label for="<?php echo $y ?>-checkbox"><?php echo $y ?></label>
-										<input id="<?php echo $y ?>-checkbox" type="checkbox" value="<?php echo $y ?>">
-									</li>
-								<?php } ?>
-							</form>
-							<button type="button" data-btn="submit" class="admin-btn-success">Go</button>
+						<div data-id="clean-tables" class="admin-db-message"></div>
+						<div class="admin-section-columns">
+							<div>
+								<label class="php-action-label">Delete data from table</label>
+								<p class="admin-markup">function cleanTable($table)</p>
+							</div>
+							<div class="admin-action">
+								<select>
+									<option value="-1">Select a table</option>
+									<?php foreach(getTableNames() as $t) { ?>
+										<option value="<?php echo $t ?>"><?php echo $t ?></option>
+									<?php } ?>
+								</select>
+								<button type="button" class="admin-btn-warning" onclick="cleanTable(this);">Go</button>
+							</div>
 						</div>
 					</div>
 					<div class="admin-section">
-						<div>
-							<label class="php-action-label">Calculate yearly word frequencies</label>
-							<p class="admin-markup">Performs frequency calculation from archive and populates yearly table</p>
-						</div>
-						<div class="admin-action">
-							<form class="input-matrix">
-								<?php foreach($years as $y) { ?>
-									<li><label for="<?php echo $y ?>-checkbox"><?php echo $y ?></label>
-										<input id="<?php echo $y ?>-checkbox" type="checkbox" value="<?php echo $y ?>">
-									</li>
-								<?php } ?>
-									<li><label for="all-checkbox">ALL</label>
-										<input id="all-checkbox" type="checkbox" value="all">
-									</li>
-							</form>
-							<button type="button" data-btn="submit" class="admin-btn-success">Go</button>
+						<div data-id="" class="admin-db-message"></div>
+						<div class="admin-section-columns">
+							<div>
+								<label class="php-action-label">Search and archive</label>
+								<p class="admin-markup">Performs full word search against years selected</p>
+							</div>
+							<div class="admin-action">
+								<ul class="input-matrix">
+									<?php foreach($years as $y) { ?>
+										<li><label for="<?php echo $y ?>-search"><?php echo $y ?></label>
+											<input id="<?php echo $y ?>-search" type="checkbox" value="<?php echo $y ?>">
+										</li>
+									<?php } ?>
+								</ul>
+								<button type="button" data-btn="submit" class="admin-btn-success">Go</button>
+							</div>
 						</div>
 					</div>
 					<div class="admin-section">
-						<div>
-							<label class="php-action-label">Populate 'random article' table</label>
-							<p class="admin-markup">For each 'bad word' it selects 20 random articles from the 'archive', and populates the 'random' table</p>
+						<div data-id="populate-yearly-table" class="admin-db-message"></div>
+						<div class="admin-section-columns">
+							<div>
+								<label class="php-action-label">Calculate yearly word frequencies</label>
+								<p class="admin-markup">Performs frequency calculation from archive and populates yearly table</p>
+							</div>
+							<div class="admin-action">
+								<ul class="input-matrix">
+									<?php foreach($years as $y) { ?>
+										<li><label for="<?php echo $y ?>-yearly"><?php echo $y ?></label>
+											<input id="<?php echo $y ?>-yearly" type="checkbox" value="<?php echo $y ?>">
+										</li>
+									<?php } ?>
+								</ul>
+								<button type="button" class="admin-btn-success" onClick="populateYearlyTable(this);">Go</button>
+							</div>
 						</div>
-						<div class="admin-action">
-							<button type="button" data-btn="submit" class="admin-btn-success">Go</button>
+					</div>
+					<div class="admin-section">
+						<div data-id="populate-random-articles" class="admin-db-message"></div>
+						<div class="admin-section-columns">
+							<div>
+								<label class="php-action-label">Populate 'random article' table</label>
+								<p class="admin-markup">For each 'bad word' it selects 20 random articles from the 'archive', and populates the 'random' table</p>
+							</div>
+							<div class="admin-action">
+								<button type="button" class="admin-btn-success" onClick="populateRandomArticles();">Go</button>
+							</div>
 						</div>
 					</div>
 					<div class="admin-section">
@@ -153,17 +165,68 @@ require_once("mo.php");
 function getYearlyTotals(btn) {
 	var yearlyWordInput = $(btn).prev().val();
 	$.ajax({
-		url: 'get-yearly.php',
+		url: 'get-yearly-totals.php',
 		type:'POST',
 		data: {
 			'input': yearlyWordInput
 		},
 		success: function(response) {
-			$('#admin-messages').append(response);
+			$('[data-id="get-yearly-totals"]').empty().append(response);
 		},
 		error: function(){
 			alert('error');
 		}
 	});
+}
+function populateYearlyTable(btn) {
+	var yearsToPopulate = [];
+	$(btn).prev().find(':checked').each(function() {
+		yearsToPopulate.push($(this).val());
+	});
+	$.ajax({
+		url: 'populate-yearly-table.php',
+		type:'POST',
+		data: {
+			'options': yearsToPopulate
+		},
+		success: function(response) {
+			$('[data-id="populate-yearly-table"]').empty().append(response);
+		},
+		error: function(){
+			alert('error');
+		}
+	});
+}
+function populateRandomArticles() {
+	$.ajax({
+		url: 'populate-random-articles.php',
+		type:'POST',
+		success: function(response) {
+			$('[data-id="populate-random-articles"]').empty().append(response);
+		},
+		error: function(){
+			alert('error');
+		}
+	});
+}
+function cleanTable(btn) {
+	var tableOption = $(btn).prev().val();
+	$.ajax({
+		url: 'clean-table.php',
+		type:'POST',
+		data: {
+			'option': tableOption
+		},
+		success: function(response) {
+			$('[data-id="clean-tables"]').empty().append(response);
+		},
+		error: function(){
+			alert('error');
+		}
+	});
+}
+
+function removeMessages() {
+	$('.admin-db-message').empty();
 }
 </script>
