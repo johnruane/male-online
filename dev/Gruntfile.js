@@ -18,7 +18,7 @@ module.exports = function(grunt) {
         },
         watch: {
             php: {
-                files: ['templates/*','resources/*'],
+                files: ['templates/*','resources/*','components/*'],
                 tasks: ['copy:php'],
                 options: {
                   spawn: false,
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
                 files: [{
                   expand: true,
                   flatten: true,
-                  src: ['templates/*', 'resources/*'],
+                  src: ['templates/*','resources/*','components/*'],
                   dest: '../build/'
                 }]
             },

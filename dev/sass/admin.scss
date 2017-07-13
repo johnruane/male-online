@@ -41,8 +41,15 @@
 		padding-top: $global-padding;
 	}
 }
-.admin-action{
+.admin-action {
 	text-align: right;
+}
+.admin-results {
+	background: #e4e4e4;
+    padding: 15px;
+	margin-bottom: $global-padding;
+	font-size: 10px;
+	font-style: italic;
 }
 .input-matrix {
 	display: grid;

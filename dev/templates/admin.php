@@ -2,48 +2,6 @@
 ini_set("error_reporting","-1");
 ini_set("display_errors","On");
 require_once("mo.php");
-
-if (isset($_POST['action'])) {
-    switch ($_POST['action']) {
-        case 'clean-all-tables':
-            cleanAllTables();
-            error_log('All tables cleaned', 0);
-            break;
-        case 'populate-current-count-from-years': // query each year and populate archive_count
-            foreach ($years_to_search as $year) {
-                $article_list = getDailyArchiveLinks($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
-                getListOfArticleLinks($article_list, $xpath_archive_article_query_string, $year);
-                setFoundArticlesToCurrentDB($matched_articles);
-                error_log($year.' done.', 0);
-            }
-            error_log('Archive populated from years array', 0);
-            break;
-        case 'populate-today-count':
-            getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string);
-            setTodaysArticles($matched_articles);
-            error_log('Today count populated', 0);
-            break;
-        case 'set-yearly-count':
-            $bad_words = getBadWords();
-            foreach($years as $year) {
-                foreach ($bad_words as $word) {
-                    $word_result = getCurrentCountsForYearByWord($year, $word);
-                    setYearlyTotalsByYear($year, $word, $word_result[0]['total']);
-                }
-            }
-            error_log('Yearly count populated', 0);
-            break;
-        case 'populate-random-articles':
-            $bad_words = getBadWords();
-            foreach ($bad_words as $word) {
-                populateRandomArticles($word);
-            }
-            error_log('Random table populated', 0);
-            break;
-		case 'get-yearly-totals-by-word':
-			break;
-    }
-}
 ?>
 <!doctype html>
 
@@ -84,17 +42,15 @@ if (isset($_POST['action'])) {
 			<div class="admin-panel">
 				<span class="admin-heading">DB functions</span>
 				<div class="admin-body">
-					<div class="admin-messages"></div>
+					<div id="admin-messages"></div>
 					<div class="admin-section">
 						<div>
 							<label class="php-action-label">Get yearly totals for word</label>
 							<p class="admin-markup"></p>
 						</div>
 						<div class="admin-action">
-							<form>
-								<input type="text" name="admin-input">
-								<button type="submit" class="admin-btn-success" data-btn="submit" value="get-yearly-totals-by-word">Go</button>
-							</form>
+							<input type="text" name="admin-input">
+							<button id="getYearlyTotals" type="submit" class="admin-btn-success" onclick="getYearlyTotals(this);">Go</button>
 						</div>
 					</div>
 					<div class="admin-section">
@@ -194,20 +150,20 @@ if (isset($_POST['action'])) {
 </html>
 
 <script>
-$(function() {
-    $('[data-btn="submit"]').on('click', function() {
-        var clickBtnValue = $(this).val();
-		var adminInput = $(this).closest('form').children('input').val();
-        var ajaxurl = 'admin.php',
-        data =  {
-			'action': clickBtnValue,
-			'input': adminInput
-		};
-        $.post(ajaxurl, data, function (response) {
-			var res = response;
-			$(res).find('.admin-messages').append('<p>Test</p>');
-            $('body').html(res);
-        });
-    });
-});
+function getYearlyTotals(btn) {
+	var yearlyWordInput = $(btn).prev().val();
+	$.ajax({
+		url: 'get-yearly.php',
+		type:'POST',
+		data: {
+			'input': yearlyWordInput
+		},
+		success: function(response) {
+			$('#admin-messages').append(response);
+		},
+		error: function(){
+			alert('error');
+		}
+	});
+}
 </script>
