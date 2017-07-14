@@ -4,47 +4,29 @@ body {
 	word-break: break-word;
 	word-wrap: break-word;
 }
-// Rangeslider
-.rangeslider-wrapper {
-	width: 95%;
-	margin: 0px auto 0;
-	max-width: 500px;
-	.trends-labels {
-		margin-top: -11px;
-	}
-}
-.year-range-slider {
-	width: 100%;
-	text-align: center;
-}
-// Slider
-.rangeslider {
-	background: $rangeslider-track-color;
-	box-shadow: none;
-	border-radius: 0;
-	height: 3px;
-	width: 75%;
-	margin: 0 auto;
-	@media(min-width: $sm) {
-		width: 85%;
-	}
-}
-.rangeslider__fill {
-	background: $rangeslider-track-color;
-}
-.rangeslider--horizontal .rangeslider__handle {
-	top: -7px;
-}
-.rangeslider__handle {
-	box-shadow: none;
-	width: 1.5rem;
-	height: 1.5rem;
-	background-color: $rangeslider-handle-color;
-	box-shadow: none;
-	border: none
-}
 // Footer
 footer {
-	height: 200px;
-	background-color: #e4e0ec;
+	background: $footer-background;
+	border-top: 1px solid $primary-color;
+	padding-bottom: 50px;
+	margin-top: 50px;
+}
+footer summary {
+	&:hover {
+		cursor: pointer;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+footer summary + * {
+	border-top: 1px solid #c7c7c7;
+	padding-top: 7px;
+	margin-top: 7px;
+	font-style: italic;
+}
+.footer-word-list {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: auto;
 }

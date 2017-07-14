@@ -1,0 +1,6 @@
+.plain-link {
+	color: grey;
+	&:hover, &:focus, &:visited {
+		color: grey;
+	}
+}

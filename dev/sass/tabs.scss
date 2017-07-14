@@ -1,10 +1,10 @@
 .tab-heading {
     text-align: center;
-    margin: $global-padding 0 0;
+    // margin: $global-padding 0 0;
 }
 .sub-heading {
     text-align: center;
-    margin: 0 0 $global-padding;
+    // margin: 0 0 $global-padding;
 	font-family: serif;
     font-weight: 100;
 }
@@ -14,7 +14,8 @@
     display: flex;
     justify-content: center;
     margin-bottom: 0;
-    background-color: $navigattio-background-color;
+    border-bottom: 1px solid $tab-background-color;
+	border-top: 1px solid $tab-background-color;
 }
 .nav > li {
     position: relative;
@@ -51,9 +52,6 @@
     // color: #555;
     text-decoration: underline;
     cursor: default;
-}
-.nav-tabs .active {
-	background-color: #fff;
 }
 .tab-content > .tab-pane {
     display: none;

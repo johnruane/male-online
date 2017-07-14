@@ -22,25 +22,14 @@
             toggleDailyArticleSelection();
             highlightArticleTextAndCloneThumbnail();
 			highlightWordInArticle('.word-chart', '.graph-article');
-			scrollIntoView();
-			setVisible();
+			setTrendsChart();
         };
         self.barBackgroundColors = function(len) {
             var colorAry = [];
-            if (len === 1) {
-                return randomColor({
-					luminosity: 'dark',
-                    format: 'rgba',
-                    alpha: 0.3});
-            } else {
-                for (i=0;i<len;i++) {
-                    colorAry.push(randomColor({
-                        format: 'rgba',
-                        alpha: 0.3})
-                    );
-                }
-                return colorAry;
-            }
+            return randomColor({
+				luminosity: 'bright',
+                format: 'rgba',
+                alpha: 0.3});
         };
         self.toggleDailyArticleSelection = function() {
             $('[data-toggle="trends-reveal"]').on('click', function(event) {
@@ -62,76 +51,60 @@
 				$(this).find('.today-word-articles-images img:first-child').clone().appendTo('#'+$id+'-thumbnail-placeholder');
             });
         };
-        self.setTrendsChart = function(chartid) {
-            var $graph_vals = $('#'+chartid).find('.word-value');
-            var $graph_labels = $('#'+chartid).find('.word-key');
-            $($graph_vals).each(function() {
-                $chartistWordValues.push(parseInt($(this).text()));
-            });
-            $($graph_labels).each(function() {
-                $chartistWordLabels.push($(this).text());
-            });
-            var $chartcolor = barBackgroundColors(1);
-        	trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: $chartistWordLabels,
-                    datasets: [{
-                        data: $chartistWordValues,
-                        radius: 0,
-                        borderWidth: 1,
-                        borderColor: $chartcolor,
-                        backgroundColor: $chartcolor
-                    }]
-                },
-                options: {
-					responsive: true,
-					maintainAspectRatio: true,
-                    animation: false,
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                         xAxes: [{
-							 display: false
-                         }],
-                         yAxes: [{
-							display: false,
-							gridLines: {
-								display: false
-							},
-							scaleLabel: {
-								display: false
-							}
-                         }]
-                     },
-					 gridLines: {
-						 display: true
-					 }
-                }
-            });
-            $chartistWordLabels = [];
-            $chartistWordValues = [];
-        };
-		self.scrollIntoView = function() {
-			var didScroll = false;
-			window.onscroll = doThisStuffOnScroll;
-			function doThisStuffOnScroll() {
-			    didScroll = true;
-			}
-			setInterval(function() {
-			    if(didScroll) {
-			        didScroll = false;
-					setVisible();
-			    }
-			}, 100);
-		};
-		self.setVisible = function() {
-			$('.word-chart').each( function() {
-				if ($(this).isOnScreen() && !$(this).hasClass('loaded'))) {
-					setTrendsChart($(this).attr('id'));
-					$(this).addClass('loaded');
-				}
+        self.setTrendsChart = function() {
+			$('#trends-tab').on('click', function() {
+				$('.word-chart').each( function() {
+					var chartid = $(this).attr('id');
+		            var $graph_vals = $('#'+chartid).find('.word-value');
+		            var $graph_labels = $('#'+chartid).find('.word-key');
+		            $($graph_vals).each(function() {
+		                $chartistWordValues.push(parseInt($(this).text()));
+		            });
+		            $($graph_labels).each(function() {
+		                $chartistWordLabels.push($(this).text());
+		            });
+		            var $chartcolor = barBackgroundColors(1);
+		        	trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
+		                type: 'line',
+		                data: {
+		                    labels: $chartistWordLabels,
+		                    datasets: [{
+		                        data: $chartistWordValues,
+		                        radius: 0,
+		                        borderWidth: 1,
+		                        borderColor: $chartcolor,
+		                        backgroundColor: $chartcolor
+		                    }]
+		                },
+		                options: {
+							responsive: true,
+							maintainAspectRatio: true,
+		                    animation: false,
+		                    legend: {
+		                        display: false
+		                    },
+		                    scales: {
+		                         xAxes: [{
+									 display: false
+		                         }],
+		                         yAxes: [{
+									display: false,
+									gridLines: {
+										display: false
+									},
+									scaleLabel: {
+										display: false
+									}
+		                         }]
+		                     },
+							 gridLines: {
+								 display: true
+							 }
+		                }
+		            });
+		            $chartistWordLabels = [];
+		            $chartistWordValues = [];
+		        });
 			});
 		};
         return {

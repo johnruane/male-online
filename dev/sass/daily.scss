@@ -115,7 +115,7 @@
 }
 .item-card-heading {
     margin-bottom: $global-padding;
-    border-bottom: 2px solid #f50000;
+    border-bottom: 2px solid $highlight-color;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
