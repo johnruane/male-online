@@ -1,5 +1,6 @@
 <?php
 $mo_home_domain="http://dailymail.co.uk/";
+$mo_archive_url = "http://www.dailymail.co.uk/home/sitemaparchive/year_";
 
 $years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
@@ -56,7 +57,6 @@ $list_of_bad_words = array (
     14 => ['figure-hugging']
 );
 
-$xpath_archive_article_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li";
 $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
 function currentYearArchiveSearch() {
@@ -77,30 +77,31 @@ function currentYearArchiveSearch() {
 /*
     Gets all the Date links from a Yearly archive page and return them as an array
 */
-function getDailyArchiveLinks($url, $xpath_string) {
+function getDailyArchiveLinks($url) {
     $html = file_get_contents($url);
     $dom = new \DOMDocument('1.0', 'UTF-8');
+	$article_list = array();
 
     $internalErrors = libxml_use_internal_errors(true); // set error level
     $dom->loadHTML($html);
     libxml_use_internal_errors($internalErrors); // Restore error level
 
     $xpath = new DomXpath($dom);
-    $daily_link_list = $xpath->query($xpath_string); // Returns all list items from a yearly page
+    $daily_link_list = $xpath->query('//ul[@class="split"]/li'); // Returns all list items from a yearly page
 
     $daily_headline_list = array();
     foreach ($daily_link_list as $article) {
     	$node = $xpath->query('descendant::a/attribute::href', $article);
-    	array_push($article_links, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
+    	array_push($article_list, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
     }
-    return $article_links; // Returns an array of daily links
+    return $article_list; // Returns an array of daily links
 }
 
 /*
     Get all the links from the year link provided
 */
-function getListOfArticleLinks($ary_of_links, $query_string) {
-    global $matched_articles;
+function getListOfArticleLinks($ary_of_links) {
+    $matched_articles = array();
     global $list_of_bad_words;
     $pub_date = '';
 
@@ -119,7 +120,7 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
         libxml_use_internal_errors($internalErrors); // Restore error level
 
         $xpath = new DomXpath($dom);
-        $articles = $xpath->query($query_string);
+        $articles = $xpath->query("//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li");
 
         foreach ($articles as $article) { // article = DOMElement
             if ( is_object($article) ) {
@@ -158,10 +159,11 @@ function getListOfArticleLinks($ary_of_links, $query_string) {
                 }
             }
         }
+		return $matched_articles;
     }
 }
 /* SETTERS */
-function setFoundArticlesToCurrentDB($q_links) {
+function populateArchiveWithArticles($q_links) {
     $db = new Db();
     $sql = 'INSERT INTO archive_count (publication_date, word, article_text, article_link, thumbnail_link) VALUES (?, ?, ?, ?, ?)';
     $stmt = $db->connect()->prepare($sql);
@@ -191,6 +193,16 @@ function setYearlyTotalsForWordByYear($year, $word) {
            $stmt->bind_param('ssi', $year, $row['word'], $row['total']);
            $stmt->execute();
         }
+    } else {
+        echo $db->error();
+    }
+}
+function setYearlyTotalsByYear($year, $word, $count) {
+    $sql_count_yearly = 'INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)';
+    $db = new Db();
+    if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
+       $stmt->bind_param('ssi', $year, $word, $count);
+       $stmt->execute();
     } else {
         echo $db->error();
     }

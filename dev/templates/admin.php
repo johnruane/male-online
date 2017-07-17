@@ -76,7 +76,7 @@ require_once("db.php");
 						</div>
 					</div>
 					<div class="admin-section">
-						<div data-id="" class="admin-db-message"></div>
+						<div data-id="search-archive" class="admin-db-message"></div>
 						<div class="admin-section-columns">
 							<div>
 								<label class="php-action-label">Search and archive</label>
@@ -90,7 +90,7 @@ require_once("db.php");
 										</li>
 									<?php } ?>
 								</ul>
-								<button type="button" data-btn="submit" class="admin-btn-success">Go</button>
+								<button type="button" onClick="searchAndArchive(this);" class="admin-btn-success">Go</button>
 							</div>
 						</div>
 					</div>
@@ -237,6 +237,25 @@ function removeWord(btn) {
 		},
 		success: function(response) {
 			$('[data-id="remove-word"]').empty().append(response);
+		},
+		error: function(){
+			alert('error');
+		}
+	});
+}
+function searchAndArchive(btn) {
+	var yearsToPopulate = [];
+	$(btn).prev().find(':checked').each(function() {
+		yearsToPopulate.push($(this).val());
+	});
+	$.ajax({
+		url: 'search-archive.php',
+		type:'POST',
+		data: {
+			'options': yearsToPopulate
+		},
+		success: function(response) {
+			$('[data-id="search-archive"]').empty().append(response);
 		},
 		error: function(){
 			alert('error');

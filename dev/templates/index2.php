@@ -26,7 +26,7 @@ if (isset($_POST['action'])) {
             foreach ($years_to_search as $year) {
                 $article_list = getDailyArchiveLinks($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
                 getListOfArticleLinks($article_list, $xpath_archive_article_query_string, $year);
-                setFoundArticlesToCurrentDB($matched_articles);
+                populateArchiveWithArticles($matched_articles);
                 error_log($year.' done.', 0);
             }
             error_log('Archive populated from years array', 0);
