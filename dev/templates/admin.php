@@ -138,6 +138,7 @@ require_once("db.php");
 						</div>
 					</div>
 					<div class="admin-section">
+						<div data-id="remove-word" class="admin-db-message"></div>
 						<div>
 							<label class="php-action-label">Word removal</label>
 							<p class="admin-markup">Deletes all entries from the 'archive' &amp; 'yearly' tables</p>
@@ -146,11 +147,11 @@ require_once("db.php");
 							<form>
 								<select>
 									<option value="-1">Select a word</option>
-								<?php foreach(getBadWords() as $w) { ?>
-									<option value="<?php echo $w ?>"><?php echo $w ?></option>
-								<?php } ?>
+									<?php foreach(getActiveBadWords() as $w) { ?>
+										<option value="<?php echo $w['word'] ?>"><?php echo $w['word'] ?></option>
+									<?php } ?>
 								</select>
-								<button type="button" data-btn="submit" class="admin-btn-warning admin-long-btn">Delete</button>
+								<button type="button" data-btn="submit" onClick="removeWord(this);" class="admin-btn-warning admin-long-btn">Delete</button>
 							</form>
 						</div>
 					</div>
@@ -226,7 +227,20 @@ function cleanTable(btn) {
 	});
 }
 
-function removeMessages() {
-	$('.admin-db-message').empty();
+function removeWord(btn) {
+	var word = $(btn).prev().val();
+	$.ajax({
+		url: 'remove-word.php',
+		type:'POST',
+		data: {
+			'option': word
+		},
+		success: function(response) {
+			$('[data-id="remove-word"]').empty().append(response);
+		},
+		error: function(){
+			alert('error');
+		}
+	});
 }
 </script>

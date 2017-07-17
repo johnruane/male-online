@@ -181,16 +181,6 @@ function setTodaysArticles($q_links) {
         $stmt->execute();
     }
 }
-function setYearlyTotalsByYear($year, $word, $count) {
-    $sql_count_yearly = 'INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)';
-    $db = new Db();
-    if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
-       $stmt->bind_param('ssi', $year, $word, $count);
-       $stmt->execute();
-    } else {
-        echo $db->error();
-    }
-}
 function setYearlyTotalsForWordByYear($year, $word) {
     $sql_count_yearly = 'INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)';
     $db = new Db();
@@ -289,6 +279,11 @@ function getBadWords() {
     asort($list_of_bad_words_sorted);
     return $list_of_bad_words_sorted;
 }
+function getActiveBadWords() {
+	$sql_get_active_words = "SELECT DISTINCT word FROM archive_count ORDER BY word ASC";
+	$db = new Db();
+	return $db->select($sql_get_active_words);
+}
 function randomArticleByWord($word) {
     $sql_random_article = "SELECT article_text, article_link FROM random_articles WHERE word = '$word' ORDER BY rand() LIMIT 1";
     $db = new Db();
@@ -300,5 +295,14 @@ function cmp($a, $b) {
     }
     return ($a['count'] < $b['count']) ? -1 : 1;
 }
-
+function removeWordFromArchive($word) {
+	$sql_delete_from_archive = "DELETE FROM archive_count WHERE word = '$word'";
+    $db = new Db();
+    $db->query($sql_delete_from_archive);
+}
+function removeWordFromYearly($word) {
+	$sql_delete_from_yearly = "DELETE FROM yearly_count WHERE word = '$word'";
+    $db = new Db();
+    $db->query($sql_delete_from_yearly);
+}
 ?>
