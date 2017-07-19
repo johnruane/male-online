@@ -47,7 +47,7 @@ $sql_create_visited_table = 'CREATE TABLE visited_links (
 
 $list_of_bad_words = array (
     4 => ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp'],
-    5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy'],
+    5 => ['ample','china','busty','leggy','perky','saucy','thigh','toned','yummy'],
     6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases'],
     7 => ['ageless','braless','flashes','flaunts','midriff','scantily','sizable','slender'],
     8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
@@ -101,17 +101,13 @@ function getDailyArchiveLinks($url) {
     Get all the links from the year link provided
 */
 function getListOfArticleLinks($ary_of_links) {
-    $matched_articles = array();
-    global $list_of_bad_words;
-    $pub_date = '';
-
+	$links = array();
     /*
         link = http://www.dailymail.co.uk/home/sitemaparchive/day_19941014.html
         or
         link = http://www.dailymail.co.uk/home/index.html
     */
     foreach ($ary_of_links as $link) {
-        error_log($link, 0);
         $html = file_get_contents($link);
         $dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -121,47 +117,53 @@ function getListOfArticleLinks($ary_of_links) {
 
         $xpath = new DomXpath($dom);
         $articles = $xpath->query("//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li");
-
-        foreach ($articles as $article) { // article = DOMElement
-            if ( is_object($article) ) {
-                $node_text = $article->nodeValue; // article[nodeValue] = string to search eg "She dropped her Chanel diamond ring" etc
-                $node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); // removes javascript
-                $node_text = preg_replace('/\s+/', ' ', $node_text); // replace large whitespaces with a single whitespace
-                $article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any space into array
-
-                foreach ($article_string_array as $article_word) { // loops through array of article[nodeValue]
-                    $article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word); // remove numerical & special characters
-
-                    if (isset($list_of_bad_words[strlen($article_word)])) { // if the 'article word' length matches a 'bad words' length
-                        foreach ($list_of_bad_words[strlen($article_word)] as $badword) {
-                            if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
-
-                                // different date function for 'archive' or 'daily'
-                                if (strpos($link, 'sitemaparchive') == true) {
-                                    $linkURL = explode('/', $link);
-                                    $pub_date = preg_split("/[_.]/", end($linkURL))[1]; // get the date from the article url
-                                } else {
-                                    $pub_date = date("Y-m-d");
-                                }
-
-                                $matched_article['date'] = $pub_date;
-                                $matched_article['word'] = $badword;
-                                $matched_article['article_text'] = $node_text;
-                                $matched_article['article_link'] = $xpath->query('descendant::a/attribute::href', $article)->item(0)->nodeValue;
-                                $thumbnail = $xpath->query('descendant::a/img/attribute::data-src', $article);
-                                if (strpos($link, 'index') == true) {
-                                    $matched_article['thumbnail_link'] = $thumbnail->item(0)->nodeValue;
-                                }
-                                array_push($matched_articles, $matched_article);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-		return $matched_articles;
-    }
+		array_push($links, $articles);
+	}
+	return $links;
 }
+
+// $matched_articles = array();
+// global $list_of_bad_words;
+// $pub_date = '';
+//         foreach ($articles as $article) { // article = DOMElement
+//             if ( is_object($article) ) {
+//                 $node_text = $article->nodeValue; // article[nodeValue] = string to search eg "She dropped her Chanel diamond ring" etc
+//                 $node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); // removes javascript
+//                 $node_text = preg_replace('/\s+/', ' ', $node_text); // replace large whitespaces with a single whitespace
+//                 $article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any space into array
+// 				error_log($node_text, 0);
+//                 foreach ($article_string_array as $article_word) { // loops through array of article[nodeValue]
+//                     $article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word); // remove numerical & special characters
+//
+//                     if (isset($list_of_bad_words[strlen($article_word)])) { // if the 'article word' length matches a 'bad words' length
+//                         foreach ($list_of_bad_words[strlen($article_word)] as $badword) {
+//                             if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
+//                                 // different date function for 'archive' or 'daily'
+//                                 if (strpos($link, 'sitemaparchive') == true) {
+//                                     $linkURL = explode('/', $link);
+//                                     $pub_date = preg_split("/[_.]/", end($linkURL))[1]; // get the date from the article url
+//                                 } else {
+//                                     $pub_date = date("Y-m-d");
+//                                 }
+//
+//                                 $matched_article['date'] = $pub_date;
+//                                 $matched_article['word'] = $badword;
+//                                 $matched_article['article_text'] = $node_text;
+//                                 $matched_article['article_link'] = $xpath->query('descendant::a/attribute::href', $article)->item(0)->nodeValue;
+//                                 $thumbnail = $xpath->query('descendant::a/img/attribute::data-src', $article);
+//                                 if (strpos($link, 'index') == true) {
+//                                     $matched_article['thumbnail_link'] = $thumbnail->item(0)->nodeValue;
+//                                 }
+//                                 array_push($matched_articles, $matched_article);
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// 	return $matched_articles;
+// }
 /* SETTERS */
 function populateArchiveWithArticles($q_links) {
     $db = new Db();

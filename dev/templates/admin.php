@@ -84,6 +84,9 @@ require_once("db.php");
 							</div>
 							<div class="admin-action">
 								<ul class="input-matrix">
+									<li><label for="1994-search">1994</label>
+										<input id="1994-search" type="checkbox" value="1994">
+									</li>
 									<?php foreach($years as $y) { ?>
 										<li><label for="<?php echo $y ?>-search"><?php echo $y ?></label>
 											<input id="<?php echo $y ?>-search" type="checkbox" value="<?php echo $y ?>">
