@@ -9,11 +9,11 @@
 .trends-grid {
 	display: flex;
 	flex-flow: row wrap;
-	margin-left: -$global-padding;
+	margin-left: -$global-padding*2;
 	.word-chart {
 		width: 50%;
-		padding-left: $global-padding;
-		margin-bottom: $global-padding*2;
+		padding-left: $global-padding*2;
+		margin-bottom: $global-padding;
 	}
 	@media(min-width: $sm) {
 		.word-chart {

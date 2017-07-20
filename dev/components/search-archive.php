@@ -10,9 +10,11 @@ require_once("db.php");
 		<?php } ?>
 	</span>
 	<?php foreach ($_POST['options'] as $year) {
+		$articlesWithBadWords = array();
 		// Get a list of daily article headlines from daily url
-		$dailyLinks = getDailyArchiveLinks($mo_archive_url.$year.'.html');
-		$articleList = getListOfArticleLinks($dailyLinks);
-		var_dump($articleList);
-		// populateArchiveWithArticles($articleList);
+		$dailyLinks = getDateLinksFromArchivePage($mo_archive_url.$year.'.html');
+		$articlesWithBadWords = searchArticleHeadlines($dailyLinks);
+		// var_dump($articlesWithBadWords);
+		// populateArchiveWithArticles($articlesWithBadWords);
 	 } ?>
+</div>

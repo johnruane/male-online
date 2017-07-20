@@ -14,7 +14,6 @@ $xpath_archive_article_query_string = "//ul[contains(concat(' ', normalize-space
 $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
 $article_list = array(); // List of all the articles got from yearly page
-$matched_articles = array();
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
@@ -24,15 +23,15 @@ if (isset($_POST['action'])) {
             break;
         case 'populate-current-count-from-years': // query each year and populate archive_count
             foreach ($years_to_search as $year) {
-                $article_list = getDailyArchiveLinks($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
-                getListOfArticleLinks($article_list, $xpath_archive_article_query_string, $year);
+                $article_list = getDateLinksFromArchivePage($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
+                getArticleLinksFromArchivePage($article_list, $xpath_archive_article_query_string, $year);
                 populateArchiveWithArticles($matched_articles);
                 error_log($year.' done.', 0);
             }
             error_log('Archive populated from years array', 0);
             break;
         case 'populate-today-count':
-            getListOfArticleLinks([$mo_homepage_url], $xpath_article_query_string);
+            getArticleLinksFromArchivePage([$mo_homepage_url], $xpath_article_query_string);
             setTodaysArticles($matched_articles);
             error_log('Today count populated', 0);
             break;

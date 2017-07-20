@@ -1,121 +1,107 @@
 (function(jQuery) {
-    var MaleOnlineFunctions = function ($){
-        var self = this;
-        var $chartistWordValues = [];
-        var $chartistWordLabels = [];
-        var trendsChart;
-        var alpha = 1;
-        var todayColors = [
-            [0, 'rgba(28, 186, 184)'],
-            [10, 'rgba(0, 142, 135)'],
-            [20, 'rgba(6, 143, 69)'],
-            [30, 'rgba(103, 189, 69)'],
-            [40, 'rgba(254, 231, 1)'],
-            [50, 'rgba(248, 150, 29)'],
-            [60, 'rgba(243, 111, 32)'],
-            [70, 'rgba(238, 49, 36)'],
-            [80, 'rgba(202, 57, 144)'],
-            [90, 'rgba(42, 75, 155)']
-        ];
-        self.init = function() {
+	var MaleOnlineFunctions = function ($){
+		var self = this;
+		var $chartistWordValues = [];
+		var $chartistWordLabels = [];
+		var trendsChart;
+		var alpha = 1;
+		self.init = function() {
 			$(window).scrollTop(0);
-            toggleDailyArticleSelection();
-            highlightArticleTextAndCloneThumbnail();
+			toggleDailyArticleSelection();
+			highlightArticleTextAndCloneThumbnail();
 			highlightWordInArticle('.word-chart', '.graph-article');
 			setTrendsChart();
-        };
-        self.barBackgroundColors = function(len) {
-            var colorAry = [];
-            return randomColor({
-				luminosity: 'bright',
-                format: 'rgba',
-                alpha: 0.3});
-        };
-        self.toggleDailyArticleSelection = function() {
-            $('[data-toggle="trends-reveal"]').on('click', function(event) {
+		};
+		self.barBackgroundColors = function(len) {
+			var colorAry = [];
+			return randomColor({
+				luminosity: 'dark',
+				format: 'rgba',
+				alpha: 0.3
+			});
+		};
+		self.toggleDailyArticleSelection = function() {
+			$('[data-toggle="trends-reveal"]').on('click', function(event) {
 				// changes the article text
-                $(this).parents('.today-list-item').find('.article-text').css('display', 'none');
-                $id = $(this).data('id');
-                $($id).css('display', 'block');
+				$(this).parents('.today-list-item').find('.article-text').css('display', 'none');
+				$id = $(this).data('id');
+				$($id).css('display', 'block');
 				// changes the article image
 				var $placeholder = $($id).parent('.today-word-articles-text').children('.thumbnail-placeholder');
 				$($placeholder).empty();
 				var clone = $(this).clone().appendTo($placeholder);
-            });
-        };
-        self.highlightArticleTextAndCloneThumbnail = function() {
+			});
+		};
+		self.highlightArticleTextAndCloneThumbnail = function() {
 			highlightWordInArticle('.daily-article-wrapper', '.article-text');
-            $('.daily-article-wrapper').each(function() {
+			$('.daily-article-wrapper').each(function() {
 				var $id = $(this).attr('id');
-                $(this).find('.today-word-articles-text .article-text:nth-child(2)').css('display', 'block');
+				$(this).find('.today-word-articles-text .article-text:nth-child(2)').css('display', 'block');
 				$(this).find('.today-word-articles-images img:first-child').clone().appendTo('#'+$id+'-thumbnail-placeholder');
-            });
-        };
-        self.setTrendsChart = function() {
+			});
+		};
+		self.setTrendsChart = function() {
 			$('#trends-tab').on('click', function() {
 				$('.word-chart').each( function() {
 					var chartid = $(this).attr('id');
-		            var $graph_vals = $('#'+chartid).find('.word-value');
-		            var $graph_labels = $('#'+chartid).find('.word-key');
-		            $($graph_vals).each(function() {
-		                $chartistWordValues.push(parseInt($(this).text()));
-		            });
-		            $($graph_labels).each(function() {
-		                $chartistWordLabels.push($(this).text());
-		            });
-		            var $chartcolor = barBackgroundColors(1);
-		        	trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
-		                type: 'line',
-		                data: {
-		                    labels: $chartistWordLabels,
-		                    datasets: [{
-		                        data: $chartistWordValues,
-		                        radius: 0,
-		                        borderWidth: 1,
-		                        borderColor: $chartcolor,
-		                        backgroundColor: $chartcolor
-		                    }]
-		                },
-		                options: {
+					var $graph_vals = $('#'+chartid).find('.word-value');
+					var $graph_labels = $('#'+chartid).find('.word-key');
+					$($graph_vals).each(function() {
+						$chartistWordValues.push(parseInt($(this).text()));
+					});
+					$($graph_labels).each(function() {
+						$chartistWordLabels.push($(this).text());
+					});
+					var $chartcolor = barBackgroundColors(1);
+					trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
+						type: 'line',
+						data: {
+							labels: $chartistWordLabels,
+							datasets: [{
+								data: $chartistWordValues,
+								radius: 0,
+								borderWidth: 1,
+								borderColor: $chartcolor,
+								fill: false
+							}]
+						},
+						options: {
 							responsive: true,
 							maintainAspectRatio: true,
-		                    animation: false,
-		                    legend: {
-		                        display: false
-		                    },
-		                    scales: {
-		                         xAxes: [{
-									 display: false
-		                         }],
-		                         yAxes: [{
+							animation: false,
+							legend: {
+								display: false
+							},
+							scales: {
+								xAxes: [{ // horizontal
+									display: false
+								}],
+								yAxes: [{ // vertical
 									display: false,
 									gridLines: {
 										display: false
 									},
-									scaleLabel: {
-										display: false
+									ticks: {
+										suggestedMin: -1
 									}
-		                         }]
-		                     },
-							 gridLines: {
-								 display: true
-							 }
-		                }
-		            });
-		            $chartistWordLabels = [];
-		            $chartistWordValues = [];
-		        });
+								}]
+							}
+						}
+					});
+					$chartistWordLabels = [];
+					$chartistWordValues = [];
+				});
 			});
 		};
-        return {
-            init: init,
-        }
-    };
-    // Setup the global object and run init on document ready
-    $(function(){
-        window.MaleOnlineFunctions = MaleOnlineFunctions(jQuery);
-        window.MaleOnlineFunctions.init();
-    });
+		return {
+			init: init,
+		}
+	};
+	// Setup the global object and run init on document ready
+	$(function(){
+		window.MaleOnlineFunctions = MaleOnlineFunctions(jQuery);
+		window.MaleOnlineFunctions.init();
+	});
 })(jQuery);
 
 function highlightWordInArticle(articleContainerClass, articleTextClass) {
@@ -137,15 +123,15 @@ function highlightWordInArticle(articleContainerClass, articleTextClass) {
 }
 
 $.fn.isOnScreen = function(){
-    var win = $(window);
-    var viewport = {
-        top : win.scrollTop(),
-        left : win.scrollLeft()
-    };
-    viewport.right = viewport.left + win.width();
-    viewport.bottom = viewport.top + win.height();
-    var bounds = this.offset();
-    bounds.right = bounds.left + this.outerWidth();
-    bounds.bottom = bounds.top + this.outerHeight();
-    return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+	var win = $(window);
+	var viewport = {
+		top : win.scrollTop(),
+		left : win.scrollLeft()
+	};
+	viewport.right = viewport.left + win.width();
+	viewport.bottom = viewport.top + win.height();
+	var bounds = this.offset();
+	bounds.right = bounds.left + this.outerWidth();
+	bounds.bottom = bounds.top + this.outerHeight();
+	return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
 };
