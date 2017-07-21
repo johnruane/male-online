@@ -10,11 +10,12 @@ require_once("db.php");
 		<?php } ?>
 	</span>
 	<?php foreach ($_POST['options'] as $year) {
+		$headlineLinks = array();
 		$articlesWithBadWords = array();
 		// Get a list of daily article headlines from daily url
-		$dailyLinks = getDateLinksFromArchivePage($mo_archive_url.$year.'.html');
-		$articlesWithBadWords = searchArticleHeadlines($dailyLinks);
-		// var_dump($articlesWithBadWords);
+		$dailyLinks = getLinksFromURLAndXpath($mo_archive_url.'year_'.$year.'.html', '//ul[@class="split"]/li');
+		getListOfArticleLinks($dailyLinks, "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li");
+		//$articlesWithBadWords = searchArticleHeadlines($headlineLinks);
 		// populateArchiveWithArticles($articlesWithBadWords);
 	 } ?>
 </div>

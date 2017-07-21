@@ -23,7 +23,7 @@ if (isset($_POST['action'])) {
             break;
         case 'populate-current-count-from-years': // query each year and populate archive_count
             foreach ($years_to_search as $year) {
-                $article_list = getDateLinksFromArchivePage($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
+                $article_list = getLinksFromURLAndXpath($mo_archive_url.$year.'.html', '//ul[@class="split"]/li');
                 getArticleLinksFromArchivePage($article_list, $xpath_archive_article_query_string, $year);
                 populateArchiveWithArticles($matched_articles);
                 error_log($year.' done.', 0);

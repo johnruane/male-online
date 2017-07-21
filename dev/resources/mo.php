@@ -1,6 +1,6 @@
 <?php
 $mo_home_domain="http://dailymail.co.uk/";
-$mo_archive_url = "http://www.dailymail.co.uk/home/sitemaparchive/year_";
+$mo_archive_url = "http://www.dailymail.co.uk/home/sitemaparchive/";
 
 $years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
@@ -46,27 +46,28 @@ $sql_create_visited_table = 'CREATE TABLE visited_links (
     )';
 
 $list_of_bad_words = array (
-    // 4 => ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp'],
-    5 => ['ample','given','busty','leggy','perky','saucy','thigh','toned','yummy'],
-    // 6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases'],
-    // 7 => ['ageless','braless','flashes','flaunts','midriff','scantily','sizable','slender'],
-    // 8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
-    // 9 => ['posterior','revealing'],
-    // 10 => ['skin-tight','super-slim'],
-    // 11 => ['eye-popping'],
-    // 14 => ['figure-hugging']
+    4 => ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp'],
+    5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy'],
+    6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases'],
+    7 => ['ageless','braless','flashes','flaunts','midriff','scantily','sizable','slender'],
+    8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
+    9 => ['posterior','revealing'],
+    10 => ['skin-tight','super-slim'],
+    11 => ['eye-popping'],
+    14 => ['figure-hugging']
 );
 
+$xpath_archive_article_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li";
 $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
 function currentYearArchiveSearch() {
     global $current_year;
 
     // Get all links on year page - return as an array
-    $current_year_links = getDateLinksFromArchivePage("http://www.dailymail.co.uk/home/sitemaparchive/year_".$current_year.".html", "//ul[contains(concat(' ', normalize-space(@class), ' '), ' split ')]/li");
+    $current_year_links = getDailyArchiveLinks("http://www.dailymail.co.uk/home/sitemaparchive/year_".$current_year.".html", "//ul[contains(concat(' ', normalize-space(@class), ' '), ' split ')]/li");
 	// 1. Query archive_count table for all current year links - return publication_date
 	// 2. Loop through current_year_links and filter out the ones whose date already appears in above article_string_array
-	// 3. Send unvisited links to getDateLinksFromArchivePage function
+	// 3. Send unvisited links to getDailyArchiveLinks function
 
 	//setVisitedLinks($current_year_links);
     // Get all links from visited_links table
@@ -75,39 +76,42 @@ function currentYearArchiveSearch() {
 }
 
 /*
-    Get all the day links from a url provided (a year page)
+    Gets all the Date links from a Yearly archive page and return them as an array
 */
-function getDateLinksFromArchivePage($url) {
+function getLinksFromURLAndXpath($url, $xp) {
+	$links = array();
     $html = file_get_contents($url);
     $dom = new \DOMDocument('1.0', 'UTF-8');
-	$article_list = array();
 
     $internalErrors = libxml_use_internal_errors(true); // set error level
     $dom->loadHTML($html);
     libxml_use_internal_errors($internalErrors); // Restore error level
 
     $xpath = new DomXpath($dom);
-    $daily_link_list = $xpath->query('//ul[@class="split"]/li'); // Returns all list items from a yearly page
+    $link_list = $xpath->query($xp); // Returns all list items from a yearly page
 
-    $daily_headline_list = array();
-    foreach ($daily_link_list as $article) {
-    	$node = $xpath->query('descendant::a/attribute::href', $article);
-    	array_push($article_list, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
+    foreach ($link_list as $link) {
+    	$node = $xpath->query('descendant::a/attribute::href', $link);
+    	array_push($links, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
     }
-    return $article_list; // Returns an array of daily links
+    return $links; // Returns an array of daily links
 }
 
 /*
-    Get all the article links from an array of links provided (array of day links)
+    Get all the links from the year link provided
 */
-function getArticleLinksFromArchivePage($ary_of_links) {
-	$articles = array();
+function getListOfArticleLinks($ary_of_links, $query_string) {
+    global $matched_articles;
+    global $list_of_bad_words;
+    $pub_date = '';
+
     /*
         link = http://www.dailymail.co.uk/home/sitemaparchive/day_19941014.html
         or
         link = http://www.dailymail.co.uk/home/index.html
     */
     foreach ($ary_of_links as $link) {
+        error_log($link, 0);
         $html = file_get_contents($link);
         $dom = new \DOMDocument('1.0', 'UTF-8');
 
@@ -116,57 +120,50 @@ function getArticleLinksFromArchivePage($ary_of_links) {
         libxml_use_internal_errors($internalErrors); // Restore error level
 
         $xpath = new DomXpath($dom);
-        $article = $xpath->query("//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li");
-		array_push($articles, $article);
-	}
-	return $articles;
-}
+        $articles = $xpath->query($query_string);
 
-/*
-    Get all the article links from an array of links provided (array of day links)
-*/
-function searchArticleHeadlines($articleList) {
-	$matched_articles = array();
-	global $list_of_bad_words;
-	$pub_date = '';
-	var_dump($articleList);
-    foreach ($articleList as $article) { // article = DOMElement
-	    if ( is_object($article) ) {
-	        $node_text = $article->nodeValue; // article[nodeValue] = string to search eg "She dropped her Chanel diamond ring" etc
-	        $node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); // removes javascript
-	        $node_text = preg_replace('/\s+/', ' ', $node_text); // replace large whitespaces with a single whitespace
-	        $article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any space into array
-	        foreach ($article_string_array as $article_word) { // loops through array of article[nodeValue]
-	            $article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word); // remove numerical & special characters
-	            if (isset($list_of_bad_words[strlen($article_word)])) { // if the 'article word' length matches a 'bad words' length
-	                foreach ($list_of_bad_words[strlen($article_word)] as $badword) {
-	                    if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
-	                        // different date function for 'archive' or 'daily'
-	                        if (strpos($link, 'sitemaparchive') == true) {
-	                            $linkURL = explode('/', $link);
-	                            $pub_date = preg_split("/[_.]/", end($linkURL))[1]; // get the date from the article url
-	                        } else {
-	                            $pub_date = date("Y-m-d");
-	                        }
-	                        $matched_article['date'] = $pub_date;
-	                        $matched_article['word'] = $badword;
-	                        $matched_article['article_text'] = $node_text;
-	                        $matched_article['article_link'] = $xpath->query('descendant::a/attribute::href', $article)->item(0)->nodeValue;
-	                        $thumbnail = $xpath->query('descendant::a/img/attribute::data-src', $article);
-	                        if (strpos($link, 'index') == true) {
-	                            $matched_article['thumbnail_link'] = $thumbnail->item(0)->nodeValue;
-	                        }
-	                        array_push($matched_articles, $matched_article);
-	                    }
-	                }
-	            }
-	        }
-	    }
-	}
-	return $matched_articles;
+        foreach ($articles as $article) { // article = DOMElement
+			var_dump($article->nodeValue);
+            if ( is_object($article) ) {
+                $node_text = $article->nodeValue; // article[nodeValue] = string to search eg "She dropped her Chanel diamond ring" etc
+                $node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); // removes javascript
+                $node_text = preg_replace('/\s+/', ' ', $node_text); // replace large whitespaces with a single whitespace
+                $article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any space into array
+
+                foreach ($article_string_array as $article_word) { // loops through array of article[nodeValue]
+                    $article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word); // remove numerical & special characters
+
+                    if (isset($list_of_bad_words[strlen($article_word)])) { // if the 'article word' length matches a 'bad words' length
+                        foreach ($list_of_bad_words[strlen($article_word)] as $badword) {
+                            if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
+
+                                // different date function for 'archive' or 'daily'
+                                if (strpos($link, 'sitemaparchive') == true) {
+                                    $linkURL = explode('/', $link);
+                                    $pub_date = preg_split("/[_.]/", end($linkURL))[1]; // get the date from the article url
+                                } else {
+                                    $pub_date = date("Y-m-d");
+                                }
+
+                                $matched_article['date'] = $pub_date;
+                                $matched_article['word'] = $badword;
+                                $matched_article['article_text'] = $node_text;
+                                $matched_article['article_link'] = $xpath->query('descendant::a/attribute::href', $article)->item(0)->nodeValue;
+                                $thumbnail = $xpath->query('descendant::a/img/attribute::data-src', $article);
+                                if (strpos($link, 'index') == true) {
+                                    $matched_article['thumbnail_link'] = $thumbnail->item(0)->nodeValue;
+                                }
+                                array_push($matched_articles, $matched_article);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 /* SETTERS */
-function populateArchiveWithArticles($q_links) {
+function setFoundArticlesToCurrentDB($q_links) {
     $db = new Db();
     $sql = 'INSERT INTO archive_count (publication_date, word, article_text, article_link, thumbnail_link) VALUES (?, ?, ?, ?, ?)';
     $stmt = $db->connect()->prepare($sql);
@@ -196,16 +193,6 @@ function setYearlyTotalsForWordByYear($year, $word) {
            $stmt->bind_param('ssi', $year, $row['word'], $row['total']);
            $stmt->execute();
         }
-    } else {
-        echo $db->error();
-    }
-}
-function setYearlyTotalsByYear($year, $word, $count) {
-    $sql_count_yearly = 'INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)';
-    $db = new Db();
-    if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
-       $stmt->bind_param('ssi', $year, $word, $count);
-       $stmt->execute();
     } else {
         echo $db->error();
     }
