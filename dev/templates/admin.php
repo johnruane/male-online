@@ -45,11 +45,22 @@ require_once("db.php");
 				<span class="admin-heading">DB functions</span>
 				<div class="admin-body">
 					<div class="admin-section">
+						<div data-id="cron-job" class="admin-db-message"></div>
+						<div class="admin-section-columns">
+							<div>
+								<label class="php-action-label">CRON job</label>
+								<p class="admin-markup">Test function</p>
+							</div>
+							<div class="admin-action">
+								<button id="runCronJob" type="submit" class="admin-btn-success" onclick="runCronJob(this);">Go</button>
+							</div>
+						</div>
+					</div>
+					<div class="admin-section">
 						<div data-id="get-yearly-totals" class="admin-db-message"></div>
 						<div class="admin-section-columns">
 							<div>
 								<label class="php-action-label">Get yearly totals for word</label>
-								<p class="admin-markup"></p>
 							</div>
 							<div class="admin-action">
 								<input type="text" name="admin-input">
@@ -259,6 +270,18 @@ function searchAndArchive(btn) {
 		},
 		success: function(response) {
 			$('[data-id="search-archive"]').empty().append(response);
+		},
+		error: function(){
+			alert('error');
+		}
+	});
+}
+function runCronJob(btn) {
+	$.ajax({
+		url: 'cron-job.php',
+		type:'POST',
+		success: function(response) {
+			$('[data-id="cron-job"]').empty().append(response);
 		},
 		error: function(){
 			alert('error');

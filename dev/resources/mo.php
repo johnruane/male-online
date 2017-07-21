@@ -1,6 +1,5 @@
 <?php
 $mo_home_domain="http://dailymail.co.uk/";
-$mo_archive_url = "http://www.dailymail.co.uk/home/sitemaparchive/";
 
 $years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
@@ -57,14 +56,11 @@ $list_of_bad_words = array (
 	14 => ['figure-hugging']
 );
 
-$xpath_archive_article_query_string = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li";
-$xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
-
-function currentYearArchiveSearch() {
+function search() {
 	global $current_year;
 
 	// Get all links on year page - return as an array
-	$current_year_links = getDailyArchiveLinks("http://www.dailymail.co.uk/home/sitemaparchive/year_".$current_year.".html", "//ul[contains(concat(' ', normalize-space(@class), ' '), ' split ')]/li");
+	
 	// 1. Query archive_count table for all current year links - return publication_date
 	// 2. Loop through current_year_links and filter out the ones whose date already appears in above article_string_array
 	// 3. Send unvisited links to getDailyArchiveLinks function
@@ -76,74 +72,71 @@ function currentYearArchiveSearch() {
 }
 
 /*
-Gets all the Date links from a Yearly archive page and return them as an array
+	Gets links from a url filtered by xpath
 */
 function getLinksFromURLAndXpath($url, $xp) {
 	$links = array();
 	$html = file_get_contents($url);
 	$dom = new \DOMDocument('1.0', 'UTF-8');
 
-	$internalErrors = libxml_use_internal_errors(true); // set error level
+	$internalErrors = libxml_use_internal_errors(true);
 	$dom->loadHTML($html);
-	libxml_use_internal_errors($internalErrors); // Restore error level
+	libxml_use_internal_errors($internalErrors);
 
 	$xpath = new DomXpath($dom);
-	$link_list = $xpath->query($xp); // Returns all list items from a yearly page
+	$link_list = $xpath->query($xp);
 
 	foreach ($link_list as $link) {
 		$node = $xpath->query('descendant::a/attribute::href', $link);
 		array_push($links, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
 	}
-	return $links; // Returns an array of daily links
+	return $links;
 }
 
 /*
-Get all the links from the year link provided
+	Search through array, get headlines from each entry, pass DOM object through script to read headline and search for words
 */
-function searchArticlesForBadWords($ary_of_links, $query_string) {
+function searchArticlesForBadWords($links, $xp) {
 	$matched_articles = array();
 	global $list_of_bad_words;
 	$pub_date = '';
 
-	/*
-	link = http://www.dailymail.co.uk/home/sitemaparchive/day_19941014.html
-	or
-	link = http://www.dailymail.co.uk/home/index.html
-	*/
-	foreach ($ary_of_links as $link) {
-
+	// Loop through array of links
+	foreach ($links as $link) {
 		$html = file_get_contents($link);
 		$dom = new \DOMDocument('1.0', 'UTF-8');
 
-		$internalErrors = libxml_use_internal_errors(true); // set error level
+		$internalErrors = libxml_use_internal_errors(true);
 		$dom->loadHTML($html);
 		libxml_use_internal_errors($internalErrors); // Restore error level
 
+		// Return DOM from links and filter the headlines on the page
 		$xpath = new DomXpath($dom);
-		$articles = $xpath->query($query_string);
+		$articles = $xpath->query($xp);
 
-		foreach ($articles as $article) { // article = DOMElement
+		// Loop through each DOM object created above
+		foreach ($articles as $article) {
 			if ( is_object($article) ) {
 				$node_text = $article->nodeValue; // article[nodeValue] = string to search eg "She dropped her Chanel diamond ring" etc
 				$node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); // removes javascript
 				$node_text = preg_replace('/\s+/', ' ', $node_text); // replace large whitespaces with a single whitespace
-				$article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any space into array
+				$article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any 'space' into array
 
-				foreach ($article_string_array as $article_word) { // loops through array of article[nodeValue]
+				foreach ($article_string_array as $article_word) {
 					$article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word); // remove numerical & special characters
 
 					if (isset($list_of_bad_words[strlen($article_word)])) { // if the 'article word' length matches a 'bad words' length
 						foreach ($list_of_bad_words[strlen($article_word)] as $badword) {
 							if (strcasecmp($article_word, $badword) == 0) { // case-insensitive string comparison
 
-								// different date function for 'archive' or 'daily'
+								// Different date function for 'archive' or 'daily'
 								if (strpos($link, 'sitemaparchive') == true) {
 									$linkURL = explode('/', $link);
 									$pub_date = preg_split("/[_.]/", end($linkURL))[1]; // get the date from the article url
 								} else {
 									$pub_date = date("Y-m-d");
 								}
-
+								// Construct the relevant data into an object
 								$matched_article['date'] = $pub_date;
 								$matched_article['word'] = $badword;
 								$matched_article['article_text'] = $node_text;
@@ -162,6 +155,7 @@ function searchArticlesForBadWords($ary_of_links, $query_string) {
 	}
 	return $matched_articles;
 }
+
 /* SETTERS */
 function populateArchiveWithArticles($q_links) {
 	$db = new Db();
