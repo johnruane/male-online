@@ -56,21 +56,6 @@ $list_of_bad_words = array (
 	14 => ['figure-hugging']
 );
 
-function search() {
-	global $current_year;
-
-	// Get all links on year page - return as an array
-	
-	// 1. Query archive_count table for all current year links - return publication_date
-	// 2. Loop through current_year_links and filter out the ones whose date already appears in above article_string_array
-	// 3. Send unvisited links to getDailyArchiveLinks function
-
-	//setVisitedLinks($current_year_links);
-	// Get all links from visited_links table
-	// $links_not_visited = array_diff($current_year_links, getVisitedLinks());
-	// var_dump($links_not_visited);
-}
-
 /*
 	Gets links from a url filtered by xpath
 */

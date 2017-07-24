@@ -5,9 +5,8 @@ require_once("db.php");
 ini_set("error_reporting","-1");
 ini_set("display_errors","On");
 
-$sort_array = array();
 $mo_homepage_url = "http://www.dailymail.co.uk/home/index.html";
-$xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
+$xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
 ?>
 <!doctype html>
@@ -22,7 +21,6 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
     <meta name="viewport" content="width=device-width; initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no;" />
 
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="js/jquery.randomColor.js"></script>
     <script src="js/bootstrap-tab.js"></script>
 
     <link rel="stylesheet" href="css/styles.css?v=1.0">
@@ -53,7 +51,7 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
         <main class="container">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane tab-pane-today active" id="today">
-                    <!-- <?php getArticleLinksFromArchivePage([$mo_homepage_url], $xpath_article_query_string); ?>
+                    <!-- <?php getLinksFromURLAndXpath([$mo_homepage_url], $xpath_today); ?>
                     <?php cleanTable('today_count'); ?>
                     <?php setTodaysArticles($matched_articles); ?> -->
                     <h4 class="tab-heading">Today</h4>
@@ -103,7 +101,6 @@ $xpath_article_query_string = "//div[@class='beta']//div[contains(concat(' ', no
 						<li>Bootstrap Tab - <a class="plain-link" href="http://getbootstrap.com/javascript/#tabs">link</a></li>
 						<li>Chart JS - <a class="plain-link" href="http://www.chartjs.org/">link</a></li>
 						<li>Lazysizes - <a class="plain-link" href="https://afarkas.github.io/lazysizes/">link</a></li>
-						<li>Ramdom Color - <a href="https://github.com/davidmerfield/randomColor">link</a>
 					</ul>
 				</details>
 			</div>

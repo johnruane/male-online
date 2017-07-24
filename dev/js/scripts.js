@@ -4,21 +4,12 @@
 		var $chartistWordValues = [];
 		var $chartistWordLabels = [];
 		var trendsChart;
-		var alpha = 1;
 		self.init = function() {
 			$(window).scrollTop(0);
 			toggleDailyArticleSelection();
 			highlightArticleTextAndCloneThumbnail();
 			highlightWordInArticle('.word-chart', '.graph-article');
 			setTrendsChart();
-		};
-		self.barBackgroundColors = function(len) {
-			var colorAry = [];
-			return randomColor({
-				luminosity: 'dark',
-				format: 'rgba',
-				alpha: 0.3
-			});
 		};
 		self.toggleDailyArticleSelection = function() {
 			$('[data-toggle="trends-reveal"]').on('click', function(event) {
@@ -41,6 +32,8 @@
 			});
 		};
 		self.setTrendsChart = function() {
+			var color_count = 0;
+			var colors = graphColors(42);
 			$('#trends-tab').on('click', function() {
 				$('.word-chart').each( function() {
 					var chartid = $(this).attr('id');
@@ -52,7 +45,7 @@
 					$($graph_labels).each(function() {
 						$chartistWordLabels.push($(this).text());
 					});
-					var $chartcolor = barBackgroundColors(1);
+					var $chartcolor = colors[color_count];
 					trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
 						type: 'line',
 						data: {
@@ -60,7 +53,7 @@
 							datasets: [{
 								data: $chartistWordValues,
 								radius: 0,
-								borderWidth: 1,
+								borderWidth: 2,
 								borderColor: $chartcolor,
 								fill: false
 							}]
@@ -82,14 +75,26 @@
 										display: false
 									},
 									ticks: {
-										suggestedMin: -1
+										suggestedMin: -1,
+										max: 100
 									}
 								}]
+							},
+							elements: {
+								line: {
+									tension: 0.2
+								}
+							},
+							layout: {
+								padding: {
+									left: 5
+								}
 							}
 						}
 					});
 					$chartistWordLabels = [];
 					$chartistWordValues = [];
+					color_count++;
 				});
 			});
 		};
@@ -135,3 +140,27 @@ $.fn.isOnScreen = function(){
 	bounds.bottom = bounds.top + this.outerHeight();
 	return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
 };
+
+function graphColors(number) {
+	var alpha = 1
+	var col_set = [ 'rgba(182, 211, 219,'+alpha+')',
+					'rgba(248, 182, 219,'+alpha+')',
+					'rgba(204, 195, 220,'+alpha+')',
+					'rgba(178, 214, 196,'+alpha+')',
+					'rgba(237, 199, 178,'+alpha+')',
+					'rgba(235, 231, 241,'+alpha+')',
+					'rgba(183, 220, 181,'+alpha+')',
+					'rgba(232, 213, 184,'+alpha+')',
+					'rgba(178, 192, 210,'+alpha+')',
+					'rgba(245, 233, 185,'+alpha+')'];
+	var cols = [];
+	var division = Math.floor(number / col_set.length);
+	var remainder = number - (division * col_set.length);
+	for (i=0; i<division; i++) {
+		cols = cols.concat(col_set);
+	}
+	for (i=0; i<remainder; i++) {
+		cols.push(col_set[i]);
+	}
+	return cols;
+}
