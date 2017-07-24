@@ -34,7 +34,11 @@
 		self.setTrendsChart = function() {
 			var color_count = 0;
 			var colors = graphColors(42);
-			$('#trends-tab').on('click', function() {
+			$('#trends-tab').on('click', function(e) {
+				if ($(this).attr('aria-expanded') === 'true') {
+					e.preventDefault();
+					return;
+				}
 				$('.word-chart').each( function() {
 					var chartid = $(this).attr('id');
 					var $graph_vals = $('#'+chartid).find('.word-value');
@@ -61,6 +65,7 @@
 						options: {
 							responsive: true,
 							maintainAspectRatio: true,
+							scaleStartValue: 0,
 							animation: false,
 							legend: {
 								display: false
@@ -73,10 +78,6 @@
 									display: false,
 									gridLines: {
 										display: false
-									},
-									ticks: {
-										suggestedMin: -1,
-										max: 100
 									}
 								}]
 							},

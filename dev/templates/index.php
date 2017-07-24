@@ -34,10 +34,10 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
 <body>
     <div class="site-wrapper">
         <header class="main-header">
-            <a class="site-logo" href="/index4.php">
+            <!-- <a class="site-logo" href="/index4.php">
                 <span class="flam-text">Male </span>
                 <span class="thin-text">Online</span>
-            </a>
+            </a> -->
             <!-- <nav class="nav-icon" data-bind="menu">
                 <span></span>
                 <span></span>
@@ -84,19 +84,25 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
 							<li><?php echo $word ?></li>
 						<?php endforeach ?>
 					</ul>
-					<p>I have the ability to freely add and remove words based on trends or suggestions.</p>
+				</details>
+				<details>
+					<summary>Can you add more words?</summary>
+					<p>Yes. I'm open to suggestions.</p>
 				</details>
 				<details>
 					<summary>How accurate is it?</summary>
-					<p>It's not 100%. I can't distinguise between 'Jordan puts her bust on display' and 'Airline to go bust in 1 week'. I manually clean out any incorrectly logged articles as they are found and welcome any errors being pointed out by anyone viewing the content.</p>
+					<p>It's not 100%.</p>
+					<p>	I can't distinguise between 'Jordan puts her bust on display' and 'Airline to go bust in 1 week'. I manually clean out any incorrectly logged articles as they are found and welcome any errors being pointed out by anyone viewing the content.<p>
+					<p>Im also working on possible inaccuracies if hyphons have been used as in super-slim or superslim.</p>
 				</details>
 				<details>
 					<summary>Disclaimer</summary>
-					<p>This website is purely for "research", "computational analysis" and "entertainment" purposes only. All data and copyright material on display here is owned by The Daily Mail and their licensors.</p>
+					<p>This website is purely for "research", "computational analysis" and "entertainment" purposes only.</p>
+					<p>All data and copyright material on display here is owned by The Daily Mail and their licensors.</p>
 				</details>
 				<details>
 					<summary>Credits</summary>
-					<p>All code used to web scrape or data mine has been written by me using PHP. No frameworks or grids are used for presentation. Except for the 3rd party tools below, everything has been developed from scratch.</p>
+					<p>All code used to web scrape or data mine has been written by me using PHP - no frameworks or grids have been used.</p> <p>Except for the 3rd party tools below, everything has been developed from scratch.</p>
 					<ul class="reset-list">
 						<li>Bootstrap Tab - <a class="plain-link" href="http://getbootstrap.com/javascript/#tabs">link</a></li>
 						<li>Chart JS - <a class="plain-link" href="http://www.chartjs.org/">link</a></li>

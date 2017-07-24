@@ -1,6 +1,5 @@
 body {
 	background: #ffffff;
-	font-family: Futura, Arial, sans-serif;
 	word-break: break-word;
 	word-wrap: break-word;
 }
@@ -23,12 +22,19 @@ footer summary + * {
 	border-top: 1px solid #c7c7c7;
 	padding-top: 7px;
 	margin-top: 7px;
-	font-style: italic;
 }
 .footer-word-list {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: auto;
+	padding-bottom: $global-padding;
+}
+details p {
+	margin-bottom: $global-padding;
+	font-style: italic;
+}
+details li {
+	font-style: italic;
 }
 canvas {
 	border-left: 1px solid #cdcdcd;
