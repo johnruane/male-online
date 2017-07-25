@@ -5,7 +5,6 @@
 		var $chartistWordLabels = [];
 		var trendsChart;
 		self.init = function() {
-			$(window).scrollTop(0);
 			toggleDailyArticleSelection();
 			highlightArticleTextAndCloneThumbnail();
 			highlightWordInArticle('.word-chart', '.graph-article');
@@ -34,69 +33,73 @@
 		self.setTrendsChart = function() {
 			var color_count = 0;
 			var colors = graphColors(42);
-			$('#trends-tab').on('click', function(e) {
-				if ($(this).attr('aria-expanded') === 'true') {
-					e.preventDefault();
-					return;
-				}
-				$('.word-chart').each( function() {
-					var chartid = $(this).attr('id');
-					var $graph_vals = $('#'+chartid).find('.word-value');
-					var $graph_labels = $('#'+chartid).find('.word-key');
-					$($graph_vals).each(function() {
-						$chartistWordValues.push(parseInt($(this).text()));
-					});
-					$($graph_labels).each(function() {
-						$chartistWordLabels.push($(this).text());
-					});
-					var $chartcolor = colors[color_count];
-					trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
-						type: 'line',
-						data: {
-							labels: $chartistWordLabels,
-							datasets: [{
-								data: $chartistWordValues,
-								radius: 0,
-								borderWidth: 2,
-								borderColor: $chartcolor,
-								fill: false
+			if ($(this).attr('aria-expanded') === 'true') {
+				e.preventDefault();
+				return;
+			}
+			$('.word-chart').each( function() {
+				var chartid = $(this).attr('id');
+				var $graph_vals = $('#'+chartid).find('.word-value');
+				var $graph_labels = $('#'+chartid).find('.word-key');
+				$($graph_vals).each(function() {
+					$chartistWordValues.push(parseInt($(this).text()));
+				});
+				$($graph_labels).each(function() {
+					$chartistWordLabels.push($(this).text());
+				});
+				var $chartcolor = colors[color_count];
+				trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
+					type: 'line',
+					data: {
+						labels: $chartistWordLabels,
+						datasets: [{
+							data: $chartistWordValues,
+							radius: 0,
+							borderWidth: 2,
+							borderColor: $chartcolor,
+							fill: false
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: true,
+						scaleStartValue: 0,
+						animation: false,
+						legend: {
+							display: false
+						},
+						scales: {
+							xAxes: [{ // horizontal
+								display: false
+							}],
+							yAxes: [{ // vertical
+								display: false,
+								gridLines: {
+									display: false
+								}
 							}]
 						},
-						options: {
-							responsive: true,
-							maintainAspectRatio: true,
-							scaleStartValue: 0,
-							animation: false,
-							legend: {
-								display: false
-							},
-							scales: {
-								xAxes: [{ // horizontal
-									display: false
-								}],
-								yAxes: [{ // vertical
-									display: false,
-									gridLines: {
-										display: false
-									}
-								}]
-							},
-							elements: {
-								line: {
-									tension: 0.2
-								}
-							},
-							layout: {
-								padding: {
-									left: 5
-								}
+						elements: {
+							line: {
+								tension: 0.2
+							}
+						},
+						layout: {
+							padding: {
+								left: 5
 							}
 						}
-					});
-					$chartistWordLabels = [];
-					$chartistWordValues = [];
-					color_count++;
+					}
 				});
+				$chartistWordLabels = [];
+				$chartistWordValues = [];
+				color_count++;
+			}).promise().done(function() {
+				$('#mo-tabs a').on('click', function(e) {
+					e.preventDefault();
+					$(this).tab('show');
+				});
+				$('.container').removeClass('loading');
 			});
 		};
 		return {

@@ -20,3 +20,10 @@ $xl:                        1400px;
 .container-fluid {
     width: 100%;
 }
+
+.container.loading {
+	opacity: 0;
+	transition: opacity 0.5s;
+	height: 100vh;
+	overflow: hidden;
+}

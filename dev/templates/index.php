@@ -44,13 +44,13 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
                 <span></span>
             </nav> -->
         </header>
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a id="today-tab" href="#today" aria-controls="today" role="tab" data-toggle="tab">Today</a></li>
-			<li role="presentation"><a id="trends-tab" href="#trends" aria-controls="trends" role="tab" data-toggle="tab">Trends</a></li>
+		<ul class="nav nav-tabs" id="mo-tabs" role="tablist">
+			<li role="presentation" class="active"><a id="today-tab" href="#today" aria-controls="today" role="tab">Today</a></li>
+			<li role="presentation"><a id="trends-tab" href="#trends" aria-controls="trends" role="tab">Trends</a></li>
 		</ul>
-        <main class="container">
+        <main class="container loading">
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane tab-pane-today active" id="today">
+                <div role="tabpanel" class="tab-pane active" id="today">
                     <!-- <?php getLinksFromURLAndXpath([$mo_homepage_url], $xpath_today); ?>
                     <?php cleanTable('today_count'); ?>
                     <?php setTodaysArticles($matched_articles); ?> -->
