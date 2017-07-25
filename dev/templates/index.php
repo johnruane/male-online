@@ -45,10 +45,10 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
             </nav> -->
         </header>
 		<ul class="nav nav-tabs" id="mo-tabs" role="tablist">
-			<li role="presentation" class="active"><a id="today-tab" href="#today" aria-controls="today" role="tab">Today</a></li>
-			<li role="presentation"><a id="trends-tab" href="#trends" aria-controls="trends" role="tab">Trends</a></li>
+			<li role="presentation" class="active"><a id="today-tab" href="#today" data-toggle="tab" aria-controls="today" role="tab">Today</a></li>
+			<li role="presentation"><a id="trends-tab" href="#trends" data-toggle="tab" aria-controls="trends" role="tab">Trends</a></li>
 		</ul>
-        <main class="container loading">
+        <main class="container">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="today">
                     <!-- <?php getLinksFromURLAndXpath([$mo_homepage_url], $xpath_today); ?>

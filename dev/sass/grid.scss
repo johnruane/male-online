@@ -16,6 +16,8 @@ $xl:                        1400px;
 	margin-left: auto;
 	width: $container-width;
 	max-width: 1050px;
+	transition: all .5s;
+	opacity: 1;
 }
 .container-fluid {
     width: 100%;
@@ -23,7 +25,7 @@ $xl:                        1400px;
 
 .container.loading {
 	opacity: 0;
-	transition: opacity 0.5s;
+	transition: all .5s;
 	height: 100vh;
 	overflow: hidden;
 }

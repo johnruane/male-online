@@ -33,14 +33,9 @@
 		self.setTrendsChart = function() {
 			var color_count = 0;
 			var colors = graphColors(42);
-			if ($(this).attr('aria-expanded') === 'true') {
-				e.preventDefault();
-				return;
-			}
 			$('.word-chart').each( function() {
-				var chartid = $(this).attr('id');
-				var $graph_vals = $('#'+chartid).find('.word-value');
-				var $graph_labels = $('#'+chartid).find('.word-key');
+				var $graph_vals = $('#'+this.id).find('.word-value');
+				var $graph_labels = $('#'+this.id).find('.word-key');
 				$($graph_vals).each(function() {
 					$chartistWordValues.push(parseInt($(this).text()));
 				});
@@ -48,7 +43,7 @@
 					$chartistWordLabels.push($(this).text());
 				});
 				var $chartcolor = colors[color_count];
-				trendsChart = new Chart(document.getElementById(chartid + '-canvas').getContext('2d'), {
+				trendsChart = new Chart(document.getElementById(this.id + '-canvas').getContext('2d'), {
 					type: 'line',
 					data: {
 						labels: $chartistWordLabels,
@@ -61,8 +56,6 @@
 						}]
 					},
 					options: {
-						responsive: true,
-						maintainAspectRatio: true,
 						scaleStartValue: 0,
 						animation: false,
 						legend: {
@@ -83,23 +76,12 @@
 							line: {
 								tension: 0.2
 							}
-						},
-						layout: {
-							padding: {
-								left: 5
-							}
 						}
 					}
 				});
 				$chartistWordLabels = [];
 				$chartistWordValues = [];
 				color_count++;
-			}).promise().done(function() {
-				$('#mo-tabs a').on('click', function(e) {
-					e.preventDefault();
-					$(this).tab('show');
-				});
-				$('.container').removeClass('loading');
 			});
 		};
 		return {
