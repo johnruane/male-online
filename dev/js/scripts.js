@@ -31,57 +31,97 @@
 			});
 		};
 		self.setTrendsChart = function() {
-			var color_count = 0;
-			var colors = graphColors(42);
+			// var color_count = 0;
+			// var colors = graphColors(42);
+			// $('.word-chart').each( function() {
+			// 	var $graph_vals = $('#'+this.id).find('.word-value');
+			// 	var $graph_labels = $('#'+this.id).find('.word-key');
+			// 	$($graph_vals).each(function() {
+			// 		$chartistWordValues.push(parseInt($(this).text()));
+			// 	});
+			// 	$($graph_labels).each(function() {
+			// 		$chartistWordLabels.push($(this).text());
+			// 	});
+			// 	var $chartcolor = colors[color_count];
+			// 	trendsChart = new Chart(document.getElementById(this.id + '-canvas').getContext('2d'), {
+			// 		type: 'line',
+			// 		data: {
+			// 			labels: $chartistWordLabels,
+			// 			datasets: [{
+			// 				data: $chartistWordValues,
+			// 				radius: 0,
+			// 				borderWidth: 2,
+			// 				borderColor: $chartcolor,
+			// 				fill: false
+			// 			}]
+			// 		},
+			// 		options: {
+			// 			scaleStartValue: 0,
+			// 			animation: false,
+			// 			legend: {
+			// 				display: false
+			// 			},
+			// 			scales: {
+			// 				xAxes: [{ // horizontal
+			// 					display: false
+			// 				}],
+			// 				yAxes: [{ // vertical
+			// 					display: false,
+			// 					gridLines: {
+			// 						display: false
+			// 					}
+			// 				}]
+			// 			},
+			// 			elements: {
+			// 				line: {
+			// 					tension: 0.2
+			// 				}
+			// 			}
+			// 		}
+			// 	});
+			// 	$chartistWordLabels = [];
+			// 	$chartistWordValues = [];
+			// 	color_count++;
+			// });
 			$('.word-chart').each( function() {
-				var $graph_vals = $('#'+this.id).find('.word-value');
-				var $graph_labels = $('#'+this.id).find('.word-key');
-				$($graph_vals).each(function() {
-					$chartistWordValues.push(parseInt($(this).text()));
-				});
-				$($graph_labels).each(function() {
-					$chartistWordLabels.push($(this).text());
-				});
-				var $chartcolor = colors[color_count];
-				trendsChart = new Chart(document.getElementById(this.id + '-canvas').getContext('2d'), {
-					type: 'line',
-					data: {
-						labels: $chartistWordLabels,
-						datasets: [{
-							data: $chartistWordValues,
-							radius: 0,
-							borderWidth: 2,
-							borderColor: $chartcolor,
-							fill: false
-						}]
+				var $id = $(this).attr('id');
+				var $word = $(this).attr('id');
+				var $graph_vals = $('#'+$id).find('.word-value').map(function() {
+					return $(this).text();
+				}).get();
+				var $graph_labels = $('#'+$id).find('.word-key').map(function() {
+					return $(this).text();
+				}).get();
+				var data = {
+					series: [$graph_vals],
+					labels: $graph_labels
+				};
+				var options = {
+					lineSmooth: true,
+					showArea: false,
+					fullWidth: true,
+					bezierCurve:false,
+					showPoint: false,
+					low: 0,
+					chartPadding: {
+					  right: 5,
+					  bottom: -20,
 					},
-					options: {
-						scaleStartValue: 0,
-						animation: false,
-						legend: {
-							display: false
-						},
-						scales: {
-							xAxes: [{ // horizontal
-								display: false
-							}],
-							yAxes: [{ // vertical
-								display: false,
-								gridLines: {
-									display: false
-								}
-							}]
-						},
-						elements: {
-							line: {
-								tension: 0.2
-							}
-						}
+					axisX: {
+						showGrid: false,
+						showLabel: false
+					},
+					axisY: {
+						offset: 0,
+						showGrid: false,
+						showLabel: false,
 					}
-				});
-				$chartistWordLabels = [];
-				$chartistWordValues = [];
-				color_count++;
+				};
+				var $mychart = new Chartist.Line('.'+$word, data, options);
+				//$mychart = $('.'+ $word +'-chart');
+				// $mychart.get(0).__chartist__.update(data);
+				$graph_labels = [];
+				$graph_vals = [];
 			});
 		};
 		return {
@@ -126,27 +166,3 @@ $.fn.isOnScreen = function(){
 	bounds.bottom = bounds.top + this.outerHeight();
 	return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
 };
-
-function graphColors(number) {
-	var alpha = 1
-	var col_set = [ 'rgba(182, 211, 219,'+alpha+')',
-					'rgba(248, 182, 219,'+alpha+')',
-					'rgba(204, 195, 220,'+alpha+')',
-					'rgba(178, 214, 196,'+alpha+')',
-					'rgba(237, 199, 178,'+alpha+')',
-					'rgba(235, 231, 241,'+alpha+')',
-					'rgba(183, 220, 181,'+alpha+')',
-					'rgba(232, 213, 184,'+alpha+')',
-					'rgba(178, 192, 210,'+alpha+')',
-					'rgba(245, 233, 185,'+alpha+')'];
-	var cols = [];
-	var division = Math.floor(number / col_set.length);
-	var remainder = number - (division * col_set.length);
-	for (i=0; i<division; i++) {
-		cols = cols.concat(col_set);
-	}
-	for (i=0; i<remainder; i++) {
-		cols.push(col_set[i]);
-	}
-	return cols;
-}

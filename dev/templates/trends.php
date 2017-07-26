@@ -8,7 +8,7 @@
 <?php if ($wordResults != null && count($wordResults) > 1) { ?>
         <div id="<?php echo $word ?>-chart" data-bind="word-chart" data-highlighter="<?php echo $word ?>" class="word-chart clearfix">
 			<div class="item-card-heading">
-                <h2 class="word-key"><?php echo $word ?></h2>
+                <!-- <h2 class="word-key"><?php echo $word ?></h2> -->
             </div>
 			<div class="trends-wrapper">
 				<div class="trends-graph-wrapper">
@@ -18,7 +18,7 @@
 		                    <span class="word-value"><?php echo $row['count'] ?></span></li>
 		                <?php endforeach ?>
 		            </ul>
-		            <canvas id="<?php echo $word ?>-chart-canvas"></canvas>
+		            <div class="ct-chart ct-major-sixth <?php echo $word ?>-chart"></div>
 					<div class="trends-labels">
 						<span>2000</span>
 						<span>2017</span>

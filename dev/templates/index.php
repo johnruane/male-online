@@ -23,6 +23,7 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="js/bootstrap-tab.js"></script>
 
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="css/styles.css?v=1.0">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bigshot+One" rel="stylesheet">
@@ -58,7 +59,7 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
 					<p class="sub-heading">Current articles on today's homepage</p>
                     <!-- <?php include 'today.php' ?> -->
                 </div>
-                <div role="tabpanel" class="tab-pane" id="trends">
+                <div role="tabpanel" class="tab-pane active" id="trends">
                     <h4 class="tab-heading">Trends</h4>
 					<p class="sub-heading">Graph mapping usage over time</p>
                     <div class="trends-grid">
@@ -115,6 +116,6 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
     <script src="//localhost:35729/livereload.js"></script>
 </body>
 </html>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js"></script>
+<script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 <script src="js/lazysides.min.js"></script>
 <script src="js/scripts.js"></script>
