@@ -59,7 +59,7 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
 					<p class="sub-heading">Current articles on today's homepage</p>
                     <!-- <?php include 'today.php' ?> -->
                 </div>
-                <div role="tabpanel" class="tab-pane active" id="trends">
+                <div role="tabpanel" class="tab-pane" id="trends">
                     <h4 class="tab-heading">Trends</h4>
 					<p class="sub-heading">Graph mapping usage over time</p>
                     <div class="trends-grid">
@@ -110,6 +110,11 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
 						<li>Lazysizes - <a class="plain-link" href="https://afarkas.github.io/lazysizes/">link</a></li>
 					</ul>
 				</details>
+			</div>
+			<div class="container">
+				<ul class="reset-list">
+					<li>CONTACT</li>
+				</ul>
 			</div>
         </footer>
     </div>

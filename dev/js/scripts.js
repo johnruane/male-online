@@ -8,7 +8,10 @@
 			toggleDailyArticleSelection();
 			highlightArticleTextAndCloneThumbnail();
 			highlightWordInArticle('.word-chart', '.graph-article');
-			setTrendsChart();
+			$('#trends-tab').one('click', function(event) {
+				setTrendsChart();
+				$(this).off(event);
+			});
 		};
 		self.toggleDailyArticleSelection = function() {
 			$('[data-toggle="trends-reveal"]').on('click', function(event) {
@@ -31,58 +34,6 @@
 			});
 		};
 		self.setTrendsChart = function() {
-			// var color_count = 0;
-			// var colors = graphColors(42);
-			// $('.word-chart').each( function() {
-			// 	var $graph_vals = $('#'+this.id).find('.word-value');
-			// 	var $graph_labels = $('#'+this.id).find('.word-key');
-			// 	$($graph_vals).each(function() {
-			// 		$chartistWordValues.push(parseInt($(this).text()));
-			// 	});
-			// 	$($graph_labels).each(function() {
-			// 		$chartistWordLabels.push($(this).text());
-			// 	});
-			// 	var $chartcolor = colors[color_count];
-			// 	trendsChart = new Chart(document.getElementById(this.id + '-canvas').getContext('2d'), {
-			// 		type: 'line',
-			// 		data: {
-			// 			labels: $chartistWordLabels,
-			// 			datasets: [{
-			// 				data: $chartistWordValues,
-			// 				radius: 0,
-			// 				borderWidth: 2,
-			// 				borderColor: $chartcolor,
-			// 				fill: false
-			// 			}]
-			// 		},
-			// 		options: {
-			// 			scaleStartValue: 0,
-			// 			animation: false,
-			// 			legend: {
-			// 				display: false
-			// 			},
-			// 			scales: {
-			// 				xAxes: [{ // horizontal
-			// 					display: false
-			// 				}],
-			// 				yAxes: [{ // vertical
-			// 					display: false,
-			// 					gridLines: {
-			// 						display: false
-			// 					}
-			// 				}]
-			// 			},
-			// 			elements: {
-			// 				line: {
-			// 					tension: 0.2
-			// 				}
-			// 			}
-			// 		}
-			// 	});
-			// 	$chartistWordLabels = [];
-			// 	$chartistWordValues = [];
-			// 	color_count++;
-			// });
 			$('.word-chart').each( function() {
 				var $id = $(this).attr('id');
 				var $word = $(this).attr('id');
@@ -117,10 +68,6 @@
 					}
 				};
 				var $mychart = new Chartist.Line('.'+$word, data, options);
-				//$mychart = $('.'+ $word +'-chart');
-				// $mychart.get(0).__chartist__.update(data);
-				$graph_labels = [];
-				$graph_vals = [];
 			});
 		};
 		return {
