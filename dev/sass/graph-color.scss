@@ -13,11 +13,14 @@ $graph-colors: (
 );
 @each $value in $graph-colors {
 	.word-chart:nth-child( #{nth($value, 1)}n+1 ) {
+		.ct-series-a .ct-area {
+			fill: darken(nth($value, 2), 30%);
+		}
 		.ct-series-a .ct-line {
 			stroke: nth($value, 2);
 		}
 	}
 }
 .ct-series-a .ct-line {
-  stroke-width: 3px;
+  stroke-width: 2px;
 }

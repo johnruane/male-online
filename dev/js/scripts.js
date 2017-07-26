@@ -98,14 +98,13 @@
 				};
 				var options = {
 					lineSmooth: true,
-					showArea: false,
+					showArea: true,
 					fullWidth: true,
 					bezierCurve:false,
 					showPoint: false,
-					low: 0,
 					chartPadding: {
 					  right: 5,
-					  bottom: -20,
+					  bottom: -28,
 					},
 					axisX: {
 						showGrid: false,
