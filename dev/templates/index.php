@@ -54,8 +54,6 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
                 <div role="tabpanel" class="tab-pane active" id="today">
                     <h4 class="tab-heading">Today</h4>
 					<p class="sub-heading">Current articles on today's homepage</p>
-                    <?php $matched_articles = searchArticlesForBadWords([$mo_homepage_url], $xpath_today); ?>
-                    <?php setTodaysArticles($matched_articles); ?>
                     <?php include 'today.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">
