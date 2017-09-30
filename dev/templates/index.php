@@ -52,12 +52,11 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
         <main class="container">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="today">
-                    <!-- <?php getLinksFromURLAndXpath([$mo_homepage_url], $xpath_today); ?>
-                    <?php cleanTable('today_count'); ?>
-                    <?php setTodaysArticles($matched_articles); ?> -->
                     <h4 class="tab-heading">Today</h4>
 					<p class="sub-heading">Current articles on today's homepage</p>
-                    <!-- <?php include 'today.php' ?> -->
+                    <?php $matched_articles = searchArticlesForBadWords([$mo_homepage_url], $xpath_today); ?>
+                    <?php setTodaysArticles($matched_articles); ?>
+                    <?php include 'today.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">
                     <h4 class="tab-heading">Trends</h4>

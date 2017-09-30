@@ -1,5 +1,4 @@
 <?php
-$mo_home_domain="http://dailymail.co.uk/";
 
 $years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 
@@ -73,7 +72,9 @@ function getLinksFromURLAndXpath($url, $xp) {
 
 	foreach ($link_list as $link) {
 		$node = $xpath->query('descendant::a/attribute::href', $link);
-		array_push($links, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
+		if ($node->item(0)) {
+			array_push($links, "http://www.dailymail.co.uk" . $node->item(0)->textContent); // Gets all daily links
+		}
 	}
 	return $links;
 }
@@ -99,7 +100,7 @@ function searchArticlesForBadWords($links, $xp) {
 		$xpath = new DomXpath($dom);
 		$articles = $xpath->query($xp);
 
-		// Loop through each DOM object created above
+		//Loop through each DOM object created above
 		foreach ($articles as $article) {
 			if ( is_object($article) ) {
 				$node_text = $article->nodeValue; // article[nodeValue] = string to search eg "She dropped her Chanel diamond ring" etc
