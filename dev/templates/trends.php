@@ -28,7 +28,7 @@
 					<span class="graph-label" id="random-use">Random use in an article: </span>
 					<?php $randomWord = randomArticleByWord($word); ?>
 					<span class="graph-article">"<?php echo substr($randomWord[0]['article_text'], 1, -1); ?>"</span>
-					<a class="graph-link" href="<?php echo $mo_home_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">Go to full article	</a>
+					<a class="graph-link" href="<?php echo $mo_homepage_url ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">Go to full article	</a>
 				</div>
 			</div>
         </div>

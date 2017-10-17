@@ -142,6 +142,16 @@ function searchArticlesForBadWords($links, $xp) {
 	return $matched_articles;
 }
 
+function getMatchedArticlesFromWord($articles, $word) {
+	$matches = array();
+	foreach($articles as $article) {
+		if ($article['word'] == $word) {
+			array_push($matches, $article);
+		}
+	}
+	return $matches;
+}
+
 /* SETTERS */
 function populateArchiveWithArticles($q_links) {
 	$db = new Db();
