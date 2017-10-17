@@ -35,15 +35,15 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
 <body>
     <div class="site-wrapper">
         <header class="main-header">
-            <!-- <a class="site-logo" href="/index4.php">
+            <a class="site-logo" href="/index4.php">
                 <span class="flam-text">Male </span>
                 <span class="thin-text">Online</span>
-            </a> -->
-            <!-- <nav class="nav-icon" data-bind="menu">
+            </a>
+            <nav class="nav-icon" data-bind="menu">
                 <span></span>
                 <span></span>
                 <span></span>
-            </nav> -->
+            </nav>
         </header>
 		<ul class="nav nav-tabs" id="mo-tabs" role="tablist">
 			<li role="presentation" class="active"><a id="today-tab" href="#today" data-toggle="tab" aria-controls="today" role="tab">Today</a></li>
