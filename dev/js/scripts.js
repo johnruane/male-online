@@ -26,7 +26,7 @@
 			});
 		};
 		self.highlightArticleTextAndCloneThumbnail = function() {
-			highlightWordInArticle('.daily-article-wrapper', '.article-text');
+			highlightWordInArticle('.daily-article-wrapper', '.article-text-span');
 			$('.daily-article-wrapper').each(function() {
 				var $id = $(this).attr('id');
 				$(this).find('.today-word-articles-text .article-text:nth-child(2)').css('display', 'block');
@@ -87,6 +87,7 @@ function highlightWordInArticle(articleContainerClass, articleTextClass) {
 		$(this).find(articleTextClass).each(function() {
 			var $articleSpan = $(this);
 			var $articleText = $($articleSpan).text();
+			var $link = $($articleSpan).find('a.graph-link');
 
 			var wordStart = $articleText.toLowerCase().indexOf($id);
 			var beforeWord = $articleText.slice(0, wordStart);
@@ -99,16 +100,16 @@ function highlightWordInArticle(articleContainerClass, articleTextClass) {
 	});
 }
 
-$.fn.isOnScreen = function(){
-	var win = $(window);
-	var viewport = {
-		top : win.scrollTop(),
-		left : win.scrollLeft()
-	};
-	viewport.right = viewport.left + win.width();
-	viewport.bottom = viewport.top + win.height();
-	var bounds = this.offset();
-	bounds.right = bounds.left + this.outerWidth();
-	bounds.bottom = bounds.top + this.outerHeight();
-	return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
-};
+// $.fn.isOnScreen = function(){
+// 	var win = $(window);
+// 	var viewport = {
+// 		top : win.scrollTop(),
+// 		left : win.scrollLeft()
+// 	};
+// 	viewport.right = viewport.left + win.width();
+// 	viewport.bottom = viewport.top + win.height();
+// 	var bounds = this.offset();
+// 	bounds.right = bounds.left + this.outerWidth();
+// 	bounds.bottom = bounds.top + this.outerHeight();
+// 	return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
+// };

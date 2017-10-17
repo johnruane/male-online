@@ -8,7 +8,7 @@
 <?php if ($wordResults != null && count($wordResults) > 1) { ?>
         <div id="<?php echo $word ?>-chart" data-bind="word-chart" data-highlighter="<?php echo $word ?>" class="word-chart clearfix">
 			<div class="item-card-heading">
-                <!-- <h2 class="word-key"><?php echo $word ?></h2> -->
+                <h2 class="word-key"><?php echo $word ?></h2>
             </div>
 			<div class="trends-wrapper">
 				<div class="trends-graph-wrapper">
@@ -28,7 +28,7 @@
 					<span class="graph-label" id="random-use">Random use in an article: </span>
 					<?php $randomWord = randomArticleByWord($word); ?>
 					<span class="graph-article">"<?php echo substr($randomWord[0]['article_text'], 1, -1); ?>"</span>
-					<a class="graph-link" href="<?php echo $mo_homepage_url ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">Go to full article	</a>
+					<a class="graph-link" href="<?php echo $mo_domain ?><?php echo $randomWord[0]['article_link']; ?>" target="_blank">Go to full article	</a>
 				</div>
 			</div>
         </div>

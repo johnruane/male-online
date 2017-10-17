@@ -37,11 +37,11 @@
                     <?php foreach ($matches as $list): ?>
                         <div id="<?php echo $word ?>-word-<?php echo $index ?>" class="article-text">
                             <span class="article-text-span"><?php echo $list['article_text'] ?></span>
-                            <a class="graph-link" href="<?php echo $mo_homepage_url ?><?php echo $list['article_link'] ?>" target="_blank">Go to full article</a>
+                            <a class="graph-link" href="<?php echo $mo_domain ?><?php echo $list['article_link'] ?>" target="_blank">Go to full article</a>
                         </div>
                         <?php $index++ ?>
                     <?php endforeach ?>
-                </div>
+                    </div>
                 <div class="today-word-articles-images">
                     <?php $index=0 ?>
                     <?php foreach ($matches as $list): ?>

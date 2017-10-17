@@ -6,6 +6,7 @@ ini_set("error_reporting","-1");
 ini_set("display_errors","On");
 
 $mo_homepage_url = "http://www.dailymail.co.uk/home/index.html";
+$mo_domain = "http://www.dailymail.co.uk";
 $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
 
 ?>
