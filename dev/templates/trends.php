@@ -21,7 +21,7 @@
 		            <div class="ct-chart ct-major-sixth <?php echo $word ?>-chart"></div>
 					<div class="trends-labels">
 						<span>2000</span>
-						<span>2017</span>
+						<span>2018</span>
 					</div>
 				</div>
 				<div class="graph-stat today-word-articles-text">

@@ -1,6 +1,6 @@
 <?php
 
-$years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
+$years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'];
 
 $current_year = "2017";
 
@@ -107,6 +107,7 @@ function searchArticlesForBadWords($links, $xp) {
 				$node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); // removes javascript
 				$node_text = preg_replace('/\s+/', ' ', $node_text); // replace large whitespaces with a single whitespace
 				$article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any 'space' into array
+                error_log($node_text);
 
 				foreach ($article_string_array as $article_word) {
 					$article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word); // remove numerical & special characters
@@ -173,7 +174,7 @@ function setTodaysArticles($q_links) {
 		$stmt->execute();
 	}
 }
-function setYearlyTotalsForWordByYear($year, $word) {
+function setYearlyTotalsForWordByYear($year, $word, $result) {
 	$sql_count_yearly = 'INSERT INTO yearly_count (year, word, count) VALUES (?,?,?)';
 	$db = new Db();
 	if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
@@ -252,7 +253,7 @@ function getDailyArticlesFromWord($word) {
 function getTableNames() {
 	$sql_select_table_names = "SHOW TABLES";
 	$db = new Db();
-	return $db->fetch($sql_select_table_names, 'Tables_in_moail_online_test');
+    return $db->fetch($sql_select_table_names, 'Tables_in_mail_online_db');
 }
 /* Other functions */
 function cleanTable($table) {

@@ -12,7 +12,8 @@ require_once("db.php");
 	<?php foreach ($_POST['options'] as $year) {
 		foreach (getBadWords() as $word) {
 			$word_result = getCurrentCountsForYearByWord($year, $word);
-			setYearlyTotalsByYear($year, $word, $word_result[0]['total']);
+			var_dump($word_result);
+			//setYearlyTotalsForWordByYear($year, $word, $word_result);
 		}
 	} ?>
 </div>
