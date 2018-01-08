@@ -5,24 +5,23 @@
 		var $chartistWordLabels = [];
 		var trendsChart;
 		self.init = function() {
-			toggleDailyArticleSelection();
-			highlightArticleTextAndCloneThumbnail();
-			highlightWordInArticle('.word-chart', '.graph-article');
+			initDailyArticleSelection();
+			// highlightArticleTextAndCloneThumbnail();
+			// highlightWordInArticle('.word-chart', '.graph-article');
 			$('#trends-tab').one('click', function(event) {
 				setTrendsChart();
 				$(this).off(event);
 			});
 		};
-		self.toggleDailyArticleSelection = function() {
-			$('[data-toggle="trends-reveal"]').on('click', function(event) {
+		self.initDailyArticleSelection = function() {
+			$('[data-toggle="today-article"]').on('click', function(event) {
 				// changes the article text
-				$(this).parents('.today-list-item').find('.article-text').css('display', 'none');
-				$id = $(this).data('id');
-				$($id).css('display', 'block');
-				// changes the article image
-				var $placeholder = $($id).parent('.today-word-articles-text').children('.thumbnail-placeholder');
-				$($placeholder).empty();
-				var clone = $(this).clone().appendTo($placeholder);
+				var $src = $(event.target).attr('src');
+				var $articleText = $(event.target).data('article');
+				var $link = $(event.target).data('href');
+				var $prev = $(this).prev();
+				$prev.children('.thumbnail-placeholder').html('<img src="'+ $src +'"></img>');
+				$prev.children('.article-text').html($articleText + '<a class="graph-link" href="' + $link + '" target="_blank">Go to full article</a>');
 			});
 		};
 		self.highlightArticleTextAndCloneThumbnail = function() {
@@ -99,17 +98,3 @@ function highlightWordInArticle(articleContainerClass, articleTextClass) {
 		});
 	});
 }
-
-// $.fn.isOnScreen = function(){
-// 	var win = $(window);
-// 	var viewport = {
-// 		top : win.scrollTop(),
-// 		left : win.scrollLeft()
-// 	};
-// 	viewport.right = viewport.left + win.width();
-// 	viewport.bottom = viewport.top + win.height();
-// 	var bounds = this.offset();
-// 	bounds.right = bounds.left + this.outerWidth();
-// 	bounds.bottom = bounds.top + this.outerHeight();
-// 	return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
-// };

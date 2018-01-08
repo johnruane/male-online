@@ -11,18 +11,11 @@
 	}
 }
 .thumbnail-placeholder {
-	margin-right: $global-padding;
 	display: block;
 	img {
 		margin-bottom: ($global-padding/2);
 		max-width: 154px;
 	}
-}
-.article-text {
-    display: none;
-	margin-right: $global-padding;
-	max-width: 300px;
-	float: right;
 }
 .today-list {
     background: $today-list-background-color;
@@ -60,16 +53,9 @@
     text-align: right;
 }
 .daily-article-wrapper {
-    display: flex;
-    .today-word-articles-text {
-        flex: 6;
-		@media(min-width: $md) {
-			flex: 4;
-		}
-		@media(min-width: $lg) {
-			flex: 3;
-		}
-    }
+    display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: $global-padding;
     .today-word-articles-images {
         flex: 6;
 		align-content: flex-start;
@@ -80,6 +66,10 @@
 			flex: 9;
 		}
     }
+}
+.today-word-articles-text {
+	display: grid;
+	grid-template-columns: 1fr;
 }
 .article-highlight {
     background: #ffff00;

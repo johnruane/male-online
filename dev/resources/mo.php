@@ -106,6 +106,8 @@ function searchArticlesForBadWords($links, $xp) {
 				$node_text = $article->nodeValue; // article[nodeValue] = string to search eg "She dropped her Chanel diamond ring" etc
 				$node_text = preg_replace('/\b[A-Za-z0-9]{1,x}\b\s?/i', '', $node_text); // removes javascript
 				$node_text = preg_replace('/\s+/', ' ', $node_text); // replace large whitespaces with a single whitespace
+				$node_text = preg_replace('/\xc2\xa0/', '', $node_text); // remove &nbsp; from the article text
+				$node_text = trim($node_text); // remove white space from beginning and end
 				$article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any 'space' into array
                 error_log($node_text);
 

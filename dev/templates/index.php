@@ -40,11 +40,6 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
                 <span class="flam-text">Male </span>
                 <span class="thin-text">Online</span>
             </a>
-            <nav class="nav-icon" data-bind="menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </nav>
         </header>
 		<ul class="nav nav-tabs" id="mo-tabs" role="tablist">
 			<li role="presentation" class="active"><a id="today-tab" href="#today" data-toggle="tab" aria-controls="today" role="tab">Today</a></li>

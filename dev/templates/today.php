@@ -32,21 +32,12 @@
             <?php $matches = getMatchedArticlesFromWord($matched_articles, $word) ?>
             <div id="<?php echo $word ?>" class="daily-article-wrapper" data-highlighter="<?php echo $word ?>">
                 <div class="today-word-articles-text">
-                    <div id="<?php echo $word ?>-thumbnail-placeholder" class="thumbnail-placeholder"></div>
-                    <?php $index=0 ?>
+					<div class="thumbnail-placeholder"></div>
+					<span class="article-text"></span>
+				</div>
+                <div class="today-word-articles-images" data-toggle="today-article">
                     <?php foreach ($matches as $list): ?>
-                        <div id="<?php echo $word ?>-word-<?php echo $index ?>" class="article-text">
-                            <span class="article-text-span"><?php echo $list['article_text'] ?></span>
-                            <a class="graph-link" href="<?php echo $mo_domain ?><?php echo $list['article_link'] ?>" target="_blank">Go to full article</a>
-                        </div>
-                        <?php $index++ ?>
-                    <?php endforeach ?>
-                    </div>
-                <div class="today-word-articles-images">
-                    <?php $index=0 ?>
-                    <?php foreach ($matches as $list): ?>
-                        <img data-id="#<?php echo $word ?>-word-<?php echo $index ?>" data-toggle="trends-reveal" class="article-list-item lazyload" data-src="<?php echo $list['thumbnail_link'] ?>">
-                        <?php $index++ ?>
+                        <img class="article-list-item lazyload" data-src="<?php echo $list['thumbnail_link'] ?>" data-article="<?php echo $list['article_text'] ?>" data-href="<?php echo $list['article_link'] ?>">
                     <?php endforeach ?>
                 </div>
             </div>
