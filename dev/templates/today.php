@@ -37,7 +37,7 @@
 				</div>
                 <div class="today-word-articles-images" data-toggle="today-article">
                     <?php foreach ($matches as $list): ?>
-                        <img class="article-list-item lazyload" data-src="<?php echo $list['thumbnail_link'] ?>" data-article="<?php echo $list['article_text'] ?>" data-href="<?php echo $list['article_link'] ?>">
+                        <img class="article-list-item lazyload" data-src="<?php echo $list['thumbnail_link'] ?>" data-article="<?php echo $list['article_text'] ?>" data-href="<?php echo $mo_domain.$list['article_link'] ?>">
                     <?php endforeach ?>
                 </div>
             </div>

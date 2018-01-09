@@ -2,8 +2,6 @@
 
 $years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'];
 
-$current_year = "2017";
-
 $sql_create_count_table = 'CREATE TABLE archive_count (
 	entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	publication_date DATE,
@@ -45,7 +43,7 @@ $sql_create_visited_table = 'CREATE TABLE visited_links (
 
 $list_of_bad_words = array (
 	4 => ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp'],
-	5 => ['ample','busty','given','leggy','perky','saucy','thigh','toned','yummy'],
+	5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy'],
 	6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases'],
 	7 => ['ageless','braless','flashes','flaunts','midriff','scantily','sizable','slender'],
 	8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],

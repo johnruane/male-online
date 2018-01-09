@@ -5,32 +5,28 @@
 		var $chartistWordLabels = [];
 		var trendsChart;
 		self.init = function() {
-			initDailyArticleSelection();
-			// highlightArticleTextAndCloneThumbnail();
-			// highlightWordInArticle('.word-chart', '.graph-article');
+			initDailyArticle();
+			highlightWordInArticle('.word-chart', '.graph-article');
 			$('#trends-tab').one('click', function(event) {
 				setTrendsChart();
 				$(this).off(event);
 			});
 		};
-		self.initDailyArticleSelection = function() {
+		self.initDailyArticle = function() {
 			$('[data-toggle="today-article"]').on('click', function(event) {
 				// changes the article text
-				var $src = $(event.target).attr('src');
-				var $articleText = $(event.target).data('article');
-				var $link = $(event.target).data('href');
+				var $src = event.target.dataset.src;
+				var $articleText = event.target.dataset.article;
+				var $link = event.target.dataset.href;
 				var $prev = $(this).prev();
 				$prev.children('.thumbnail-placeholder').html('<img src="'+ $src +'"></img>');
 				$prev.children('.article-text').html($articleText + '<a class="graph-link" href="' + $link + '" target="_blank">Go to full article</a>');
+				highlightWordInArticle('.daily-article-wrapper', '.article-text');
 			});
-		};
-		self.highlightArticleTextAndCloneThumbnail = function() {
-			highlightWordInArticle('.daily-article-wrapper', '.article-text-span');
-			$('.daily-article-wrapper').each(function() {
-				var $id = $(this).attr('id');
-				$(this).find('.today-word-articles-text .article-text:nth-child(2)').css('display', 'block');
-				$(this).find('.today-word-articles-images img:first-child').clone().appendTo('#'+$id+'-thumbnail-placeholder');
+			$('.today-list-item').each(function() {
+				$(this).find('.today-word-articles-images > :first-child').trigger('click');
 			});
+			highlightWordInArticle('.daily-article-wrapper', '.article-text');
 		};
 		self.setTrendsChart = function() {
 			$('.word-chart').each( function() {
@@ -84,17 +80,17 @@ function highlightWordInArticle(articleContainerClass, articleTextClass) {
 	$(articleContainerClass).each(function() {
 		var $id = $(this).data('highlighter');
 		$(this).find(articleTextClass).each(function() {
-			var $articleSpan = $(this);
-			var $articleText = $($articleSpan).text();
-			var $link = $($articleSpan).find('a.graph-link');
+			var $this = $(this);
+			var articleText = $($this).text();
+			var $link = $($this).find('a.graph-link');
 
-			var wordStart = $articleText.toLowerCase().indexOf($id);
-			var beforeWord = $articleText.slice(0, wordStart);
-			var word = $articleText.slice(wordStart, wordStart+$id.length);
-			var afterWord = $articleText.slice(wordStart+$id.length, $articleText.length);
+			var wordStart = articleText.toLowerCase().indexOf($id);
+			var beforeWord = articleText.slice(0, wordStart);
+			var word =articleText.slice(wordStart, wordStart+$id.length);
+			var afterWord = articleText.slice(wordStart+$id.length, articleText.length);
 
 			var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
-			$($articleSpan).html(newText);
+			$($this).html(newText + $link);
 		});
 	});
 }
