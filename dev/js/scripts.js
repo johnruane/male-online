@@ -90,7 +90,7 @@ function highlightWordInArticle(articleContainerClass, articleTextClass) {
 			var afterWord = articleText.slice(wordStart+$id.length, articleText.length);
 
 			var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
-			$($this).html(newText + $link);
+			$($this).html(newText);
 		});
 	});
 }
