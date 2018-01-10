@@ -5,11 +5,8 @@
 		var $chartistWordLabels = [];
 		var trendsChart;
 		self.init = function() {
-			setupDailyArticleEvent();
-			initDailyArticles();
-			// $('.today-list-item').each(function() {
-			// 	$(this).find('.today-word-articles-images > :first-child').trigger('click');
-			// });
+			//setupDailyArticleEvent();
+			//initDailyArticles();
 			//highlightWordInArticle('.word-chart', '.graph-article');
 			$('#trends-tab').one('click', function(event) {
 				setTrendsChart();
@@ -21,7 +18,9 @@
 				var $firstThumbnail = $(this).find('.today-word-articles-images > :first-child');
 				swapDailyArticle($firstThumbnail);
 			});
-			//highlightWordInArticle('.daily-article-wrapper', '.article-text', $articleText);
+			$('.today-word-articles-text .article-text').each(function() {
+				//highlightWordInArticle($(this).text, $(this).data('highlighter'));
+			});
 		};
 		self.setupDailyArticleEvent = function() {
 			$('[data-toggle="today-article"]').on('click', function(event) {
@@ -85,17 +84,11 @@
 	});
 })(jQuery);
 
-function highlightWordInArticle(articleContainerClass, articleTextClass, articleText) {
-	$(articleContainerClass).each(function() {
-		var $id = $(this).data('highlighter');
-		var $this = $(articleTextClass);
-		var articleText = $($this).text();
-		var $link = $($this).find('a.graph-link');
-		var wordStart = articleText.toLowerCase().indexOf($id);
-		var beforeWord = articleText.slice(0, wordStart);
-		var word = articleText.slice(wordStart, wordStart+$id.length);
-		var afterWord = articleText.slice(wordStart+$id.length, articleText.length);
-		var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
-		$($this).html(newText);
-	});
+function highlightWordInArticle(text, word) {
+	var wordStart = text.toLowerCase().indexOf(word);
+	var beforeWord = text.slice(0, wordStart);
+	var word = text.slice(wordStart, wordStart+word.length);
+	var afterWord = text.slice(wordStart+word.length, articleText.length);
+	var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
+	$($this).html(newText);
 }

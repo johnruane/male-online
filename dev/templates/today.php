@@ -30,10 +30,10 @@
                 </span>
             </div>
             <?php $matches = getMatchedArticlesFromWord($matched_articles, $word) ?>
-            <div id="<?php echo $word ?>" class="daily-article-wrapper" data-highlighter="<?php echo $word ?>">
+            <div id="<?php echo $word ?>" class="daily-article-wrapper">
                 <div class="today-word-articles-text">
 					<div class="thumbnail-placeholder"></div>
-					<span class="article-text"></span>
+					<span class="article-text" data-highlighter="<?php echo $word ?>"></span>
                     <span class="article-link"></span>
 				</div>
                 <div class="today-word-articles-images" data-toggle="today-article">
