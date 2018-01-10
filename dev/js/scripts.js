@@ -5,28 +5,37 @@
 		var $chartistWordLabels = [];
 		var trendsChart;
 		self.init = function() {
-			initDailyArticle();
-			highlightWordInArticle('.word-chart', '.graph-article');
+			setupDailyArticleEvent();
+			initDailyArticles();
+			// $('.today-list-item').each(function() {
+			// 	$(this).find('.today-word-articles-images > :first-child').trigger('click');
+			// });
+			//highlightWordInArticle('.word-chart', '.graph-article');
 			$('#trends-tab').one('click', function(event) {
 				setTrendsChart();
 				$(this).off(event);
 			});
 		};
-		self.initDailyArticle = function() {
+		self.initDailyArticles = function() {
+			$('.daily-article-wrapper').each(function() {
+				var $firstThumbnail = $(this).find('.today-word-articles-images > :first-child');
+				swapDailyArticle($firstThumbnail);
+			});
+			//highlightWordInArticle('.daily-article-wrapper', '.article-text', $articleText);
+		};
+		self.setupDailyArticleEvent = function() {
 			$('[data-toggle="today-article"]').on('click', function(event) {
-				// changes the article text
-				var $src = event.target.dataset.src;
-				var $articleText = event.target.dataset.article;
-				var $link = event.target.dataset.href;
-				var $prev = $(this).prev();
-				$prev.children('.thumbnail-placeholder').html('<img src="'+ $src +'"></img>');
-				$prev.children('.article-text').html($articleText + '<a class="graph-link" href="' + $link + '" target="_blank">Go to full article</a>');
-				highlightWordInArticle('.daily-article-wrapper', '.article-text');
+				swapDailyArticle($(event.target));
 			});
-			$('.today-list-item').each(function() {
-				$(this).find('.today-word-articles-images > :first-child').trigger('click');
-			});
-			highlightWordInArticle('.daily-article-wrapper', '.article-text');
+		};
+		self.swapDailyArticle = function(image) {
+			var parent = image.closest('.daily-article-wrapper');
+			var src = image[0].dataset.src;
+			var href = image[0].dataset.href;
+			var text = image[0].dataset.article;
+			$(parent).find('.thumbnail-placeholder').html('<img src="'+ src +'"></img>');
+			$(parent).find('.article-link').html('<a class="graph-link" href="' + href + '" target="_blank">Go to full article</a>');
+			$(parent).find('.article-text').html(text);
 		};
 		self.setTrendsChart = function() {
 			$('.word-chart').each( function() {
@@ -76,21 +85,17 @@
 	});
 })(jQuery);
 
-function highlightWordInArticle(articleContainerClass, articleTextClass) {
+function highlightWordInArticle(articleContainerClass, articleTextClass, articleText) {
 	$(articleContainerClass).each(function() {
 		var $id = $(this).data('highlighter');
-		$(this).find(articleTextClass).each(function() {
-			var $this = $(this);
-			var articleText = $($this).text();
-			var $link = $($this).find('a.graph-link');
-
-			var wordStart = articleText.toLowerCase().indexOf($id);
-			var beforeWord = articleText.slice(0, wordStart);
-			var word =articleText.slice(wordStart, wordStart+$id.length);
-			var afterWord = articleText.slice(wordStart+$id.length, articleText.length);
-
-			var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
-			$($this).html(newText);
-		});
+		var $this = $(articleTextClass);
+		var articleText = $($this).text();
+		var $link = $($this).find('a.graph-link');
+		var wordStart = articleText.toLowerCase().indexOf($id);
+		var beforeWord = articleText.slice(0, wordStart);
+		var word = articleText.slice(wordStart, wordStart+$id.length);
+		var afterWord = articleText.slice(wordStart+$id.length, articleText.length);
+		var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
+		$($this).html(newText);
 	});
 }

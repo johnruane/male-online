@@ -34,6 +34,7 @@
                 <div class="today-word-articles-text">
 					<div class="thumbnail-placeholder"></div>
 					<span class="article-text"></span>
+                    <span class="article-link"></span>
 				</div>
                 <div class="today-word-articles-images" data-toggle="today-article">
                     <?php foreach ($matches as $list): ?>
