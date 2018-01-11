@@ -5,26 +5,19 @@
 		var $chartistWordLabels = [];
 		var trendsChart;
 		self.init = function() {
-			//setupDailyArticleEvent();
-			//initDailyArticles();
-			//highlightWordInArticle('.word-chart', '.graph-article');
+			initDailyArticles();
 			$('#trends-tab').one('click', function(event) {
 				setTrendsChart();
 				$(this).off(event);
 			});
 		};
 		self.initDailyArticles = function() {
+			$('[data-toggle="today-article"]').on('click', function(event) {
+				swapDailyArticle($(event.target));
+			});
 			$('.daily-article-wrapper').each(function() {
 				var $firstThumbnail = $(this).find('.today-word-articles-images > :first-child');
 				swapDailyArticle($firstThumbnail);
-			});
-			$('.today-word-articles-text .article-text').each(function() {
-				//highlightWordInArticle($(this).text, $(this).data('highlighter'));
-			});
-		};
-		self.setupDailyArticleEvent = function() {
-			$('[data-toggle="today-article"]').on('click', function(event) {
-				swapDailyArticle($(event.target));
 			});
 		};
 		self.swapDailyArticle = function(image) {
@@ -34,7 +27,8 @@
 			var text = image[0].dataset.article;
 			$(parent).find('.thumbnail-placeholder').html('<img src="'+ src +'"></img>');
 			$(parent).find('.article-link').html('<a class="graph-link" href="' + href + '" target="_blank">Go to full article</a>');
-			$(parent).find('.article-text').html(text);
+			var $articleText = $(parent).find('.article-text');
+			$($articleText)[0].innerHTML = highlightWordInArticle(text, $($articleText).data('highlighter'));
 		};
 		self.setTrendsChart = function() {
 			$('.word-chart').each( function() {
@@ -88,7 +82,7 @@ function highlightWordInArticle(text, word) {
 	var wordStart = text.toLowerCase().indexOf(word);
 	var beforeWord = text.slice(0, wordStart);
 	var word = text.slice(wordStart, wordStart+word.length);
-	var afterWord = text.slice(wordStart+word.length, articleText.length);
+	var afterWord = text.slice(wordStart+word.length, text.length);
 	var newText = beforeWord + '<span class="article-highlight">' + word + '</span>' + afterWord;
-	$($this).html(newText);
+	return newText;
 }
