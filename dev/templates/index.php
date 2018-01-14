@@ -37,8 +37,9 @@ $xpath_today = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@
     <div class="site-wrapper">
         <header class="main-header">
             <a class="site-logo" href="/index4.php">
-                <span class="flam-text">Male </span>
-                <span class="thin-text">Online</span>
+                <span>The</span>
+                <span class="flam-text"> Male</span>
+                <span class="thin-text"> Online</span>
             </a>
         </header>
 		<ul class="nav nav-tabs" id="mo-tabs" role="tablist">

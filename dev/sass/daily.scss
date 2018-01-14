@@ -1,7 +1,8 @@
 .article-list-item {
-    height: auto;
-    width: 100%;
-	max-width: 154px;
+    max-width: 100%;
+    @media(min-width: $sm) {
+        width: auto;
+    }
     a {
         color: #000;
         text-decoration: none;
@@ -56,16 +57,6 @@
     display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: $global-padding;
-    .today-word-articles-images {
-        flex: 6;
-		align-content: flex-start;
-		@media(min-width: $md) {
-			flex: 8;
-		}
-		@media(min-width: $lg) {
-			flex: 9;
-		}
-    }
 }
 .article-highlight {
     background: #ffff00;
@@ -82,16 +73,20 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: auto;
-    grid-gap: 5px;
+    grid-gap: ($global-padding*0.66);
+    align-self: start;
 	@media(min-width: $sm) {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
-	@media(min-width: $lg) {
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-	}
-	@media(min-width: $xl) {
-		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-	}
+    @media(min-width: $md) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+	// @media(min-width: $lg) {
+	// 	grid-template-columns: 1fr 1fr 1fr 1fr;
+	// }
+    // @media(min-width: $xl) {
+    //     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    // }
 }
 .hidden-word-results {
     visibility: hidden;
@@ -100,7 +95,7 @@
     left: -9999px;
 }
 .item-card-heading {
-    margin-bottom: $global-padding/2;
+    margin-bottom: $global-padding;
     border-bottom: 2px solid $highlight-color;
     display: flex;
     justify-content: space-between;

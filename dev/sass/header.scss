@@ -1,26 +1,21 @@
 .flam-text {
     font-family: 'Bigshot One', cursive;
-    &:before {
-        content: "Daily";
-        position: absolute;
-        font-family: 'Quicksand', sans-serif;
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: #272727;
-        top: -25px;
-        left: 9px;
+    font-size: 3.5rem;
+    @media(min-width: $sm) {
+        font-size: 4rem;
     }
 }
 .thin-text {
     font-family: 'Quicksand', sans-serif;
     font-weight: 200;
+    font-size: 3rem;
     color: #5A6C7B
 }
 .main-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* height: $header-height; */
+    margin: 10px 0;
     width: 100vw;
     > * {
         z-index: $z-index-high;
@@ -29,10 +24,12 @@
 .site-logo {
     text-decoration: none;
     color: #000;
-    font-size: 4rem;
-	line-height: 4rem;
-	margin: 20px 0 10px;
+    font-size: 1.3rem;
+    line-height: initial;
     position: relative;
+    & :first-child {
+        text-transform: uppercase;
+    }
     &:hover {
         cursor: pointer;
     }
