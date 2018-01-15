@@ -15,7 +15,7 @@
 	display: block;
 	img {
 		margin-bottom: ($global-padding/2);
-		max-width: 154px;
+		max-width: 100%;
 	}
 }
 .today-list {
@@ -54,9 +54,21 @@
     text-align: right;
 }
 .daily-article-wrapper {
-    display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-column-gap: $global-padding;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-column-gap: $global-padding;
+}
+.today-word-articles-text {
+	grid-column: 1/4;
+  @media(min-width: $sm) {
+    grid-column: 2/4;
+  }
+  @media(min-width: $md) {
+    grid-column: 1/3;
+  }
+  @media(min-width: $lg) {
+    grid-column: 1;
+  }
 }
 .article-highlight {
     background: #ffff00;
@@ -71,19 +83,21 @@
 }
 .today-word-articles-images {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: auto;
     grid-gap: ($global-padding*0.66);
     align-self: start;
-	@media(min-width: $sm) {
-		grid-template-columns: 1fr 1fr 1fr 1fr;
-	}
+    grid-column: 4/7;
+  	@media(min-width: $sm) {
+      grid-template-columns: repeat(4, 1fr);
+  	}
     @media(min-width: $md) {
-        grid-template-columns: 1fr 1fr 1fr;
+      grid-column: 3/7;
     }
-	// @media(min-width: $lg) {
-	// 	grid-template-columns: 1fr 1fr 1fr 1fr;
-	// }
+  	@media(min-width: $lg) {
+      grid-column: 2/7;
+  	  grid-template-columns: repeat(5, 1fr);
+  	}
     // @media(min-width: $xl) {
     //     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     // }
