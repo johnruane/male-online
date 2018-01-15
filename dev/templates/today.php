@@ -31,11 +31,13 @@
             </div>
             <?php $matches = getMatchedArticlesFromWord($matched_articles, $word) ?>
             <div id="<?php echo $word ?>" class="daily-article-wrapper">
-                <div class="today-word-articles-text">
-					<div class="thumbnail-placeholder"></div>
-					<span class="article-text" data-highlighter="<?php echo $word ?>"></span>
-                    <span class="article-link"></span>
-				</div>
+              <div class="today-word-articles-text">
+                <div>
+                <div class="thumbnail-placeholder"></div>
+                  <span class="article-text" data-highlighter="<?php echo $word ?>"></span>
+                  <span class="article-link"></span>
+                </div>
+              </div>
                 <div class="today-word-articles-images" data-toggle="today-article">
                     <?php foreach ($matches as $list): ?>
                         <img class="article-list-item lazyload" data-src="<?php echo $list['thumbnail_link'] ?>" data-article="<?php echo $list['article_text'] ?>" data-href="<?php echo $mo_domain.$list['article_link'] ?>">

@@ -60,6 +60,11 @@
 }
 .today-word-articles-text {
 	grid-column: 1/4;
+  & > div {
+    position: sticky;
+    top: 60px;
+  }
+
   @media(min-width: $sm) {
     grid-column: 2/4;
   }
@@ -109,9 +114,14 @@
     left: -9999px;
 }
 .item-card-heading {
-    margin-bottom: $global-padding;
-    border-bottom: 2px solid $highlight-color;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+  position: sticky;
+  top: -1px;
+  padding-top: $global-padding;
+  z-index: $z-index-med;
+  background: #FFFFFF;
+  margin-bottom: $global-padding;
+  border-bottom: 2px solid $highlight-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
