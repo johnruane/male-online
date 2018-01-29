@@ -13,12 +13,15 @@
 			<div class="trends-wrapper">
 				<div class="trends-graph-wrapper">
 		            <ul class="hidden-word-results">
-		                <?php foreach ($wordResults as $row): ?>
-		                    <li><span class="word-key"><?php echo $row['year'] ?></span>
-		                    <span class="word-value"><?php echo $row['count'] ?></span></li>
-		                <?php endforeach ?>
+                        <?php $trendString = ""; ?>
+		                <?php foreach ($wordResults as $row):
+                            $trendRow = '"' . $row['year'] . '"' . ':' . $row['count'];
+                            echo $trendRow;
+                            $trendString = $trendString . $trendRow . ',';
+		                endforeach ?>
+                        <?php $trendString = substr($trendString, 0, -1); ?>
 		            </ul>
-		            <div class="ct-chart ct-major-sixth <?php echo $word ?>-chart"></div>
+		            <div class="ct-chart ct-major-sixth <?php echo $word ?>-chart" data-trend-graph='<?php echo $trendString ?>'></div>
 					<div class="trends-labels">
 						<span>2000</span>
 						<span>2018</span>

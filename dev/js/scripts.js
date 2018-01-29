@@ -34,15 +34,11 @@
 			$('.word-chart').each( function() {
 				var $id = $(this).attr('id');
 				var $word = $(this).attr('id');
-				var $graph_vals = $('#'+$id).find('.word-value').map(function() {
-					return $(this).text();
-				}).get();
-				var $graph_labels = $('#'+$id).find('.word-key').map(function() {
-					return $(this).text();
-				}).get();
+				var $data = $('#'+$id).find('.ct-chart').data('trend-graph');
+				var $jdata = JSON.parse('{'+$data+'}');
 				var data = {
-					series: [$graph_vals],
-					labels: $graph_labels
+					series: [Object.values($jdata)],
+					labels: Object.keys($jdata)
 				};
 				var options = {
 					lineSmooth: true,
