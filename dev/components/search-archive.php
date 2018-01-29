@@ -13,8 +13,8 @@ require_once("db.php");
 		$articlesWithBadWords = array();
 
 		// Get a list of daily article headlines from daily url
-		$dailyLinks = getLinksFromURLAndXpath('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', '//ul[@class="split"]/li');
-		$articlesWithBadWords = searchArticlesForBadWords($dailyLinks, "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li");
+		$dailyLinks = getLinksFromURLAndXpath('http://www.dailymail.co.uk/home/sitemaparchive/year_'.$year.'.html', $news_archive_list);
+		$articlesWithBadWords = searchArticlesForBadWords($dailyLinks, $new_article_list);
 		populateArchiveWithArticles($articlesWithBadWords);
 	 } ?>
 </div>

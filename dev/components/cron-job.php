@@ -12,8 +12,8 @@ require_once("db.php");
 
 		$articlesWithBadWords = array();
 
-		// $dailyLinks = getLinksFromURLAndXpath($yesterday, '//ul[@class="split"]/li');
-		// $articlesWithBadWords = searchArticlesForBadWords($dailyLinks, "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li");
+		$dailyLinks = getLinksFromURLAndXpath($yesterday, $news_archive_list);
+		// $articlesWithBadWords = searchArticlesForBadWords($dailyLinks, $new_article_list);
 		// populateArchiveWithArticles($articlesWithBadWords);
 	?>
 </div>
