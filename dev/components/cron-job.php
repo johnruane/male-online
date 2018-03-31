@@ -6,14 +6,13 @@ require_once("db.php");
 <div class="admin-results clearfix">
 	<span>CRON job ran</span>
 	<?php
-		$date = new DateTime(date());
-		$date->sub(date_interval_create_from_date_string('1 day'));
-		$yesterday = 'http://www.dailymail.co.uk/home/sitemaparchive/day_'.$date->format('Ymd').'.html';
+		$date = new DateTime();
+		$date->sub(new DateInterval('P1D'));
 
+		$yesterday = 'http://www.dailymail.co.uk/home/sitemaparchive/day_'.$date->format('Ymd').'.html';
 		$articlesWithBadWords = array();
 
-		$dailyLinks = getLinksFromURLAndXpath($yesterday, $news_archive_list);
-		// $articlesWithBadWords = searchArticlesForBadWords($dailyLinks, $new_article_list);
-		// populateArchiveWithArticles($articlesWithBadWords);
+		$articlesWithBadWords = searchArticlesForBadWords([$yesterday], $archive_by_day);
+		populateArchiveWithArticles($articlesWithBadWords);
 	?>
 </div>

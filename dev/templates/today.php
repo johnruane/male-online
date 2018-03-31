@@ -4,18 +4,19 @@
     require_once("db.php");
 ?>
 <?php
-    $matched_articles = searchArticlesForBadWords([$mo_homepage_url], $xpath_today);
+    $matched_articles = searchArticlesForBadWords([$mo_homepage_url], $archive_homepage);
     $array_matched_words = array();
     foreach ($matched_articles as $article):
         array_push($array_matched_words, $article['word']);
     endforeach;
     $array_matched_words_count = array_count_values($array_matched_words);
     arsort($array_matched_words_count);
-    // var_dump($matched_articles);
+    //var_dump($array_matched_words_count); 
 ?>
 <div class="today-grid">
     <?php foreach ($array_matched_words_count as $word => $count): ?>
-        <div class="today-list-item card" data-toggle="collapse" data-target="#<?php echo $row['word'] ?>" aria-expanded="false">
+
+        <div class="today-list-item card">
             <div class="item-card-heading">
                 <h2 class="word-key"><?php echo $word ?></h2>
                 <span class="today-times-display">

@@ -1,6 +1,12 @@
 <?php
 
-$years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017'];
+$mo_homepage_url = "http://www.dailymail.co.uk/home/index.html";
+$mo_domain = "http://www.dailymail.co.uk";
+$archive_homepage = "//div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'femail')]//li | //div[@class='beta']//div[contains(concat(' ', normalize-space(@class), ' '), 'tvshowbiz')]//li";
+$archive_by_year = "//ul[@class='split']/li";
+$archive_by_day = "//ul[contains(concat(' ', normalize-space(@class), ' '), ' archive-articles ')]/li";
+
+$years = ['2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018'];
 
 $sql_create_count_table = 'CREATE TABLE archive_count (
 	entry_id INT(6) AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -107,7 +113,7 @@ function searchArticlesForBadWords($links, $xp) {
 				$node_text = preg_replace('/\xc2\xa0/', '', $node_text); // remove &nbsp; from the article text
 				$node_text = trim($node_text); // remove white space from beginning and end
 				$article_string_array = preg_split('/[\s,]+/', $node_text); // split string on any 'space' into array
-                error_log($node_text);
+                error_log($node_text); // php log to give visual feedback the code is runng
 
 				foreach ($article_string_array as $article_word) {
 					$article_word = preg_replace('/[^A-Za-z\-]/', '', $article_word); // remove numerical & special characters
