@@ -185,9 +185,7 @@ function setYearlyTotalsForWordByYear($year, $word, $result) {
 	$db = new Db();
 	if ( $stmt = $db->connect()->prepare($sql_count_yearly) ) {
 		foreach($result as $row) {
-			$word = $row['word'];
-			$count = $row['total'];
-			$stmt->bind_param('ssi', $year, $row['word'], $row['total']);
+			$stmt->bind_param('ssi', $year, $word, $row['total']);
 			$stmt->execute();
 		}
 	} else {

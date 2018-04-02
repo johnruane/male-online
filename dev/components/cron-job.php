@@ -8,11 +8,19 @@ require_once("db.php");
 	<?php
 		$date = new DateTime();
 		$date->sub(new DateInterval('P1D'));
+		$year = $date->format('Y');
 
 		$yesterday = 'http://www.dailymail.co.uk/home/sitemaparchive/day_'.$date->format('Ymd').'.html';
 		$articlesWithBadWords = array();
 
 		$articlesWithBadWords = searchArticlesForBadWords([$yesterday], $archive_by_day);
 		populateArchiveWithArticles($articlesWithBadWords);
+
+		cleanTable(yearly_count);
+		foreach (getBadWords() as $word) {
+			$word_result = getCurrentCountsForYearByWord($year, $word);
+			setYearlyTotalsForWordByYear($year, $word, $word_result);
+		}
+
 	?>
 </div>

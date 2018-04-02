@@ -77,6 +77,7 @@
 }
 .article-highlight {
     background: #ffff00;
+    padding: 0 2px;
 }
 .word-key {
     @extend .h2;
@@ -88,9 +89,9 @@
 }
 .today-word-articles-images {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
-    grid-gap: ($global-padding*0.66);
+    grid-gap: $grid-gap;
     align-self: start;
     grid-column: 4/7;
   	@media(min-width: $sm) {
@@ -103,9 +104,6 @@
       grid-column: 2/7;
   	  grid-template-columns: repeat(5, 1fr);
   	}
-    // @media(min-width: $xl) {
-    //     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    // }
 }
 .hidden-word-results {
     visibility: hidden;

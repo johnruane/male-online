@@ -39,19 +39,19 @@ ini_set("display_errors","On");
             </a>
         </header>
 		<ul class="nav nav-tabs" id="mo-tabs" role="tablist">
-			<li role="presentation" class="active"><a id="today-tab" href="#today" data-toggle="tab" aria-controls="today" role="tab">Today</a></li>
-			<li role="presentation"><a id="trends-tab" href="#trends" data-toggle="tab" aria-controls="trends" role="tab">Trends</a></li>
+			<li role="presentation" class="active"><a id="today-tab" href="#today" data-toggle="tab" aria-controls="today" role="tab">Homepage</a></li>
+			<li role="presentation"><a id="trends-tab" href="#trends" data-toggle="tab" aria-controls="trends" role="tab">Archives</a></li>
 		</ul>
         <main class="container">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="today">
-                    <h4 class="tab-heading">Today</h4>
+                    <h4 class="tab-heading">Homepage</h4>
 					<p class="sub-heading">Current articles on today's homepage</p>
                     <?php include 'today.php' ?>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="trends">
-                    <h4 class="tab-heading">Trends</h4>
-					<p class="sub-heading">Graph mapping usage over time</p>
+                    <h4 class="tab-heading">Archives</h4>
+					<p class="sub-heading">Graph mapping word usage over time</p>
                     <div class="trends-grid">
                         <?php foreach (getBadWords() as $word): ?>
                             <?php include 'trends.php' ?>
