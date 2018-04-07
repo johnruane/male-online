@@ -1,7 +1,7 @@
 <?php
-    require_once("mo.php");
-    require_once("conf.php");
-    require_once("db.php");
+    require_once("resources/mo.php");
+    require_once("resources/conf.php");
+    require_once("resources/db.php");
 ?>
 <?php
     $matched_articles = searchArticlesForBadWords([$mo_homepage_url], $archive_homepage);
@@ -11,11 +11,9 @@
     endforeach;
     $array_matched_words_count = array_count_values($array_matched_words);
     arsort($array_matched_words_count);
-    //var_dump($array_matched_words_count); 
 ?>
 <div class="today-grid">
     <?php foreach ($array_matched_words_count as $word => $count): ?>
-
         <div class="today-list-item card">
             <div class="item-card-heading">
                 <h2 class="word-key"><?php echo $word ?></h2>

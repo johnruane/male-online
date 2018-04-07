@@ -51,7 +51,7 @@ $list_of_bad_words = array (
 	4 => ['boob','bust','pert','pout','racy','sexy','slim','trim','vamp'],
 	5 => ['ample','busty','leggy','perky','saucy','thigh','toned','yummy'],
 	6 => ['assets','curves','fuller','gushes','skimpy','skinny','steamy','teases'],
-	7 => ['ageless','braless','flashes','flaunts','midriff','scantily','sizable','slender'],
+	7 => ['ageless','braless','flashes','flaunts','midriff','sizable','slender'],
 	8 => ['cleavage','enviable','flashing','plunging','sideboob','sizzling'],
 	9 => ['posterior','revealing'],
 	10 => ['skin-tight','super-slim'],
@@ -249,6 +249,11 @@ function getWordCount($word) {
 	$db = new Db();
 	return $db->select($sql_select_word);
 }
+function getWordCountByYear($word, $year) {
+	$sql_select_word = "SELECT count FROM yearly_count WHERE year = '$year' AND word = '$word'";
+	$db = new Db();
+	return $db->select($sql_select_word);
+}
 function getDailyArticlesFromWord($word) {
 	$sql_select_word_articles = "SELECT article_text, article_link, thumbnail_link FROM today_count WHERE word = '$word'";
 	$db = new Db();
@@ -257,11 +262,16 @@ function getDailyArticlesFromWord($word) {
 function getTableNames() {
 	$sql_select_table_names = "SHOW TABLES";
 	$db = new Db();
-    return $db->fetch($sql_select_table_names, 'Tables_in_mail_online_db');
+    return $db->fetch($sql_select_table_names, 'Tables_in_test_mail_online_db');
 }
 /* Other functions */
 function cleanTable($table) {
 	$sql_clean_table = "DELETE FROM $table";
+	$db = new Db();
+	$db->query($sql_clean_table);
+}
+function cleanTableByYear($table, $year) {
+	$sql_clean_table = "DELETE FROM $table WHERE year = $year";
 	$db = new Db();
 	$db->query($sql_clean_table);
 }

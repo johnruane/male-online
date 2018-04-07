@@ -1,10 +1,9 @@
 <?php
-require_once("mo.php");
-require_once("conf.php");
-require_once("db.php");
-ini_set("error_reporting","-1");
-ini_set("display_errors","On");
-
+    require_once("resources/mo.php");
+    require_once("resources/conf.php");
+    require_once("resources/db.php");
+    ini_set("error_reporting","-1");
+    ini_set("display_errors","On");
 ?>
 <!doctype html>
 

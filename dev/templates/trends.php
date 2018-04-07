@@ -1,7 +1,7 @@
 <?php
-    require_once("mo.php");
-    require_once("conf.php");
-    require_once("db.php");
+    require_once("resources/mo.php");
+    require_once("resources/conf.php");
+    require_once("resources/db.php");
     $date = new DateTime();
     $date->sub(new DateInterval('P1D'));
     $year = $date->format('Y');
@@ -31,6 +31,8 @@
 						<span><?php echo $year-1 ?></span>
 					</div>
 				</div>
+                <!-- <?php $yearCount = getWordCountByYear($word, $year); ?>
+                <span class="">Used <strong><?php echo $yearCount[0]['count'] ?></strong> times in <?php echo $year ?></span> -->
 				<div class="graph-stat today-word-articles-text">
 					<span class="graph-label" id="random-use">Random use in an article: </span>
 					<?php $randomWord = randomArticleByWord($word); ?>

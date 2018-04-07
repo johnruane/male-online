@@ -13,8 +13,7 @@ class Db {
         // Try and connect to the database
         if(!isset(self::$connection)) {
             // Load configuration as an array. Use the actual location of your configuration file
-            $config = parse_ini_file('../dev/config.ini');
-            // $config = parse_ini_file('config.ini');
+            $config = parse_ini_file('config.ini');
             self::$connection = new mysqli($config['host'],$config['username'],$config['password'],$config['dbname']);
         }
 

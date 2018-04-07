@@ -1,7 +1,7 @@
 <?php
-require_once("mo.php");
-require_once("conf.php");
-require_once("db.php");
+	require_once("../resources/mo.php");
+	require_once("../resources/conf.php");
+	require_once("../resources/db.php");
 ?>
 <div class="admin-results clearfix">
 	<span>CRON job ran</span>
@@ -16,11 +16,12 @@ require_once("db.php");
 		$articlesWithBadWords = searchArticlesForBadWords([$yesterday], $archive_by_day);
 		populateArchiveWithArticles($articlesWithBadWords);
 
-		cleanTable(yearly_count);
+		cleanTable('random_articles');
+		cleanTableByYear('yearly_count', $year);
 		foreach (getBadWords() as $word) {
 			$word_result = getCurrentCountsForYearByWord($year, $word);
 			setYearlyTotalsForWordByYear($year, $word, $word_result);
+			populateRandomArticles($word);
 		}
-
 	?>
 </div>

@@ -1,9 +1,9 @@
 <?php
-ini_set("error_reporting","-1");
-ini_set("display_errors","On");
-require_once("mo.php");
-require_once("conf.php");
-require_once("db.php");
+    ini_set("error_reporting","-1");
+    ini_set("display_errors","On");
+    require_once("../resources/mo.php");
+    require_once("../resources/conf.php");
+    require_once("../resources/db.php");
 ?>
 <!doctype html>
 
@@ -19,7 +19,7 @@ require_once("db.php");
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="css/styles.css?v=1.0">
+    <link rel="stylesheet" href="../css/styles.css?v=1.0">
     <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bigshot+One" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -29,12 +29,6 @@ require_once("db.php");
 
 <body>
     <div class="site-wrapper admin">
-		<!-- <header class="main-header">
-			<a class="site-logo" href="/index4.php">
-				<span class="flam-text">Male </span>
-				<span class="thin-text">Online</span>
-			</a>
-		</header> -->
 		<div class="jumbotron">
 			<div class="container">
 				<h2>Admin panel</h2>

@@ -48,8 +48,24 @@ module.exports = function(grunt) {
                 files: [{
                   expand: true,
                   flatten: true,
-                  src: ['templates/*','resources/*','components/*'],
+                  src: ['templates/*'],
                   dest: '../build/'
+                }]
+            },
+            resources: {
+                files: [{
+                  expand: true,
+                  flatten: true,
+                  src: ['resources/*'],
+                  dest: '../build/resources/'
+                }]
+            },
+            components: {
+                files: [{
+                  expand: true,
+                  flatten: true,
+                  src: ['components/*'],
+                  dest: '../build/components/'
                 }]
             },
             js: {
@@ -69,7 +85,6 @@ module.exports = function(grunt) {
                 }]
             }
         },
-        // Clean build files
         clean: {
           src: ['build/**']
         }

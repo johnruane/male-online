@@ -1,8 +1,7 @@
 <?php
-    require_once("mo.php");
-    require_once("conf.php");
-    require_once("db.php");
-    // $year = $_POST['year'];
+    require_once("resources/mo.php");
+    require_once("resources/conf.php");
+    require_once("resources/db.php");
 ?>
 <?php $yearlyResults = getYearlyTotals(); ?>
 <div class="graph-container yearly-chart clearfix" id="chart-1997">
