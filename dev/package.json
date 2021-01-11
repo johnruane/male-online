@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "chart.js": "^2.5.0",
-    "lazysizes": "^4.0.0-rc3",
+    "lazysizes": "^5.2.1",
     "rangeslider.js": "^2.3.0"
   }
 }
